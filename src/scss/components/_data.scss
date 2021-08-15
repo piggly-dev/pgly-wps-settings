@@ -1,0 +1,128 @@
+.wpgly-wps--data
+{
+	display: table;
+	margin: 0 0 8px;
+	position: relative;
+
+	&:last-child
+	{ margin-bottom: 0; }
+
+	strong
+	{
+		font-weight: 800;
+		text-transform: uppercase;
+		font-size: 12px;
+		display: block;
+		color: #000;
+	}
+
+	span
+	{
+		font-weight: normal;
+		font-size: 14px;
+		display: block;
+		word-break: break-word;
+	}
+}
+
+.wpgly-wps--data-panel
+{
+	display: table;
+	width: 100%;
+	padding: 24px;
+	@include border-radius(6px);
+	background-color: rgba(getColor(text,disabled), 0.20);
+	color: #000;
+	position: relative;
+
+	.wpgly-wps--tooltip
+	{
+		position: absolute;
+		right: 24px;
+		top: 24px;
+		width: 24px;
+		height: 24px;
+		z-index: 5;
+	
+		.wpgly-info--icon
+		{
+			width: 24px;
+			height: 24px;
+		}
+
+		.wpgly-tooltip--data
+		{
+			display: none;
+			position: absolute;
+			width: 240px;
+			right: 0;
+			top: 28px;
+			background: #000;
+			font-size: 12px;
+			padding: 8px;
+			z-index: 5;
+			@include border-radius(6px);
+		}
+
+		&:hover
+		{
+			.wpgly-tooltip--data
+			{ display: table; }
+		}
+	}
+
+	&.wpgly-loading--state
+	{ color: transparent !important; }
+
+	strong
+	{
+		font-weight: 800;
+		text-transform: uppercase;
+		font-size: 12px;
+		display: block;
+	}
+
+	span
+	{
+		font-weight: normal;
+		font-size: 28px;
+		display: block;
+		word-break: break-word;
+	}
+	
+	&.wpgly-neutral--color
+	{ 
+		background-color: #FFF; 
+		color: #000; 
+	}
+
+	&.wpgly-success--color
+	{ 
+		background-color: #1fd64f;
+		color: #FFF;
+	}
+
+	&.wpgly-primary--color
+	{ 
+		background-color: #4e4eef;
+		color: #FFF;
+	}
+
+	&.wpgly-accent--color
+	{ 
+		background-color: #ff188d;
+		color: #FFF;
+	}
+
+	&.wpgly-warning--color
+	{ 
+		background-color: #ff5e21;
+		color: #FFF;
+	}
+
+	&.wpgly-danger--color
+	{ 
+		background-color: #e81d1d;
+		color: #FFF;
+	}
+}

@@ -1,0 +1,283 @@
+@use "sass:math";
+
+.wpgly-wps--field
+{
+	.wpgly-wps--description
+	{
+		font-size: 13px;
+		margin-top: 4px;
+		color: getColor(text, disabled);
+	}
+
+	.wpgly-wps--label
+	{
+		font-size: 14px; 
+		font-weight: bold; 
+		margin-bottom: 4px; 
+		display: block; 
+
+		&.hidden
+		{ margin: 22px 0; }
+	}
+	
+	.wpgly-wps--checkbox
+	{
+		display: table;
+		cursor: pointer;
+
+		.wpgly-wps--checkbox-icon
+		{
+			position: relative;
+			display: inline-table;
+			width: 18px;
+			height: 18px;
+			margin-right: 6px;
+			background-color: #FFF;
+			vertical-align: middle;
+			@include border-radius(6px);
+
+			&::before
+			{
+				content: '';
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				top: 50%;
+				left: 50%;
+				margin-top: -5px;
+				margin-left: -5px;
+				background-color: transparent;
+				@include border-radius(6px);
+				@include transition(background-color .2s)
+			}
+		}
+
+		.wpgly-wps--checkbox-placeholder
+		{
+			display: inline-table;
+			font-size: 14px; 
+			vertical-align: middle;
+		}
+
+		&.wpgly-disabled--state
+		{
+			color: getColor(text,disabled);
+
+			.wpgly-wps--checkbox-icon
+			{ background-color: getColor(text,disabled); }
+		}
+
+		&.wpgly-checked--state
+		{
+			.wpgly-wps--checkbox-icon::before
+			{ background-color: getColor(pallete, accent); }
+		}
+	}
+
+	input[type=checkbox], 
+	input[type=radio]
+	{
+		width: 20px;
+		height: 20px;
+	}
+
+	input[type=checkbox]::before
+	{    
+		content: '';
+		border-radius: 4px;
+		width: 10px;
+		height: 10px;
+		margin: 4px 4px 0;
+		background-color: #ff188d;
+	}
+
+	input[type=radio]::before
+	{        
+		content: '';
+		border-radius: 50%;
+		width: 10px;
+		height: 10px;
+		margin: 4px 4px 0;
+		background-color: #ff188d;
+	}
+
+	input,
+	select,
+	.wpgly-wps--select .selected,
+	textarea
+	{
+		line-height: 2;
+		min-height: 30px;
+		font-size: 14px;
+		background-color: #FFF;
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		padding: 8px 12px;
+		border: 2px solid;
+		border-color: #e0e0e0;
+		@include border-radius(6px);
+		@include box-shadow(4px, 4px, 16px, rgba(0,0,0,0.1));
+		@include transition(border-color .5s, box-shadow .5s);
+	}
+
+	input:focus,
+	.wpgly-wps--select .selected.open,
+	textarea:focus
+	{
+		border-color: #ff188d;
+		outline: 2px solid transparent;
+		@include box-shadow(4px, 4px, 16px, rgba(255, 24, 141, 0.1));
+	}
+
+	.wpgly-wps--tagging
+	{	
+		input,
+		select,
+		.wpgly-wps--select .selected,
+		textarea
+		{ padding-bottom: 18px; }
+
+		.tagging
+		{
+			position: absolute;
+			left: 14px;
+			bottom: 6px;
+			text-transform: uppercase;
+			font-size: 12px;
+			font-weight: bold;
+		}
+	}
+
+	.wpgly-wps--select 
+	{
+		position: relative;
+
+		.selected
+		{
+			cursor: default;
+			user-select: none;
+
+			svg
+			{
+				position: absolute;
+				width: 28px;
+				height: 28px;
+				right: 8px;
+				@include transition(transform .2s);
+			}
+			
+			&.open
+			{
+				border-bottom: unset;
+				@include border-radius(6px 6px 0px 0px);
+
+				svg 
+				{
+					@include transform(rotate(180deg));
+				}
+			}
+		}
+
+		.items
+		{
+			color: #ffffff;
+			overflow-x: hidden;
+			overflow-y: auto;
+			border-top: 1px solid getColor(text,disabled);
+			border-right: 2px solid #ff188d;
+			border-left: 2px solid #ff188d;
+			border-bottom: 2px solid #ff188d;
+			position: absolute;
+			background-color: #FFF;
+			max-height: 46px * 4;
+			left: 0;
+			right: 0;
+			z-index: 2;
+			@include border-radius(0px 0px 6px 6px);
+			scrollbar-width: 2px;
+			scrollbar-color: getColor(text,disabled) transparent;
+
+			&::-webkit-scrollbar {
+				width: 2px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: transparent;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: getColor(text,disabled);
+			}
+
+			.item
+			{
+				color: #000;
+				cursor: pointer;
+				user-select: none;
+				line-height: 2;
+				min-height: 46px;
+				font-size: 14px;
+				position: relative;
+				width: 100%;
+				max-width: 100%;
+				padding: 8px 12px;
+
+				&.current
+				{
+					background-color: rgba(255, 24, 141, 0.1);
+				}
+			}
+			 
+			.item:hover
+			{
+				color: #FFF;
+				background-color: #ff188d;
+			}
+		}
+
+		.selectHide 
+		{
+			display: none;
+		}
+	}
+
+	&.wpgly-wps--error
+	{
+		.wpgly-wps--label
+		{
+			color: getColor(pallete, error);
+		}
+
+		.wpgly-wps--error-message
+		{
+			padding: 6px 8px;
+			display: inline-table;
+			font-size: 12px;
+			color: #FFF;
+			background-color: getColor(pallete, error);
+			margin: 6px 0;
+			@include border-radius(6px);
+		}
+
+		input,
+		select,
+		.wpgly-wps--select .selected,
+		textarea
+		{
+			border-color: getColor(pallete, error);
+		}
+	}
+}
+
+.wpgly-wps--submit
+{
+	display: block !important; 
+	padding: 0 !important; 
+	margin: 0 !important;
+}
+
+.wpgly-wps--input 
+{
+	line-height: 0;
+}

@@ -1,0 +1,138 @@
+@use "sass:math";
+
+$width: 475px;
+
+.wpgly-wps-toast 
+{
+	position: fixed;
+	width: 100%;
+	padding: 0px 12px;
+	max-width: $width;
+	z-index: 10000;
+}
+
+.wpgly-wps-toast-message 
+{
+	position: relative;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+	padding: 15px;
+	width: 100%;
+	color: #fff;
+	font-size: 14px;
+	transition: opacity .5s, transform .5s;
+	@include border-radius(10px);
+	// @include transition(500ms cubic-bezier(0.17, 0.67, 0.17, 0.98));
+	// @include css3-prefix(transition-property, 'opacity, transform')
+}
+
+.wpgly-wps-toast-button 
+{
+	position: absolute;
+	top: 0;
+	right: 5px;
+	padding: 2px;
+	background-color: transparent;
+	border-width: 0;
+	font-size: 1.5em;
+	color: inherit;
+	cursor: pointer;
+}
+
+.wpgly-wps-toast-button::before 
+{ content: '\d7'; }
+/**
+ * Transition
+ */
+.wpgly-wps-toast-enter-active,
+.wpgly-wps-toast-leave 
+{ opacity: 1; }
+
+.wpgly-wps-toast-enter,
+.wpgly-wps-toast-leave-active 
+{ opacity: 0; }
+
+.wpgly-wps-toast-leave-active 
+{ position: absolute; }
+
+/**
+ * Position
+ */
+.wpgly-wps-toast-position--n 
+{
+	text-align: center;
+	top: 10px;
+	left: 50%;
+	margin-left: math.div(-$width, 2);
+}
+
+.wpgly-wps-toast-position--s 
+{
+	text-align: center;
+	bottom: 10px;
+	left: 50%;
+	margin-left: math.div(-$width, 2);
+}
+
+.wpgly-wps-toast-position--ne 
+{
+	text-align: left;
+	top: 10px;
+	right: 10px;
+}
+
+.wpgly-wps-toast-position--nw 
+{
+	top: 10px;
+	left: 10px;
+}
+
+.wpgly-wps-toast-position--se 
+{
+	text-align: left;
+	bottom: 10px;
+	right: 10px;
+}
+
+.wpgly-wps-toast-position--sw 
+{
+	bottom: 10px;
+	left: 10px;
+}
+
+/**
+ * Transition with position
+ */
+.wpgly-wps-toast-position--n,
+.wpgly-wps-toast-position--ne,
+.wpgly-wps-toast-position--nw 
+{
+	.wpgly-wps-toast-enter,
+	.wpgly-wps-toast-leave-active 
+	{ transform: translateY(-20px); }
+}
+
+.wpgly-wps-toast-position--s,
+.wpgly-wps-toast-position--se,
+.wpgly-wps-toast-position--sw 
+{
+	.wpgly-wps-toast-enter 
+	{ transform: translateY(20px); }
+
+	.wpgly-wps-toast-leave-active 
+	{ transform: translateY(-100%) translateY(20px); }
+}
+/**
+ * Types
+ */
+.wpgly-wps-toast-type--info
+{ background-color: getColor(pallete,primary); }
+
+.wpgly-wps-toast-type--success 
+{ background-color: getColor(pallete,success); }
+
+.wpgly-wps-toast-type--warning
+{ background-color: getColor(pallete,warning); }
+
+.wpgly-wps-toast-type--danger 
+{ background-color: getColor(pallete,error); }

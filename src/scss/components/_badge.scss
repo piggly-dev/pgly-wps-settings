@@ -1,0 +1,43 @@
+.wpgly-wps--badge
+{
+	font-size: 12px;
+	display: inline-block;
+	padding: 6px 10px;
+	@include border-radius(6px);
+
+	&.wpgly-neutral--color
+	{ 
+		background-color: #FFF; 
+		color: #000; 
+	}
+
+	&.wpgly-success--color
+	{ 
+		background-color: #1fd64f;
+		color: #FFF;
+	}
+
+	&.wpgly-primary--color
+	{ 
+		background-color: #4e4eef;
+		color: #FFF;
+	}
+
+	&.wpgly-accent--color
+	{ 
+		background-color: #ff188d;
+		color: #FFF;
+	}
+
+	&.wpgly-warning--color
+	{ 
+		background-color: #ff5e21;
+		color: #FFF;
+	}
+
+	&.wpgly-danger--color
+	{ 
+		background-color: #e81d1d;
+		color: #FFF;
+	}
+}

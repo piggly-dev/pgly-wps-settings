@@ -1,0 +1,45 @@
+.wpgly-wps--spinner
+{
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	z-index: 2;  
+	top: 50%;
+	left: 50%;
+	margin: -14px 0 0 -14px;
+
+	& .path 
+	{
+		stroke: #FFF;
+		stroke-linecap: round;
+		animation: dash-spinner 1.5s ease-in-out infinite;
+	}
+
+	&.wpgly-black--color .path 
+	{ stroke: #000; }
+	
+	&.wpgly-white--color .path 
+	{ stroke: #FFF; }
+	
+	&.wpgly-primary--color .path 
+	{ stroke: getColor(pallete, primary); }
+	
+	&.wpgly-accent--color .path 
+	{ stroke: getColor(pallete, accent); }
+}
+
+@keyframes dash-spinner {
+	0% {
+		stroke-dasharray: 1, 150;
+		stroke-dashoffset: 0;
+	}
+	50% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -35;
+	}
+	100% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -124;
+	}
+}
+ 

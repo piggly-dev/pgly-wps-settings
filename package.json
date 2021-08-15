@@ -1,0 +1,52 @@
+{
+	"name": "pgly-wps-settings",
+	"version": "0.0.1",
+	"description": "A CSS/JS webkit to Wordpress settings plugins.",
+	"main": "index.js",
+	"scripts": {
+		"ts:check": "tsc --noEmit",
+		"ts:check-watch": "npm run ts:check -- --watch",
+		"ts:build": "tsc --emitDeclarationOnly",
+		"js:prod": "webpack --mode=production --config config/webpack.prod.js",
+		"js:build": "npm run ts:build && npm run js:prod",
+		"js:start": "webpack serve --mode development --config config/webpack.dev.js --hot",
+		"css:build": "npm run css:build-sass && npm run css:build-autoprefix && npm run css:build-cleancss",
+		"css:build-autoprefix": "postcss --use autoprefixer --map false --output dist/css/pgly-wps-settings.css dist/css/pgly-wps-settings.css",
+		"css:build-cleancss": "cleancss -o dist/css/pgly-wps-settings.min.css dist/css/pgly-wps-settings.css",
+		"css:build-sass": "sass --style expanded src/scss/global.scss dist/css/pgly-wps-settings.css",
+		"css:clean": "rimraf css",
+		"css:deploy": "npm run css:clean && npm run css:build",
+		"css:start": "npm run css:build-sass -- --watch"
+	},
+	"author": {
+		"name" : "Caique Araujo",
+		"email" : "caique@piggly.com.br",
+		"url" : "https://github.com/caiquearaujo"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/cli": "^7.14.8",
+		"@babel/core": "^7.15.0",
+		"@babel/plugin-proposal-class-properties": "^7.14.5",
+		"@babel/plugin-proposal-object-rest-spread": "^7.14.7",
+		"@babel/preset-env": "^7.15.0",
+		"@babel/preset-typescript": "^7.15.0",
+		"@babel/register": "^7.15.3",
+		"autoprefixer": "^9.8.6",
+		"babel-loader": "^8.2.2",
+		"clean-css-cli": "^5.3.3",
+		"clean-webpack-plugin": "*",
+		"fork-ts-checker-webpack-plugin": "^6.3.2",
+		"html-webpack-plugin": "^5.3.2",
+		"postcss-cli": "^8.3.1",
+		"postcss-preset-env": "^6.7.0",
+		"rimraf": "^2.7.1",
+		"sass": "^1.37.5",
+		"typescript": "^4.3.5",
+		"webpack": "^5.50.0",
+		"webpack-cli": "^4.7.2",
+		"webpack-dev-server": "^3.11.2",
+		"webpack-fix-style-only-entries": "^0.6.1",
+		"webpack-merge": "^5.8.0"
+	}
+}

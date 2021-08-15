@@ -1,0 +1,49 @@
+{
+	"compilerOptions": {
+		// "target": "es2015",
+		// "module": "es2015",
+		"declaration": true,
+		"declarationDir": "dist/types",
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"esModuleInterop": true,
+		"noImplicitReturns": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"target": "ESNext",
+		"module": "umd",
+		"lib": [
+			"ES2015",
+			"ES2016",
+			"ES2017",
+			"ES2018",
+			"ES2019",
+			"ES2020",
+			"ESNext",
+			"dom"
+		],
+		// "noEmit": true,
+		"sourceMap": true,
+		// "strict": true,
+		// "noImplicitAny": true,
+		"strictNullChecks": true,
+		"moduleResolution": "node",
+		"forceConsistentCasingInFileNames": true,
+		// "esModuleInterop": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"src/js/*",
+			],
+		},
+	},
+	"include": [
+	  "src/js/**/*"
+, "debug/index.js"	],
+	"exclude": [
+	  "node_modules",
+	  "dist"
+	]
+}

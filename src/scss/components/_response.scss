@@ -1,0 +1,32 @@
+.wpgly-wps--response
+{
+	display: table;
+	width: 100%;
+	margin: 8px auto;
+
+	.item
+	{
+		display: table;
+		width: 100%;
+		padding: 12px;
+		@include border-radius(6px);
+		color: #FFF;
+		position: relative;
+		margin: 8px auto;
+
+		&:last-child
+		{ margin-bottom: 0; }
+	}
+
+	.type--info
+	{ background-color: getColor(pallete,primary); }
+
+	.type--success 
+	{ background-color: getColor(pallete,success); }
+
+	.type--warning
+	{ background-color: getColor(pallete,warning); }
+
+	.type--danger 
+	{ background-color: getColor(pallete,error); }
+}

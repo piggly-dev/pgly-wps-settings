@@ -1,0 +1,1 @@
+(()=>{var e=document.createElement("h1");e.textContent="Interesting!";var t=document.querySelector("#root");t&&t.append(e)})();

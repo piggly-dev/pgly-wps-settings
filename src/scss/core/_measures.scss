@@ -1,0 +1,80 @@
+/**
+	Layout measures.
+	@autor Caique M Araujo <caique@studiopiggly.com.br>
+	@version 1.0.0
+*/
+
+$measures:
+(
+	xxx-small: 3px,
+	xx-small: 6px,
+	x-small: 12px,
+	small: 14px,
+	regular: 18px,
+	medium: 24px,
+	x-medium: 36px,
+	large: 48px,
+	x-large: 60px,
+	xx-large: 72px,
+	xxx-large: 150px
+);
+
+/* Obtém as variáveis de medidas. */
+@function getMeasure ( $measure )
+{  
+	@if map-has-key ( $measures, $measure )
+	{ @return map-get( $measures, $measure ); }
+	
+	@warn "Variável `#{$key}` desconhecida em $measures.";
+	@return null;
+}
+
+
+/** Generate the helper classes **/
+@mixin genMeasures
+{    
+	@each $size, $value in $measures
+	{
+		.wpgly-wps-m--mt--#{$size}
+		{ margin-top: #{$value}; }
+		
+		.wpgly-wps-m--mb--#{$size}
+		{ margin-bottom: #{$value}; }
+		
+		.wpgly-wps-m--my--#{$size}
+		{ margin-top: #{$value}; margin-bottom: #{$value}; }
+
+		.wpgly-wps-m--ml--#{$size}
+		{ margin-left: #{$value}; }
+		
+		.wpgly-wps-m--mr--#{$size}
+		{ margin-right: #{$value}; }
+		
+		.wpgly-wps-m--mx--#{$size}
+		{ margin-left: #{$value}; margin-right: #{$value}; }
+		
+		.wpgly-wps-m--ma--#{$size}
+		{ margin-top: #{$value}; margin-bottom: #{$value}; margin-left: #{$value}; margin-right: #{$value}; }
+	
+		.wpgly-wps-m--pt--#{$size}
+		{ padding-top: #{$value}; }
+		
+		.wpgly-wps-m--pb--#{$size}
+		{ padding-bottom: #{$value}; }
+		
+		.wpgly-wps-m--py--#{$size}
+		{ padding-top: #{$value}; padding-bottom: #{$value}; }
+
+		.wpgly-wps-m--pl--#{$size}
+		{ padding-left: #{$value}; }
+		
+		.wpgly-wps-m--pr--#{$size}
+		{ padding-right: #{$value}; }
+		
+		.wpgly-wps-m--px--#{$size}
+		{ padding-left: #{$value}; padding-right: #{$value}; }
+		
+		.wpgly-wps-m--pa--#{$size}
+		{ padding-top: #{$value}; padding-bottom: #{$value}; padding-left: #{$value}; padding-right: #{$value}; }
+	}
+}

@@ -1,0 +1,12 @@
+.wpgly-wps--card
+{
+	width: 100%;
+	padding: 16px;
+	background-color: #FFF;
+	margin-bottom: 12px;
+	@include box-shadow(0, 8px, 16px, rgba(152, 152, 173, 0.60));
+	@include border-radius(12px);
+
+	&:last-child
+	{ margin-bottom: 0; }
+}

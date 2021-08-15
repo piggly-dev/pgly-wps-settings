@@ -1,0 +1,239 @@
+.wp-list-table
+{
+	margin: 18px 0;
+	padding: 0;
+	@include border-radius(6px);
+	overflow: hidden !important;
+	border: none !important;
+	@include css3-prefix(box-shadow, none);
+	background: #FFF !important;
+
+	tbody
+	{
+		tr:nth-child(odd)
+		{ background-color: #f6f7f7 !important; }
+	}
+
+	thead, tfoot
+	{
+		th
+		{ 
+			font-weight: bold !important;
+			color: #FFF !important; 
+			background-color: #252329;
+			font-size: 13px;
+
+			a
+			{
+				line-height: 1 !important;
+				padding: 12px !important;
+				color: getColor(pallete,accent) !important;
+			}
+		}
+	}
+
+	tr
+	{
+		border: none !important;
+		display: flex !important;
+		flex-wrap: wrap !important;
+		overflow: hidden !important;
+		background: #FFF !important;
+
+		td, th
+		{
+			border: none !important;
+			line-height: 1.5 !important;
+			box-sizing: border-box;
+			flex-grow: 1;
+			padding: 12px;
+			overflow: hidden !important;
+			color: #000;
+
+			strong
+			{ font-weight: bold; }
+			
+			.line
+			{ 
+				display: block; 
+				margin-bottom: 5px;
+
+				&:last-child
+				{ margin-bottom: 0; }
+			}
+
+			&.wpgly-wps--cell-1 
+			{
+				width: calc(100% / 12);
+			}
+
+			&.wpgly-wps--cell-2 
+			{
+				width: calc(100% / 12 * 2);
+			}
+
+			&.wpgly-wps--cell-3 
+			{
+				width: calc(100% / 12 * 3);
+			}
+
+			&.wpgly-wps--cell-4 
+			{
+				width: calc(100% / 12 * 4);
+			}
+
+			&.wpgly-wps--cell-5 
+			{
+				width: calc(100% / 12 * 5);
+			}
+
+			&.wpgly-wps--cell-6 
+			{
+				width: calc(100% / 2);
+			}
+
+			&.wpgly-wps--cell-7 
+			{
+				width: calc(100% / 12 * 7);
+			}
+
+			&.wpgly-wps--cell-8 
+			{
+				width: calc(100% / 12 * 8);
+			}
+
+			&.wpgly-wps--cell-9 
+			{
+				width: calc(100% / 12 * 9);
+			}
+
+			&.wpgly-wps--cell-10 
+			{
+				width: calc(100% / 12 * 10);
+			}
+
+			&.wpgly-wps--cell-11 
+			{
+				width: calc(100% / 12 * 11);
+			}
+
+			&.wpgly-wps--cell-12 
+			{
+				width: 100%;
+			}
+		}
+	}
+}
+
+.tablenav .tablenav-pages .button .screen-reader-text
+{
+	display: none;
+}
+
+.wpgly-wps--table
+{
+	margin: 18px 0;
+	padding: 0;
+	@include border-radius(6px);
+	overflow: hidden;
+
+	& > .wpgly-wps--row:nth-child(odd)
+	{
+		background-color: #f6f7f7;
+	}
+
+	& .wpgly-wps--row
+	{
+		display: flex;
+		flex-wrap: wrap;
+		overflow: hidden;
+		background: #FFF;
+
+		&:first-of-type
+		{
+			font-weight: bold;
+			color: #FFF;
+			background-color: #252329;
+		}
+
+		& .wpgly-wps--cell
+		{
+			box-sizing: border-box;
+			flex-grow: 1;
+			padding: 12px;
+			overflow: hidden;
+
+			strong
+			{ font-weight: bold; }
+			
+			span
+			{ 
+				display: block; 
+				margin-bottom: 5px;
+
+				&:last-child
+				{ margin-bottom: 0; }
+			}
+
+			&.wpgly-wps--cell-1 
+			{
+				width: calc(100% / 12);
+			}
+
+			&.wpgly-wps--cell-2 
+			{
+				width: calc(100% / 12 * 2);
+			}
+
+			&.wpgly-wps--cell-3 
+			{
+				width: calc(100% / 12 * 3);
+			}
+
+			&.wpgly-wps--cell-4 
+			{
+				width: calc(100% / 12 * 4);
+			}
+
+			&.wpgly-wps--cell-5 
+			{
+				width: calc(100% / 12 * 5);
+			}
+
+			&.wpgly-wps--cell-6 
+			{
+				width: calc(100% / 2);
+			}
+
+			&.wpgly-wps--cell-7 
+			{
+				width: calc(100% / 12 * 7);
+			}
+
+			&.wpgly-wps--cell-8 
+			{
+				width: calc(100% / 12 * 8);
+			}
+
+			&.wpgly-wps--cell-9 
+			{
+				width: calc(100% / 12 * 9);
+			}
+
+			&.wpgly-wps--cell-10 
+			{
+				width: calc(100% / 12 * 10);
+			}
+
+			&.wpgly-wps--cell-11 
+			{
+				width: calc(100% / 12 * 11);
+			}
+
+			&.wpgly-wps--cell-12 
+			{
+				width: 100%;
+			}
+		}
+	}
+}
