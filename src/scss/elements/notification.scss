@@ -1,0 +1,73 @@
+$notification-background-color: $grey-lightest !default;
+$notification-code-background-color: $scheme-main !default;
+$notification-radius: $radius !default;
+$notification-padding: 18px 32px 18px 24px !default;
+$notification-colors: $colors !default;
+
+.pgly-wps--settings
+{
+	.pgly-wps--notification
+	{
+		background-color: $notification-background-color;
+		border-radius: $notification-radius;
+		font-size: 14px;
+		line-height: 1.5;
+		margin: 8px auto;
+		position: relative;
+		padding: $notification-padding;
+
+		a:not(.pgly-wps--button)
+		{
+			color: currentColor;
+			text-decoration: underline;
+		}
+
+		strong
+		{ 
+			color: currentColor; 
+		}
+
+		code,
+		pre
+		{ background: $notification-code-background-color; }
+
+		pre code
+		{ background: transparent }
+
+		& > .pgly-wps--delete 
+		{
+			@include ltr-position(0.5rem);
+			position: absolute;
+			top: 0.5rem;
+		}
+
+		.pgly-wps--title,
+		.pgly-wps--subtitle,
+		.pgly-wps--content
+		{ color: currentColor; }
+
+		@each $name, $pair in $notification-colors 
+		{
+			$color: nth($pair, 1);
+			$color-invert: nth($pair, 2);
+
+			&.pgly-wps-is-#{$name}
+			{
+				background-color: $color;
+				color: $color-invert;
+
+				@if ( length($pair) > 3 )
+				{
+					$color-light: nth($pair, 3);
+					$color-dark: nth($pair, 4);
+
+					&.pgly-wps-is-light
+					{
+						background-color: $color-light;
+						color: $color-dark;
+					}
+				}
+			}
+		}
+	}
+}

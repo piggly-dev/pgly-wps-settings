@@ -1,0 +1,87 @@
+
+$title-color: $text !default;
+$title-size: $size-3 !default;
+$title-weight: $weight-semibold !default;
+$title-line-height: 1.125 !default;
+$title-strong-color: $text-strong !default;
+$title-strong-weight: $weight-bold !default;
+
+$subtitle-color: $text-light !default;
+$subtitle-size: $size-5 !default;
+$subtitle-weight: $weight-normal !default;
+$subtitle-line-height: 1.25 !default;
+$subtitle-strong-color: $text-strong !default;
+$subtitle-strong-weight: $weight-bold !default;
+$subtitle-negative-margin: -$size-8 !default;
+
+%title-block
+{
+	&:not(:last-child)
+   { margin-bottom: 12px; }
+}
+
+.pgly-wps--settings
+{
+	.pgly-wps--title,
+	.pgly-wps--subtitle
+	{
+		position: relative;
+		@extend %title-block;
+
+		em, span
+		{ font-weight: inherit; }
+
+		.pgly-wps--badge
+		{ vertical-align: middle; }
+	}
+
+	.pgly-wps--title
+	{
+		color: $title-color;
+		font-size: $title-size;
+		font-weight: $title-weight;
+		line-height: $title-line-height;
+
+		strong
+		{
+			color: $title-strong-color;
+			font-weight: $title-strong-weight;
+		}
+
+		&:not(.pgly-wps-is-spaced) + .pgly-wps--subtitle
+		{ margin-top: $subtitle-negative-margin; }
+
+		@each $size in $sizes
+		{
+			$i: index($sizes, $size);
+
+			&.pgly-wps-is-#{$i}
+			{ font-size: $size; }
+		}
+	}
+
+	.pgly-wps--subtitle
+	{
+		color: $subtitle-color;
+		font-size: $subtitle-size;
+		font-weight: $subtitle-weight;
+		line-height: $subtitle-line-height;
+
+		strong
+		{
+			color: $subtitle-strong-color;
+			font-weight: $subtitle-strong-weight;
+		}
+
+		&:not(.pgly-wps-is-spaced) + .pgly-wps--title
+		{ margin-top: $subtitle-negative-margin; }
+
+		@each $size in $sizes
+		{
+			$i: index($sizes, $size);
+
+			&.pgly-wps-is-#{$i}
+			{ font-size: $size; }
+		}
+	}
+}

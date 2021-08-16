@@ -1,0 +1,157 @@
+@use "sass:math";
+
+$toaster-max-width: 475px;
+$toaster-colors: $colors !default;
+
+.pgly-wps--settings
+{
+	.pgly-wps--toaster
+	{
+		max-width: $toaster-max-width;
+		padding: 12px;
+		position: fixed;
+		width: 100%;
+		z-index: 99999;
+
+		// Position
+		&.pgly-wps-in-n 
+		{
+			text-align: center;
+			top: 10px;
+			left: 50%;
+			margin-left: math.div(-$toaster-max-width, 2);
+		}
+		
+		&.pgly-wps-in-s 
+		{
+			text-align: center;
+			bottom: 10px;
+			left: 50%;
+			margin-left: math.div(-$toaster-max-width, 2);
+		}
+		
+		&.pgly-wps-in-ne 
+		{
+			text-align: left;
+			top: 10px;
+			right: 10px;
+		}
+		
+		&.pgly-wps-in-nw 
+		{
+			top: 10px;
+			left: 10px;
+		}
+		
+		&.pgly-wps-in-se 
+		{
+			text-align: left;
+			bottom: 10px;
+			right: 10px;
+		}
+		
+		&.pgly-wps-in-sw 
+		{
+			bottom: 10px;
+			left: 10px;
+		}
+
+		// Transitions
+		.pgly-wps--toast-enter-active,
+		.pgly-wps--toast-leave 
+		{ opacity: 1; }
+
+		.pgly-wps--toast-enter,
+		.pgly-wps--toast-leave-active 
+		{ opacity: 0; }
+
+		.pgly-wps--toast-leave-active 
+		{ position: absolute; }
+ 
+		.pgly-wps-in-n,
+		.pgly-wps-in-ne,
+		.pgly-wps-in-nw 
+		{
+			.pgly-wps--toast-enter,
+			.pgly-wps--toast-leave-active 
+			{ transform: translateY(-20px); }
+		}
+
+		.pgly-wps-in-s,
+		.pgly-wps-in-se,
+		.pgly-wps-in-sw 
+		{
+			.pgly-wps--toast-enter 
+			{ transform: translateY(20px); }
+
+			.pgly-wps--toast-leave-active 
+			{ transform: translateY(-100%) translateY(20px); }
+		}
+
+		.pgly-wps--toast
+		{
+			background-color: $grey-lighter;
+			border-radius: $radius-small;
+			font-size: 14px;
+			line-height: 1.5;
+			margin: 6px auto;
+			position: relative;
+			padding: 12px 32px 12px 12px;
+			transition: opacity .5s, transform .5s;
+			
+			a:not(.pgly-wps--button)
+			{
+				color: currentColor;
+				text-decoration: underline;
+			}
+
+			strong
+			{ 
+				color: currentColor; 
+			}
+
+			code,
+			pre
+			{ background: $white; }
+
+			pre code
+			{ background: transparent }
+
+			& > .pgly-wps--delete 
+			{
+				@include ltr-position(0.5rem);
+				position: absolute;
+				top: 0.5rem;
+			}
+
+			.pgly-wps--title,
+			.pgly-wps--subtitle,
+			.pgly-wps--content
+			{ color: currentColor; }
+
+			@each $name, $pair in $toaster-colors 
+			{
+				$color: nth($pair, 1);
+				$color-invert: nth($pair, 2);
+
+				&.pgly-wps-is-#{$name}
+				{
+					background-color: $color;
+					color: $color-invert;
+
+					@if ( length($pair) > 3 )
+					{
+						$color-light: nth($pair, 3);
+						$color-dark: nth($pair, 4);
+
+						&.pgly-wps-is-light
+						{
+							background-color: $color-light;
+							color: $color-dark;
+						}
+					}
+				}
+			}
+		}
+	}
+}

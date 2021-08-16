@@ -1,0 +1,29 @@
+
+.pgly-wps--settings
+{
+	.pgly-wps--space
+	{ margin: 20px 0; }
+
+	.pgly-wps--wrapper
+	{
+		margin: 20px 0;
+		padding: 0 20px;
+		border: 1px solid $grey-light;
+		border-radius: $radius-large;
+	}
+
+	.pgly-align--left
+	{
+		text-align: left;
+	}
+
+	.pgly-align--right
+	{
+		text-align: right;
+	}
+
+	.pgly-align--center
+	{
+		text-align: center;
+	}
+}
