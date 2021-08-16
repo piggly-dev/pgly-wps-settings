@@ -1,26 +1,33 @@
-/** Importing Core **/ 
-@import 'core/mixins';  
-@import 'core/colors';  
-@import 'core/typo';  
-@import 'core/measures';  
+@charset "utf-8";
 
-/** Global **/
-@import 'base/reset';
-@import 'base/core';
-@import 'base/grid';
-@import 'global/helpers';
+/*! MIT License | github.com/piggly-dev/pgly-wps-settings */
+@import "core/_all";
+@import "base/_all";
+@import "components/_all";
+@import "elements/_all";
+
+// /** Importing Core **/ 
+// @import 'core/mixins';  
+// @import 'core/colors';  
+// @import 'core/typo';  
+// @import 'core/measures';  
+
+// /** Global **/
+// @import 'base/reset';
+// @import 'base/grid';
+// @import 'global/helpers';
  
-/** Components **/
-@import 'components/actions';
-@import 'components/badge';
-@import 'components/button';
-@import 'components/cards';
-@import 'components/data';
-@import 'components/fields';
-@import 'components/logger';
-@import 'components/notice';
-@import 'components/response';
-@import 'components/spinner';
-@import 'components/table';
-@import 'components/tabs';
-@import 'components/toast';
+// /** Components **/
+// @import 'components/actions';
+// @import 'components/badge';
+// @import 'components/button';
+// @import 'components/cards';
+// @import 'components/data';
+// @import 'components/fields';
+// @import 'components/logger';
+// @import 'components/notice';
+// @import 'components/response';
+// @import 'components/spinner';
+// @import 'components/table';
+// @import 'components/tabs';
+// @import 'components/toast';

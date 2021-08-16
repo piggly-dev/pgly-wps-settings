@@ -1,0 +1,71 @@
+.pgly-wps--settings
+{
+	.pgly-wps--spinner
+	{
+		width: 28px;
+		height: 28px;
+		margin-right: 6px;
+		
+		&:last-child
+		{ margin-right: 0; }
+
+		& .path 
+		{
+			stroke: $primary;
+			stroke-linecap: round;
+			animation: dash-spinner 1.5s ease-in-out infinite;
+		}
+
+		&.pgly-wps-is-absolute
+		{
+			position: absolute;
+			z-index: 2;  
+			top: 50%;
+			left: 50%;
+			margin: -14px 0 0 -14px;
+		}
+
+		&.pgly-wps-is-black .path 
+		{ stroke: $black; }
+		
+		&.pgly-wps-is-white .path 
+		{ stroke: $white; }
+		
+		&.pgly-wps-is-primary .path 
+		{ stroke: $primary; }
+		
+		&.pgly-wps-is-accent .path 
+		{ stroke: $accent; }
+		
+		&.pgly-wps-is-success .path 
+		{ stroke: $success; }
+		
+		&.pgly-wps-is-info .path 
+		{ stroke: $info; }
+		
+		&.pgly-wps-is-warning .path 
+		{ stroke: $warning; }
+		
+		&.pgly-wps-is-danger .path 
+		{ stroke: $danger; }
+	}
+}
+
+@keyframes dash-spinner 
+{
+	0% {
+		stroke-dasharray: 1, 150;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -35;
+	}
+
+	100% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -124;
+	}
+}
+ 
