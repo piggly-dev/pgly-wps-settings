@@ -1,0 +1,144 @@
+$explorer-background-color: $grey-lightest !default;
+$explorer-colors: $colors !default;
+
+.pgly-wps--settings
+{
+	.pgly-wps--explorer
+	{
+		background-color: $explorer-background-color;
+		border-radius: $radius-small;
+		font-size: 14px;
+		line-height: 1;
+		margin-bottom: 8px;
+		position: relative;
+		padding: 24px;
+		
+		&:last-child
+		{ margin-bottom: 0; }
+
+		&.pgly-loading--state
+		{ color: transparent !important; }
+
+		.pgly-wps--tooltip
+		{
+			position: absolute;
+			right: 24px;
+			top: 24px;
+			width: 24px;
+			height: 24px;
+			z-index: 5;
+		
+			.pgly-wps--info
+			{
+				width: 24px;
+				height: 24px;
+			}
+
+			.pgly-wps--data
+			{
+				display: none;
+				position: absolute;
+				width: 240px;
+				right: 0;
+				top: 28px;
+				color: $white;
+				background: $black;
+				font-size: 12px;
+				padding: 8px;
+				z-index: 5;
+				border-radius: $radius-small;
+			}
+
+			&:hover
+			{
+				.pgly-wps--data
+				{ display: table; }
+			}
+		}
+
+		strong
+		{
+			font-weight: $weight-bold;
+			text-transform: uppercase;
+			font-size: $size-small;
+			display: block;
+		}
+
+		span
+		{
+			font-size: $size-4;
+			word-break: break-word;
+			display: block;
+		}
+
+		&.pgly-wps-is-compact
+		{
+			padding: 8px;
+			
+			.pgly-wps--tooltip
+			{
+				right: 12px;
+				top: 12px;
+				width: 18px;
+				height: 18px;
+			
+				.pgly-wps--info
+				{
+					width: 18px;
+					height: 18px;
+				}
+
+				.pgly-wps--data
+				{
+					right: 24px;
+					top: -5px;
+				}
+
+				&:hover
+				{
+					.pgly-wps--data
+					{ display: table; }
+				}
+			}
+
+			strong
+			{
+				font-size: 11px;
+				display: block;
+			}
+	
+			span
+			{ font-size: 15px; }
+		}
+
+		&.pgly-wps-is-transparent
+		{
+			background-color: transparent;
+			color: $black;
+		}
+
+		@each $name, $pair in $explorer-colors 
+		{
+			$color: nth($pair, 1);
+			$color-invert: nth($pair, 2);
+
+			&.pgly-wps-is-#{$name}
+			{
+				background-color: $color;
+				color: $color-invert;
+
+				@if ( length($pair) > 3 )
+				{
+					$color-light: nth($pair, 3);
+					$color-dark: nth($pair, 4);
+
+					&.pgly-wps-is-light
+					{
+						background-color: $color-light;
+						color: $color-dark;
+					}
+				}
+			}
+		}
+	}
+}

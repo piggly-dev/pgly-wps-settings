@@ -1,0 +1,27 @@
+#pgly-wps-plugin,
+.pgly-wps--settings
+{
+	display: table;
+	font-family: $family-primary;
+	position: relative;
+	margin: 0 auto;
+	max-width: 100%;
+	width: 100%;
+}
+
+.pgly-wps--settings
+{	
+	*, *:before, *:after
+	{
+		border: none;
+		box-sizing: border-box;
+		font-family: $family-primary;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		outline: none;
+		-webkit-font-smoothing: antialiased;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
+	}
+}

@@ -1,0 +1,50 @@
+@use "sass:math";
+
+$max-columns: 12;
+$min-grid-size: 768px;
+$column-padding: 8px;
+
+.pgly-wps--settings
+{
+	.pgly-wps--row
+	{
+		display: flex;
+		flex-wrap: wrap;
+
+		.pgly-wps--column 
+		{
+			flex-grow: 1;
+			flex-shrink: 1;
+			flex-basis: 1;
+			padding: $column-padding;
+		
+			&:first-child
+			{ padding-left: 0; }
+		
+			&:last-child
+			{ padding-right: 0; }
+
+			@for $i from 1 through $max-columns 
+			{
+				&.pgly-wps-col--#{$i}
+				{ max-width: calc(100% / #{$max-columns} * #{$i}); }
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $min-grid-size) 
+{
+	.pgly-wps--settings
+	{
+		.pgly-wps--row
+		{
+			.pgly-wps--column
+			{
+				min-width: 100%;
+				width: 100%;
+				padding: math.div($column-padding, 2) !important;
+			}
+		}
+	}
+}

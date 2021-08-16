@@ -19,9 +19,9 @@
 		"css:start": "npm run css:build-sass -- --watch"
 	},
 	"author": {
-		"name" : "Caique Araujo",
-		"email" : "caique@piggly.com.br",
-		"url" : "https://github.com/caiquearaujo"
+		"name": "Caique Araujo",
+		"email": "caique@piggly.com.br",
+		"url": "https://github.com/caiquearaujo"
 	},
 	"license": "MIT",
 	"devDependencies": {
@@ -48,5 +48,11 @@
 		"webpack-dev-server": "^3.11.2",
 		"webpack-fix-style-only-entries": "^0.6.1",
 		"webpack-merge": "^5.8.0"
+	},
+	"dependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/node": "^16.6.1",
+		"axios": "^0.21.1",
+		"qs": "^6.7.0"
 	}
 }

@@ -1,0 +1,227 @@
+$badges-margin: 6px;
+
+$badge-background-color: $background !default;
+$badge-color: $text !default;
+$badge-radius: $radius !default;
+$badge-delete-margin: 1px !default;
+$badge-height: 24px;
+$badge-padding: 6px;
+
+$badge-colors: $colors !default;
+
+.pgly-wps--settings
+{
+	.pgly-wps--badges
+	{
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+
+		.pgly-wps--badge
+		{
+			margin-bottom: $badges-margin;
+
+			&:not(:first-child)
+			{ @include ltr-property('margin', $badges-margin); }
+		}
+
+		&:last-child
+		{ margin-bottom: -$badges-margin; }
+
+		&:not(:last-child)
+		{ margin-bottom: $badges-margin * 2; }
+
+		&.pgly-wps-are-medium
+		{
+			.pgly-wps--badge:not(.pgly-wps-is-normal):not(.pgly-wps-is-large)
+			{ font-size: $size-normal; }
+		}
+
+		&.pgly-wps-are-large
+		{
+			.pgly-wps--badge:not(.pgly-wps-is-normal):not(.pgly-wps-is-medium)
+			{ font-size: $size-medium; }
+		}
+
+		&.pgly-wps-is-centered
+		{
+			justify-content: center;
+
+			.pgly-wps--badge
+			{
+				margin-right: 3px;
+				margin-left: 3px;
+			}
+		}
+
+		&.pgly-wps-is-right
+		{
+			justify-content: flex-end;
+
+			.pgly-wps--badge
+			{
+				&:not(:first-child)
+				{ margin-left: 5px; }
+
+				&:not(:last-child)
+				{ margin-right: 0; }
+			}
+		}
+
+		&.pgly-wps-has-addons
+		{
+			.pgly-wps--badge
+			{
+				@include ltr-property('margin', 0);
+
+				&:not(:first-child)
+				{
+					@include ltr-property('margin', 0, false);
+					border-top-left-radius: 0;
+          		border-bottom-left-radius: 0;
+				}
+
+				&:not(:last-child)
+				{
+					@include ltr-property('margin', 0, false);
+					border-top-right-radius: 0;
+          		border-bottom-right-radius: 0;
+				}
+			}
+		}
+	}
+
+	.pgly-wps--badge
+	{
+		align-items: center;
+		background-color: $badge-background-color;
+		border-radius: $badge-radius;
+		color: $badge-color;
+		display: inline-flex;
+		font-size: $size-small;
+		height: $badge-height;
+		justify-content: center;
+		line-height: 1.5;
+		padding-left: $badge-padding;
+		padding-right: $badge-padding;
+		white-space: nowrap;
+
+		.pgly-wps--delete
+		{
+			@include ltr-property('margin', 5px, false);
+			@include ltr-property('margin', 6px);
+		}
+
+		// Colors
+		@each $name, $pair in $badge-colors 
+		{
+			$color: nth($pair, 1);
+			$color-invert: nth($pair, 2);
+
+			&.pgly-wps-is-#{$name}
+			{
+				background-color: $color;
+				color: $color-invert;
+
+				@if ( length($pair) > 3 )
+				{
+					$color-light: nth($pair, 3);
+					$color-dark: nth($pair, 4);
+
+					&.pgly-wps-is-light
+					{
+						background-color: $color-light;
+						color: $color-dark;
+					}
+				}
+			}
+		}
+
+		// Sizes
+		&.pgly-wps-is-normal
+		{ font-size: $size-small; }
+
+		&.pgly-wps-is-medium
+		{ font-size: $size-normal; }
+
+		&.pgly-wps-is-large
+		{ font-size: $size-medium; }
+
+		// Elements
+		.pgly-wps--icon
+		{
+			&:first-child:not(:last-child)
+			{
+				@include ltr-property('margin', -6px, false);
+				@include ltr-property('margin', 4px);
+			}
+
+			&:last-child:not(:first-child)
+			{
+				@include ltr-property('margin', 4px, false);
+				@include ltr-property('margin', -6px);
+			}
+
+			&:first-child:last-child
+			{
+				@include ltr-property('margin', -6px, false);
+				@include ltr-property('margin', -6px);
+			}
+		}
+
+		// Modifiers
+		&.pgly-wps-is-delete
+		{
+			@include ltr-property('margin', $badge-delete-margin, false);
+			padding: 0;
+			position: relative;
+			width: $badge-height;
+
+			&::before,
+			&::after
+			{
+				background-color: currentColor;
+				content: '';
+				display: block;
+				left: 50%;
+				position: absolute;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%) rotate(45deg);
+				transform-origin: center center;
+			}
+
+			&::before
+			{
+				height: 1px;
+				width: 50%;
+			}
+
+			&::after
+			{
+				height: 50%;
+				width: 1px;
+			}
+
+			&:hover,
+			&:focus
+			{
+				background-color: darken($badge-background-color, 5%);
+			}
+
+			&:active
+			{
+				background-color: darken($badge-background-color, 10%);
+			}
+		}
+
+		&.pgly-wps-is-rounded
+		{ border-radius: $radius-rounded; }
+	}
+
+	a.pgly-wps--badge
+	{
+		&:hover
+		{ text-decoration: underline; }
+	}
+}
