@@ -32,6 +32,7 @@ $item-colors: $colors !default;
 			padding: 12px 16px;
 			text-decoration: none;
 			white-space: nowrap;
+			transition: color .2s, background-color .2s;
 
 			&.pgly-wps-is-selected
 			{
