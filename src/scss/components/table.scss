@@ -78,19 +78,19 @@
 		display: none;
 	}
 
-	.wpgly-wps--table
+	.pgly-wps--table
 	{
 		border-radius: $radius-small;
 		margin: 18px 0;
 		padding: 0;
 		overflow: hidden;
 
-		& > .wpgly-wps--row:nth-child(odd)
+		& > .pgly-wps--row:nth-child(odd)
 		{
 			background-color: $grey-lightest;
 		}
 
-		& .wpgly-wps--row
+		& .pgly-wps--row
 		{
 			display: flex;
 			flex-wrap: wrap;
@@ -104,7 +104,7 @@
 				background-color: $black-ter;
 			}
 
-			& .wpgly-wps--cell
+			& .pgly-wps--cell
 			{
 				box-sizing: border-box;
 				flex-grow: 1;
