@@ -283,6 +283,9 @@
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected.open {
   border-bottom: unset;
   border-radius: 6px 6px 0px 0px;
+  border-right: 2px solid #ff1a8c;
+  border-left: 2px solid #ff1a8c;
+  border-top: 2px solid #ff1a8c;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected.open svg {
   -webkit-transform: rotate(180deg);
@@ -396,6 +399,9 @@
   padding: 12px 16px;
   text-decoration: none;
   white-space: nowrap;
+  -webkit-transition: color 0.2s, background-color 0.2s;
+  -o-transition: color 0.2s, background-color 0.2s;
+  transition: color 0.2s, background-color 0.2s;
 }
 .pgly-wps--settings .pgly-wps--navigator .pgly-wps--item.pgly-wps-is-selected {
   color: white;
@@ -876,8 +882,8 @@
   white-space: nowrap;
 }
 .pgly-wps--settings .pgly-wps--badge .pgly-wps--delete {
-  margin-left: 5px;
-  margin-right: 6px;
+  margin-left: 6px;
+  margin-right: 0;
 }
 .pgly-wps--settings .pgly-wps--badge.pgly-wps-is-white {
   background-color: white;
@@ -1013,6 +1019,201 @@
   text-decoration: underline;
 }
 
+.pgly-wps--settings .pgly-wps--icon-button {
+  border: none;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+  cursor: pointer;
+  font-weight: 700;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
+  -o-transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
+  background-color: white;
+  color: #0a0a0a;
+  display: inline-block;
+  margin-bottom: 6px;
+  margin-right: 6px;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+.pgly-wps--settings .pgly-wps--icon-button:disabled, .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-disabled {
+  cursor: default;
+  pointer-events: none;
+  color: #6e6e87;
+  background-color: transparent;
+}
+.pgly-wps--settings .pgly-wps--icon-button:disabled:hover, .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-disabled:hover {
+  background-color: transparent;
+}
+.pgly-wps--settings .pgly-wps--icon-button:last-child {
+  margin-right: 0;
+}
+.pgly-wps--settings .pgly-wps--icon-button i::before {
+  font-family: inherit;
+}
+.pgly-wps--settings .pgly-wps--icon-button .pgly-wps--spinner {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+}
+.pgly-wps--settings .pgly-wps--icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-small {
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 12px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-small .pgly-wps--spinner {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-small svg {
+  width: 12px;
+  height: 12px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-medium {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 18px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-medium .pgly-wps--spinner {
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-medium svg {
+  width: 18px;
+  height: 18px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-large {
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  font-size: 24px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-large .pgly-wps--spinner {
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-large svg {
+  width: 24px;
+  height: 24px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact {
+  background-color: transparent !important;
+  display: inline-block;
+  color: #0a0a0a;
+  margin-bottom: 6px;
+  margin-right: 6px;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-info {
+  color: #0c7c88;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-success {
+  color: #109361;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-primary {
+  color: #1515e0;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-accent {
+  color: #e00070;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-warning {
+  color: #946f00;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact.pgly-wps-is-danger {
+  color: #d7141a;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact:hover {
+  background-color: rgba(110, 110, 135, 0.2) !important;
+  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact:active {
+  background-color: rgba(110, 110, 135, 0.28) !important;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-info {
+  background-color: #51e0f0;
+  color: rgba(0, 0, 0, 0.7);
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-success {
+  background-color: #16c582;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-primary {
+  background-color: #4e4eef;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-accent {
+  background-color: #ff1a8c;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-warning {
+  background-color: #ffc414;
+  color: rgba(0, 0, 0, 0.7);
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-danger {
+  background-color: #ea1f26;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state {
+  cursor: default;
+  pointer-events: none;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(35%, rgba(255, 255, 255, 0.2)), color-stop(75%, transparent));
+  background: -o-linear-gradient(left, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
+  background-size: 200% 100%;
+  -webkit-animation: 0.8s loading-button linear infinite;
+          animation: 0.8s loading-button linear infinite;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state .pgly-wps--content, .pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state i {
+  display: none;
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state .pgly-wps--spinner {
+  display: block;
+}
+.pgly-wps--settings .pgly-wps--icon-button:hover {
+  background-color: #0a0a0a;
+  color: white;
+  -webkit-box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
+          box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
+}
+.pgly-wps--settings .pgly-wps--icon-button:active {
+  background-color: #30303b;
+  color: white;
+  -webkit-box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
+          box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
+}
+.pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-rounded {
+  border-radius: 9999px;
+}
 .pgly-wps--settings .pgly-wps--button {
   border: none;
   border-radius: 4px;
@@ -1081,6 +1282,9 @@
   -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
           box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
 }
+.pgly-wps--settings .pgly-wps--button.pgly-wps-is-compact:active {
+  background-color: rgba(110, 110, 135, 0.28) !important;
+}
 .pgly-wps--settings .pgly-wps--button.pgly-wps-is-expanded {
   display: table;
   font-size: 16px;
@@ -1148,10 +1352,16 @@
   z-index: 2;
 }
 .pgly-wps--settings .pgly-wps--button:hover {
-  background-color: #000;
-  color: #FFF;
+  background-color: #0a0a0a;
+  color: white;
   -webkit-box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
           box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
+}
+.pgly-wps--settings .pgly-wps--button:active {
+  background-color: #30303b;
+  color: white;
+  -webkit-box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
+          box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
 }
 
 @media screen and (max-width: 420px) {

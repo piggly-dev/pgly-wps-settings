@@ -178,6 +178,9 @@
 				{
 					border-bottom: unset;
 					border-radius: 6px 6px 0px 0px;
+					border-right: 2px solid $accent;
+					border-left: 2px solid $accent;
+					border-top: 2px solid $accent;
 
 					svg 
 					{ transform: rotate(180deg); }

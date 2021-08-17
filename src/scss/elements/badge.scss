@@ -109,8 +109,8 @@ $badge-colors: $colors !default;
 
 		.pgly-wps--delete
 		{
-			@include ltr-property('margin', 5px, false);
-			@include ltr-property('margin', 6px);
+			@include ltr-property('margin', 6px, false);
+			@include ltr-property('margin', 0);
 		}
 
 		// Colors
