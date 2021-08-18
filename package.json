@@ -1,6 +1,6 @@
 {
 	"name": "pgly-wps-settings",
-	"version": "0.1.0",
+	"version": "0.1.2",
 	"description": "A CSS/JS webkit to Wordpress Plugin Settings",
 	"main": "index.js",
 	"scripts": {
