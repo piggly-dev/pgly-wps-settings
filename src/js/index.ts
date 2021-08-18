@@ -1,4 +1,4 @@
-/*! pgly-wps-settings v0.1.1 MIT | License | github.com/piggly-dev/pgly-wps-settings */
+/*! pgly-wps-settings v0.1.2 | MIT License | github.com/piggly-dev/pgly-wps-settings */
 import PglyAsync from './behaviours/async';
 import { PglyCheckbox, handlePglyCheckbox } from './forms/checkbox';
 import { PglyNotification, handlePglyNotifications } from './components/notification';

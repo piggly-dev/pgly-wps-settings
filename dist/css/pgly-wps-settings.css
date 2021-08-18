@@ -1,4 +1,4 @@
-/*! pgly-wps-settings v0.1.1 | MIT License | github.com/piggly-dev/pgly-wps-settings */
+/*! pgly-wps-settings v0.1.2 | MIT License | github.com/piggly-dev/pgly-wps-settings */
 /* Core */
 /* Base */
 #pgly-wps-plugin,
@@ -9,6 +9,9 @@
   margin: 0 auto;
   max-width: 100%;
   width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 25px;
 }
 
 .pgly-wps--settings *, .pgly-wps--settings *:before, .pgly-wps--settings *:after {
