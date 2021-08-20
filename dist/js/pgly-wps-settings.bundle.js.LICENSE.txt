@@ -1,1 +1,0 @@
-/*! pgly-wps-settings v0.1.2 | MIT License | github.com/piggly-dev/pgly-wps-settings */
