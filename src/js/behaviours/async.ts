@@ -67,6 +67,8 @@ PglyAsync.prototype._init = function (this: IPglyAsync)
 				this._startLoad($button)
 
 				const data = $button.dataset;
+				const refresh = data.refresh || false;
+				const responseContainer = data.responseContainer || this.options.responseContainer;
 
 				if ( this.options.form && data.form )
 				{
@@ -93,7 +95,8 @@ PglyAsync.prototype._init = function (this: IPglyAsync)
 							new _window.PglyWpsNotification({
 								message: this.options.messages?.invalid_fields || 'Invalid fields',
 								type: data.success ? 'success' : 'danger',
-								container: this.options.responseContainer
+								container: responseContainer,
+								timer: 5000
 							}); 
 						}
 
@@ -119,11 +122,15 @@ PglyAsync.prototype._init = function (this: IPglyAsync)
 						if ( _window.PglyWpsNotification )
 						{ 
 							new _window.PglyWpsNotification({
-								message: data.message,
+								message: data.data.message,
 								type: data.success ? 'success' : 'danger',
-								container: this.options.responseContainer
+								container: responseContainer,
+								timer: 5000
 							}); 
 						}
+
+						if ( refresh )
+						{ setTimeout( () => document.location.reload(), 3000 ); }
 					})
 					.catch(err => {
 						const _window: any = window;
@@ -134,7 +141,8 @@ PglyAsync.prototype._init = function (this: IPglyAsync)
 							new _window.PglyWpsNotification({
 								message: this.options.messages?.request_error || 'Something went wrong',
 								type: data.success ? 'success' : 'danger',
-								container: this.options.responseContainer
+								container: responseContainer,
+								timer: 5000
 							}); 
 						}
 					})
