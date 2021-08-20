@@ -11,6 +11,25 @@ $column-padding: 8px;
 		display: flex;
 		flex-wrap: wrap;
 
+		&.pgly-wps-has-action
+		{
+			align-items: center;
+			margin-bottom: 12px;
+			background-color: #FFF;
+			box-shadow: 0, 0, 0, rgba(78,78,239,0.35);
+			border-radius: 8px; 
+		
+			&:last-child
+			{ margin-bottom: 0; }
+
+			&.disabled
+			{
+				color: $grey-light;
+				background-color: transparent;
+				box-shadow: unset;
+			}
+		}
+
 		.pgly-wps--column 
 		{
 			flex-grow: 1;
