@@ -1,4 +1,3 @@
-/*! pgly-wps-settings v0.1.3 */
 import PglyAsync from './behaviours/async';
 import { PglyCheckbox, handlePglyCheckbox } from './forms/checkbox';
 import { PglyNotification, handlePglyNotifications } from './components/notification';

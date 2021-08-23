@@ -1,7 +1,7 @@
 $notification-background-color: $grey-lightest !default;
-$notification-code-background-color: $scheme-main !default;
+$notification-code-background-color: rgba(255,255,255,0.42) !default;
 $notification-radius: $radius !default;
-$notification-padding: 18px 32px 18px 24px !default;
+$notification-padding: 12px 34px 12px 17px !default;
 $notification-colors: $colors !default;
 
 .pgly-wps--settings
@@ -10,11 +10,14 @@ $notification-colors: $colors !default;
 	{
 		background-color: $notification-background-color;
 		border-radius: $notification-radius;
-		font-size: 14px;
+		font-size: 13px;
 		line-height: 1.5;
-		margin: 8px auto;
+		margin: 12px auto;
 		position: relative;
 		padding: $notification-padding;
+		font-size: 13px;
+		line-height: 1.5;
+		position: relative;
 
 		a:not(.pgly-wps--button)
 		{

@@ -1,4 +1,3 @@
-/*! pgly-wps-settings v0.1.3 */
 /* Core */
 /* Base */
 #pgly-wps-plugin,
@@ -26,6 +25,10 @@
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
+  word-break: break-word;
+}
+.pgly-wps--settings strong {
+  font-weight: bold;
 }
 
 .pgly-wps--settings .pgly-wps--row {
@@ -41,12 +44,20 @@
           align-items: center;
   margin-bottom: 12px;
   background-color: #FFF;
-  -webkit-box-shadow: 0, 0, 0, rgba(78, 78, 239, 0.35);
-          box-shadow: 0, 0, 0, rgba(78, 78, 239, 0.35);
   border-radius: 8px;
+  padding: 0 12px;
+  -webkit-transition: background-color 0.5s;
+  -o-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+}
+.pgly-wps--settings .pgly-wps--row.pgly-wps-has-action.pgly-wps-slide-move {
+  background-color: #a5a5c5;
 }
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action:last-child {
   margin-bottom: 0;
+}
+.pgly-wps--settings .pgly-wps--row.pgly-wps-has-action.active {
+  background-color: #a5a5c5;
 }
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action.disabled {
   color: #a5a5c5;
@@ -63,12 +74,6 @@
   -ms-flex-preferred-size: 1;
       flex-basis: 1;
   padding: 8px;
-}
-.pgly-wps--settings .pgly-wps--row .pgly-wps--column:first-child {
-  padding-left: 0;
-}
-.pgly-wps--settings .pgly-wps--row .pgly-wps--column:last-child {
-  padding-right: 0;
 }
 .pgly-wps--settings .pgly-wps--row .pgly-wps--column.pgly-wps-col--1 {
   max-width: calc(100% / 12 * 1);
@@ -290,6 +295,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  padding-right: 42px;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected svg {
   position: absolute;
@@ -475,7 +481,7 @@
   background-color: #e7e7f3 !important;
 }
 .pgly-wps--settings .wp-list-table thead th, .pgly-wps--settings .wp-list-table tfoot th {
-  font-weight: 700 !important;
+  font-weight: bold !important;
   color: white !important;
   background-color: #121212;
   font-size: 13px;
@@ -575,7 +581,7 @@
   background: white;
 }
 .pgly-wps--settings .pgly-wps--table .pgly-wps--row:first-of-type {
-  font-weight: 700;
+  font-weight: bold;
   color: white;
   background-color: #242424;
 }
@@ -1047,7 +1053,7 @@
   -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
           box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
   cursor: pointer;
-  font-weight: 700;
+  font-weight: bold;
   overflow: hidden;
   position: relative;
   text-align: center;
@@ -1242,7 +1248,7 @@
   -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
           box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
   cursor: pointer;
-  font-weight: 700;
+  font-weight: bold;
   overflow: hidden;
   position: relative;
   text-align: left;
@@ -1503,7 +1509,7 @@
   display: table;
 }
 .pgly-wps--settings .pgly-wps--explorer strong {
-  font-weight: 700;
+  font-weight: bold;
   text-transform: uppercase;
   font-size: 12px;
   display: block;
@@ -1620,11 +1626,14 @@
 .pgly-wps--settings .pgly-wps--notification {
   background-color: #e7e7f3;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
-  margin: 8px auto;
+  margin: 12px auto;
   position: relative;
-  padding: 18px 32px 18px 24px;
+  padding: 12px 34px 12px 17px;
+  font-size: 13px;
+  line-height: 1.5;
+  position: relative;
 }
 .pgly-wps--settings .pgly-wps--notification a:not(.pgly-wps--button) {
   color: currentColor;
@@ -1635,7 +1644,7 @@
 }
 .pgly-wps--settings .pgly-wps--notification code,
 .pgly-wps--settings .pgly-wps--notification pre {
-  background: white;
+  background: rgba(255, 255, 255, 0.42);
 }
 .pgly-wps--settings .pgly-wps--notification pre code {
   background: transparent;
@@ -1824,7 +1833,7 @@
 }
 .pgly-wps--settings .pgly-wps--title strong {
   color: #0a0a0a;
-  font-weight: 700;
+  font-weight: bold;
 }
 .pgly-wps--settings .pgly-wps--title:not(.pgly-wps-is-spaced) + .pgly-wps--subtitle {
   margin-top: -12px;
@@ -1864,7 +1873,7 @@
 }
 .pgly-wps--settings .pgly-wps--subtitle strong {
   color: #0a0a0a;
-  font-weight: 700;
+  font-weight: bold;
 }
 .pgly-wps--settings .pgly-wps--subtitle:not(.pgly-wps-is-spaced) + .pgly-wps--title {
   margin-top: -12px;
@@ -1897,4 +1906,4 @@
   font-size: 11px;
 }
 
-/*# sourceMappingURL=pgly-wps-settings.css.map */
+/*# sourceMappingURL=pgly-wps-settings.v0.1.4.css.map */

@@ -10,17 +10,26 @@ $column-padding: 8px;
 	{
 		display: flex;
 		flex-wrap: wrap;
+		
+		// Transitions
 
 		&.pgly-wps-has-action
 		{
 			align-items: center;
 			margin-bottom: 12px;
 			background-color: #FFF;
-			box-shadow: 0, 0, 0, rgba(78,78,239,0.35);
 			border-radius: 8px; 
+			padding: 0 12px;
+			transition: background-color .5s;
 		
+			&.pgly-wps-slide-move
+			{ background-color: $grey-light; }
+
 			&:last-child
 			{ margin-bottom: 0; }
+
+			&.active
+			{ background-color: $grey-light; }
 
 			&.disabled
 			{
@@ -37,11 +46,11 @@ $column-padding: 8px;
 			flex-basis: 1;
 			padding: $column-padding;
 		
-			&:first-child
-			{ padding-left: 0; }
+			// &:first-child
+			// { padding-left: 0; }
 		
-			&:last-child
-			{ padding-right: 0; }
+			// &:last-child
+			// { padding-right: 0; }
 
 			@for $i from 1 through $max-columns 
 			{
