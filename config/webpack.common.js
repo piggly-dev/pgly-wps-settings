@@ -1,4 +1,5 @@
 const paths = require('./paths');
+const packageJSON = require('../package.json');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -12,8 +13,8 @@ module.exports = {
 	// Where webpack outputs the assets and bundles
 	output: {
 		path: paths.build,
-		filename: 'js/pgly-wps-settings.[name].js',
-		publicPath: '/',
+		filename: `js/pgly-wps-settings.[name].v${packageJSON.version}.js`,
+		publicPath: 'auto',
 	},
 
 	// Customize the webpack build process

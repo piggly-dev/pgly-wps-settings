@@ -1,6 +1,6 @@
 {
 	"name": "pgly-wps-settings",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "A CSS/JS webkit to Wordpress Plugin Settings",
 	"main": "index.js",
 	"scripts": {
@@ -11,12 +11,13 @@
 		"js:build": "npm run ts:build && npm run js:prod",
 		"js:start": "webpack serve --mode development --config config/webpack.dev.js --hot",
 		"css:build": "npm run css:build-sass && npm run css:build-autoprefix && npm run css:build-cleancss",
-		"css:build-autoprefix": "postcss --use autoprefixer --map false --output dist/css/pgly-wps-settings.css dist/css/pgly-wps-settings.css",
-		"css:build-cleancss": "cleancss -o dist/css/pgly-wps-settings.min.css dist/css/pgly-wps-settings.css",
-		"css:build-sass": "sass --style expanded src/scss/global.scss dist/css/pgly-wps-settings.css",
+		"css:build-autoprefix": "postcss --use autoprefixer --map false --output dist/css/pgly-wps-settings.v$npm_package_version.css dist/css/pgly-wps-settings.v$npm_package_version.css",
+		"css:build-cleancss": "cleancss -o dist/css/pgly-wps-settings.v$npm_package_version.min.css dist/css/pgly-wps-settings.v$npm_package_version.css",
+		"css:build-sass": "sass --style expanded src/scss/global.scss dist/css/pgly-wps-settings.v$npm_package_version.css",
 		"css:clean": "rimraf css",
 		"css:deploy": "npm run css:clean && npm run css:build",
-		"css:start": "npm run css:build-sass -- --watch"
+		"css:start": "npm run css:build-sass -- --watch",
+		"version": "echo $npm_package_version"
 	},
 	"author": {
 		"name": "Caique Araujo",
