@@ -8,15 +8,13 @@
   margin: 0 auto;
   max-width: 100%;
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 25px;
 }
 
 .pgly-wps--settings *, .pgly-wps--settings *:before, .pgly-wps--settings *:after {
   border: none;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   font-family: BlinkMacSystemFont, -apple-system, "Montserrat", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   margin: 0;
   padding: 0;
@@ -31,23 +29,31 @@
   font-weight: bold;
 }
 
-.pgly-wps--settings .pgly-wps--row {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.pgly-wps--settings .flex-wrapper {
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  align-items: center;
+}
+.pgly-wps--settings .flex-wrapper * {
+  margin-bottom: 0 !important;
+  margin-right: 12px;
+}
+.pgly-wps--settings .flex-wrapper *:last-child {
+  margin-right: 0;
+}
+.pgly-wps--settings .flex-wrapper .focus {
+  flex: 1;
+}
+
+.pgly-wps--settings .pgly-wps--row {
+  display: flex;
+  flex-wrap: wrap;
 }
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   margin-bottom: 12px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 8px;
   padding: 0 12px;
-  -webkit-transition: background-color 0.5s;
-  -o-transition: background-color 0.5s;
   transition: background-color 0.5s;
 }
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action.pgly-wps-slide-move {
@@ -62,18 +68,16 @@
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action.disabled {
   color: #a5a5c5;
   background-color: transparent;
-  -webkit-box-shadow: unset;
-          box-shadow: unset;
+  box-shadow: unset;
 }
 .pgly-wps--settings .pgly-wps--row .pgly-wps--column {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -ms-flex-negative: 1;
-      flex-shrink: 1;
-  -ms-flex-preferred-size: 1;
-      flex-basis: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 1;
   padding: 8px;
+}
+.pgly-wps--settings .pgly-wps--row .pgly-wps--column.pgly-wps-is-compact {
+  padding: 4px;
 }
 .pgly-wps--settings .pgly-wps--row .pgly-wps--column.pgly-wps-col--1 {
   max-width: calc(100% / 12 * 1);
@@ -200,33 +204,8 @@
   border: 2px solid;
   border-color: white;
   border-radius: 4px;
-  -webkit-box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
-          box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
-  -webkit-transition: border-color 0.5s, -webkit-box-shadow 0.5s;
-  transition: border-color 0.5s, -webkit-box-shadow 0.5s;
-  -o-transition: border-color 0.5s, box-shadow 0.5s;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
   transition: border-color 0.5s, box-shadow 0.5s;
-  transition: border-color 0.5s, box-shadow 0.5s, -webkit-box-shadow 0.5s;
-}
-.pgly-wps--settings .pgly-wps--field input::-webkit-input-placeholder, .pgly-wps--settings .pgly-wps--field select::-webkit-input-placeholder, .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected::-webkit-input-placeholder, .pgly-wps--settings .pgly-wps--field textarea::-webkit-input-placeholder {
-  color: #a5a5c5;
-  font-weight: 600;
-  opacity: 1;
-}
-.pgly-wps--settings .pgly-wps--field input::-moz-placeholder, .pgly-wps--settings .pgly-wps--field select::-moz-placeholder, .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected::-moz-placeholder, .pgly-wps--settings .pgly-wps--field textarea::-moz-placeholder {
-  color: #a5a5c5;
-  font-weight: 600;
-  opacity: 1;
-}
-.pgly-wps--settings .pgly-wps--field input:-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field select:-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected:-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field textarea:-ms-input-placeholder {
-  color: #a5a5c5;
-  font-weight: 600;
-  opacity: 1;
-}
-.pgly-wps--settings .pgly-wps--field input::-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field select::-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected::-ms-input-placeholder, .pgly-wps--settings .pgly-wps--field textarea::-ms-input-placeholder {
-  color: #a5a5c5;
-  font-weight: 600;
-  opacity: 1;
 }
 .pgly-wps--settings .pgly-wps--field input::placeholder,
 .pgly-wps--settings .pgly-wps--field select::placeholder,
@@ -268,8 +247,6 @@
   margin-left: -5px;
   background-color: transparent;
   border-radius: 4px;
-  -webkit-transition: background-color 0.2s;
-  -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--checkbox .pgly-wps--placeholder {
@@ -291,10 +268,7 @@
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected {
   cursor: default;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   padding-right: 42px;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected svg {
@@ -302,11 +276,7 @@
   width: 28px;
   height: 28px;
   right: 8px;
-  -webkit-transition: -webkit-transform 0.2s;
-  transition: -webkit-transform 0.2s;
-  -o-transition: transform 0.2s;
   transition: transform 0.2s;
-  transition: transform 0.2s, -webkit-transform 0.2s;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected.open {
   border-bottom: unset;
@@ -316,9 +286,7 @@
   border-top: 2px solid #ff1a8c;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .selected.open svg {
-  -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-          transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .items {
   color: white;
@@ -350,10 +318,7 @@
 .pgly-wps--settings .pgly-wps--field .pgly-wps--select .items .item {
   color: #0a0a0a;
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   line-height: 2;
   min-height: 46px;
   font-size: 14px;
@@ -394,41 +359,26 @@
 }
 
 .pgly-wps--settings .pgly-wps--navigator {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items: center;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   margin: 16px 0;
 }
 .pgly-wps--settings .pgly-wps--navigator .pgly-wps--item {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   background-color: transparent;
   border-radius: 6px;
   color: #6e6e87;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   font-size: 12px;
   font-weight: 600;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   margin-right: 6px;
   margin-bottom: 6px;
   padding: 12px 16px;
   text-decoration: none;
   white-space: nowrap;
-  -webkit-transition: color 0.2s, background-color 0.2s;
-  -o-transition: color 0.2s, background-color 0.2s;
   transition: color 0.2s, background-color 0.2s;
 }
 .pgly-wps--settings .pgly-wps--navigator .pgly-wps--item.pgly-wps-is-selected {
@@ -456,9 +406,7 @@
 
 @media screen and (max-width: 768px) {
   .pgly-wps--settings .pgly-wps--navigator {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    justify-content: center;
   }
 }
 @media screen and (max-width: 485px) {
@@ -471,8 +419,7 @@
   background: white !important;
   border: none !important;
   border-radius: 4px;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   margin: 18px 0;
   overflow: hidden !important;
   padding: 0;
@@ -494,21 +441,15 @@
 .pgly-wps--settings .wp-list-table tr {
   background: white !important;
   border: none !important;
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
   display: flex !important;
-  -ms-flex-wrap: wrap !important;
-      flex-wrap: wrap !important;
+  flex-wrap: wrap !important;
   overflow: hidden !important;
 }
 .pgly-wps--settings .wp-list-table tr td, .pgly-wps--settings .wp-list-table tr th {
   border: none !important;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   color: #0a0a0a;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
   line-height: 1.5 !important;
   padding: 12px;
   overflow: hidden !important;
@@ -572,11 +513,8 @@
   background-color: #e7e7f3;
 }
 .pgly-wps--settings .pgly-wps--table .pgly-wps--row {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   overflow: hidden;
   background: white;
 }
@@ -586,11 +524,8 @@
   background-color: #242424;
 }
 .pgly-wps--settings .pgly-wps--table .pgly-wps--row .pgly-wps--cell {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  box-sizing: border-box;
+  flex-grow: 1;
   padding: 12px;
   overflow: hidden;
 }
@@ -695,23 +630,17 @@
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-ne .pgly-wps--toast-leave-active,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-nw .pgly-wps--toast-enter,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-nw .pgly-wps--toast-leave-active {
-  -webkit-transform: translateY(-20px);
-      -ms-transform: translateY(-20px);
-          transform: translateY(-20px);
+  transform: translateY(-20px);
 }
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-s .pgly-wps--toast-enter,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-se .pgly-wps--toast-enter,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-sw .pgly-wps--toast-enter {
-  -webkit-transform: translateY(20px);
-      -ms-transform: translateY(20px);
-          transform: translateY(20px);
+  transform: translateY(20px);
 }
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-s .pgly-wps--toast-leave-active,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-se .pgly-wps--toast-leave-active,
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps-in-sw .pgly-wps--toast-leave-active {
-  -webkit-transform: translateY(-100%) translateY(20px);
-      -ms-transform: translateY(-100%) translateY(20px);
-          transform: translateY(-100%) translateY(20px);
+  transform: translateY(-100%) translateY(20px);
 }
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps--toast {
   background-color: #d0d0e7;
@@ -721,11 +650,7 @@
   margin: 6px auto;
   position: relative;
   padding: 12px 32px 12px 12px;
-  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-  transition: opacity 0.5s, -webkit-transform 0.5s;
-  -o-transition: opacity 0.5s, transform 0.5s;
   transition: opacity 0.5s, transform 0.5s;
-  transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
 }
 .pgly-wps--settings .pgly-wps--toaster .pgly-wps--toast a:not(.pgly-wps--button) {
   color: currentColor;
@@ -826,17 +751,10 @@
 
 /* Elements */
 .pgly-wps--settings .pgly-wps--badges {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items: center;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 .pgly-wps--settings .pgly-wps--badges .pgly-wps--badge {
   margin-bottom: 6px;
@@ -857,18 +775,14 @@
   font-size: 18px;
 }
 .pgly-wps--settings .pgly-wps--badges.pgly-wps-is-centered {
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .pgly-wps--settings .pgly-wps--badges.pgly-wps-is-centered .pgly-wps--badge {
   margin-right: 3px;
   margin-left: 3px;
 }
 .pgly-wps--settings .pgly-wps--badges.pgly-wps-is-right {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  justify-content: flex-end;
 }
 .pgly-wps--settings .pgly-wps--badges.pgly-wps-is-right .pgly-wps--badge:not(:first-child) {
   margin-left: 5px;
@@ -890,20 +804,14 @@
   border-bottom-right-radius: 0;
 }
 .pgly-wps--settings .pgly-wps--badge {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   background-color: whitesmoke;
   border-radius: 6px;
   color: #121212;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   font-size: 12px;
   height: 24px;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   line-height: 1.5;
   padding-left: 6px;
   padding-right: 6px;
@@ -1019,12 +927,8 @@
   left: 50%;
   position: absolute;
   top: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
-      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
-          transform: translateX(-50%) translateY(-50%) rotate(45deg);
-  -webkit-transform-origin: center center;
-      -ms-transform-origin: center center;
-          transform-origin: center center;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform-origin: center center;
 }
 .pgly-wps--settings .pgly-wps--badge.pgly-wps-is-delete::before {
   height: 1px;
@@ -1050,19 +954,14 @@
 .pgly-wps--settings .pgly-wps--icon-button {
   border: none;
   border-radius: 4px;
-  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
-          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+  box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
   cursor: pointer;
   font-weight: bold;
   overflow: hidden;
   position: relative;
   text-align: center;
   text-decoration: none;
-  -webkit-transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
-  transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
-  -o-transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
   background-color: white;
   color: #0a0a0a;
   display: inline-block;
@@ -1173,8 +1072,7 @@
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact:hover {
   background-color: rgba(110, 110, 135, 0.2) !important;
-  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
-          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+  box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-compact:active {
   background-color: rgba(110, 110, 135, 0.28) !important;
@@ -1214,12 +1112,9 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(35%, rgba(255, 255, 255, 0.2)), color-stop(75%, transparent));
-  background: -o-linear-gradient(left, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
   background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
   background-size: 200% 100%;
-  -webkit-animation: 0.8s loading-button linear infinite;
-          animation: 0.8s loading-button linear infinite;
+  animation: 0.8s loading-button linear infinite;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state .pgly-wps--content, .pgly-wps--settings .pgly-wps--icon-button.pgly-loading--state i {
   display: none;
@@ -1230,14 +1125,12 @@
 .pgly-wps--settings .pgly-wps--icon-button:hover {
   background-color: #0a0a0a;
   color: white;
-  -webkit-box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
-          box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
+  box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
 }
 .pgly-wps--settings .pgly-wps--icon-button:active {
   background-color: #30303b;
   color: white;
-  -webkit-box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
-          box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
+  box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-rounded {
   border-radius: 9999px;
@@ -1245,19 +1138,14 @@
 .pgly-wps--settings .pgly-wps--button {
   border: none;
   border-radius: 4px;
-  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
-          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+  box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
   cursor: pointer;
   font-weight: bold;
   overflow: hidden;
   position: relative;
   text-align: left;
   text-decoration: none;
-  -webkit-transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
-  transition: background-color 0.2s, color 0.2s, -webkit-box-shadow 0.2s;
-  -o-transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
   background-color: white;
   color: #0a0a0a;
   display: inline-block;
@@ -1307,8 +1195,7 @@
 }
 .pgly-wps--settings .pgly-wps--button.pgly-wps-is-compact:hover {
   background-color: rgba(110, 110, 135, 0.2) !important;
-  -webkit-box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
-          box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
+  box-shadow: 0px 0px 0px rgba(78, 78, 239, 0);
 }
 .pgly-wps--settings .pgly-wps--button.pgly-wps-is-compact:active {
   background-color: rgba(110, 110, 135, 0.28) !important;
@@ -1358,12 +1245,9 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(35%, rgba(255, 255, 255, 0.2)), color-stop(75%, transparent));
-  background: -o-linear-gradient(left, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
   background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
   background-size: 200% 100%;
-  -webkit-animation: 0.8s loading-button linear infinite;
-          animation: 0.8s loading-button linear infinite;
+  animation: 0.8s loading-button linear infinite;
 }
 .pgly-wps--settings .pgly-wps--button.pgly-loading--state .pgly-wps--spinner {
   display: block;
@@ -1382,14 +1266,12 @@
 .pgly-wps--settings .pgly-wps--button:hover {
   background-color: #0a0a0a;
   color: white;
-  -webkit-box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
-          box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
+  box-shadow: 0px 8px 16px rgba(154, 154, 172, 0.6);
 }
 .pgly-wps--settings .pgly-wps--button:active {
   background-color: #30303b;
   color: white;
-  -webkit-box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
-          box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
+  box-shadow: 0px 16px 22px rgba(154, 154, 172, 0.65);
 }
 
 @media screen and (max-width: 420px) {
@@ -1402,16 +1284,115 @@
     margin-bottom: 0;
   }
 }
-@-webkit-keyframes loading-button {
-  to {
-    background-position-x: -200%;
-  }
-}
 @keyframes loading-button {
   to {
     background-position-x: -200%;
   }
 }
+.pgly-wps--settings .pgly-wps--card {
+  background-color: #e7e7f3;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+  margin-bottom: 8px;
+  position: relative;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-compact {
+  padding: 12px 16px;
+  margin-bottom: 4px;
+}
+.pgly-wps--settings .pgly-wps--card:last-child {
+  margin-bottom: 0;
+}
+.pgly-wps--settings .pgly-wps--card .pgly-wps--action-bar .pgly-wps--button {
+  margin-bottom: 0 !important;
+}
+.pgly-wps--settings .pgly-wps--card .inside.left {
+  padding-right: 12px;
+  flex: 1;
+}
+.pgly-wps--settings .pgly-wps--card .inside.right {
+  padding-left: 12px;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-loading--state {
+  color: transparent !important;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-white {
+  background-color: white;
+  color: #0a0a0a;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-black {
+  background-color: #0a0a0a;
+  color: white;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-light {
+  background-color: whitesmoke;
+  color: rgba(0, 0, 0, 0.7);
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-dark {
+  background-color: #30303b;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-primary {
+  background-color: #4e4eef;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-primary.pgly-wps-is-light {
+  background-color: #ececfd;
+  color: #1515e0;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-link {
+  background-color: #4e4eef;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-link.pgly-wps-is-light {
+  background-color: #ececfd;
+  color: #1515e0;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-info {
+  background-color: #51e0f0;
+  color: rgba(0, 0, 0, 0.7);
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-info.pgly-wps-is-light {
+  background-color: #ecfcfd;
+  color: #0c7c88;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-success {
+  background-color: #16c582;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-success.pgly-wps-is-light {
+  background-color: #edfdf7;
+  color: #109361;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-warning {
+  background-color: #ffc414;
+  color: rgba(0, 0, 0, 0.7);
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-warning.pgly-wps-is-light {
+  background-color: #fffaeb;
+  color: #946f00;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-danger {
+  background-color: #ea1f26;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-danger.pgly-wps-is-light {
+  background-color: #fdeced;
+  color: #d7141a;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-accent {
+  background-color: #ff1a8c;
+  color: #fff;
+}
+.pgly-wps--settings .pgly-wps--card.pgly-wps-is-accent.pgly-wps-is-light {
+  background-color: #ffebf5;
+  color: #e00070;
+}
+
 .pgly-wps--settings .pgly-wps--delete {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -1426,11 +1407,8 @@
   cursor: pointer;
   pointer-events: auto;
   display: inline-block;
-  -webkit-box-flex: 0;
-      -ms-flex-positive: 0;
-          flex-grow: 0;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
   font-size: 0;
   height: 20px;
   max-height: 20px;
@@ -1449,12 +1427,8 @@
   left: 50%;
   position: absolute;
   top: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
-      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
-          transform: translateX(-50%) translateY(-50%) rotate(45deg);
-  -webkit-transform-origin: center center;
-      -ms-transform-origin: center center;
-          transform-origin: center center;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform-origin: center center;
 }
 .pgly-wps--settings .pgly-wps--delete::before {
   height: 2px;
@@ -1623,6 +1597,14 @@
   color: #e00070;
 }
 
+.pgly-wps--settings .pgly-wps--loader {
+  margin-top: 24px;
+}
+.pgly-wps--settings .pgly-wps--loader .pgly-wps--spinner {
+  margin: 24px auto;
+  display: table;
+}
+
 .pgly-wps--settings .pgly-wps--notification {
   background-color: #e7e7f3;
   border-radius: 6px;
@@ -1743,8 +1725,7 @@
 .pgly-wps--settings .pgly-wps--spinner .path {
   stroke: #4e4eef;
   stroke-linecap: round;
-  -webkit-animation: dash-spinner 1.5s ease-in-out infinite;
-          animation: dash-spinner 1.5s ease-in-out infinite;
+  animation: dash-spinner 1.5s ease-in-out infinite;
 }
 .pgly-wps--settings .pgly-wps--spinner.pgly-wps-is-absolute {
   position: absolute;
@@ -1778,21 +1759,6 @@
   stroke: #ea1f26;
 }
 
-@-webkit-keyframes dash-spinner {
-  0% {
-    stroke-dasharray: 1, 150;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -35;
-  }
-  100% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -124;
-  }
-}
-
 @keyframes dash-spinner {
   0% {
     stroke-dasharray: 1, 150;
@@ -1809,14 +1775,16 @@
 }
 .pgly-wps--settings .pgly-wps--title:not(:last-child),
 .pgly-wps--settings .pgly-wps--subtitle:not(:last-child) {
-  margin-bottom: 12px;
+  margin-top: 22px;
+  margin-bottom: 22px;
 }
 
 .pgly-wps--settings .pgly-wps--title,
 .pgly-wps--settings .pgly-wps--subtitle {
   position: relative;
 }
-.pgly-wps--settings .pgly-wps--title em, .pgly-wps--settings .pgly-wps--title span,
+.pgly-wps--settings .pgly-wps--title em,
+.pgly-wps--settings .pgly-wps--title span,
 .pgly-wps--settings .pgly-wps--subtitle em,
 .pgly-wps--settings .pgly-wps--subtitle span {
   font-weight: inherit;
@@ -1830,6 +1798,7 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 1.125;
+  padding: 0 8px;
 }
 .pgly-wps--settings .pgly-wps--title strong {
   color: #0a0a0a;

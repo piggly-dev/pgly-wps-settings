@@ -1,0 +1,66 @@
+$card-background-color: $grey-lightest !default;
+$card-colors: $colors !default;
+
+.pgly-wps--settings {
+	.pgly-wps--card {
+		background-color: $card-background-color;
+		border-radius: $radius-small;
+		font-size: 14px;
+		line-height: 1;
+		margin-bottom: 8px;
+		position: relative;
+		padding: 24px;
+		display: flex;
+		align-items: center;
+
+		&.pgly-wps-is-compact {
+			padding: 12px 16px;
+			margin-bottom: 4px;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.pgly-wps--action-bar {
+			.pgly-wps--button {
+				margin-bottom: 0 !important;
+			}
+		}
+
+		.inside {
+			&.left {
+				padding-right: 12px;
+				flex: 1;
+			}
+
+			&.right {
+				padding-left: 12px;
+			}
+		}
+
+		&.pgly-loading--state {
+			color: transparent !important;
+		}
+
+		@each $name, $pair in $card-colors {
+			$color: nth($pair, 1);
+			$color-invert: nth($pair, 2);
+
+			&.pgly-wps-is-#{$name} {
+				background-color: $color;
+				color: $color-invert;
+
+				@if (length($pair) > 3) {
+					$color-light: nth($pair, 3);
+					$color-dark: nth($pair, 4);
+
+					&.pgly-wps-is-light {
+						background-color: $color-light;
+						color: $color-dark;
+					}
+				}
+			}
+		}
+	}
+}
