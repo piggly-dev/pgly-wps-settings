@@ -14,12 +14,14 @@ module.exports = merge(common, {
 
 	// Spin up a server for quick development
 	devServer: {
+		host: '0.0.0.0',
 		historyApiFallback: true,
 		contentBase: paths.build,
 		open: true,
 		compress: true,
 		hot: true,
 		port: 8080,
+		allowedHosts: ['auto'],
 	},
 
 	// Customize the webpack build process

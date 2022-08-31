@@ -1,6 +1,9 @@
 import PglyAsync from './behaviours/async';
 import { PglyCheckbox, handlePglyCheckbox } from './forms/checkbox';
-import { PglyNotification, handlePglyNotifications } from './components/notification';
+import {
+	PglyNotification,
+	handlePglyNotifications,
+} from './components/notification';
 import PglyToast from './components/toaster';
 
 (window as any).PglyWpsToast = PglyToast;

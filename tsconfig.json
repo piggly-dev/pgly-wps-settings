@@ -34,16 +34,9 @@
 		// "esModuleInterop": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": [
-				"src/js/*",
-			],
-		},
+			"@/*": ["src/js/*"]
+		}
 	},
-	"include": [
-	  "src/js/**/*"
-, "debug/index.js"	],
-	"exclude": [
-	  "node_modules",
-	  "dist"
-	]
+	"include": ["src/js/**/*", "debug/index.js"],
+	"exclude": ["node_modules", "dist"]
 }
