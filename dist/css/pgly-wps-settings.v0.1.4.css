@@ -1605,6 +1605,34 @@
   display: table;
 }
 
+.pgly-wps--settings .pgly-wps--media-wrapper {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px rgba(0, 0, 0, 0.24) dashed;
+  display: table;
+  width: 100%;
+}
+.pgly-wps--settings .pgly-wps--media-wrapper img {
+  width: 100%;
+  height: auto;
+}
+.pgly-wps--settings .pgly-wps--media-wrapper .pgly-wps--placeholder {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  z-index: -1;
+  margin-top: -2px;
+}
+.pgly-wps--settings .pgly-wps--media-wrapper .pgly-wps--action-bar {
+  margin-top: 12px;
+}
+.pgly-wps--settings .pgly-wps--media-wrapper .pgly-wps--action-bar button {
+  margin-bottom: 0;
+}
+
 .pgly-wps--settings .pgly-wps--notification {
   background-color: #e7e7f3;
   border-radius: 6px;
