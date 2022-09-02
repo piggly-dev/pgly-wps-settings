@@ -1,34 +1,30 @@
 @use "sass:math";
 
-.pgly-wps--settings
-{
-	.pgly-wps--field
-	{
-		.pgly-wps--label
-		{
-			font-size: 14px; 
-			font-weight: bold; 
-			margin-bottom: 4px; 
-			display: block; 
+.pgly-wps--settings {
+	.pgly-wps--field {
+		.pgly-wps--label {
+			font-size: 14px;
+			font-weight: bold;
+			margin-bottom: 4px;
+			display: block;
 
-			&.hidden
-			{ margin: 22px 0; }
+			&.hidden {
+				margin: 22px 0;
+			}
 		}
 
-		.pgly-wps--description
-		{
+		.pgly-wps--description {
 			font-size: 13px;
 			margin-top: 4px;
 			color: $grey;
 		}
 
-		&.pgly-wps--error
-		{
-			.pgly-wps--label
-			{ color: $danger; }
+		&.pgly-wps--error {
+			.pgly-wps--label {
+				color: $danger;
+			}
 
-			.pgly-wps--message
-			{
+			.pgly-wps--message {
 				padding: 6px 8px;
 				display: inline-table;
 				font-size: 12px;
@@ -41,22 +37,20 @@
 			input,
 			select,
 			.pgly-wps--select .selected,
-			textarea
-			{
+			textarea {
 				border-color: $danger;
 			}
 		}
 
-		.pgly-wps--tagged
-		{	
+		.pgly-wps--tagged {
 			input,
 			select,
 			.pgly-wps--select .selected,
-			textarea
-			{ padding-bottom: 18px; }
+			textarea {
+				padding-bottom: 18px;
+			}
 
-			.pgly-wps--tag
-			{
+			.pgly-wps--tag {
 				position: absolute;
 				left: 14px;
 				bottom: 6px;
@@ -65,16 +59,15 @@
 				font-weight: bold;
 			}
 		}
-		
+
 		input,
 		select,
 		.pgly-wps--select .selected,
-		textarea
-		{
+		textarea {
 			line-height: 2;
 			min-height: 30px;
 			font-size: 14px;
-			background-color: #FFF;
+			background-color: #fff;
 			position: relative;
 			width: 100%;
 			max-width: 100%;
@@ -82,33 +75,33 @@
 			border: 2px solid;
 			border-color: $white;
 			border-radius: $radius-small;
-			box-shadow: 4px 4px 16px rgba(0,0,0,0.1);
-			transition: border-color .5s, box-shadow .5s;
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
+			transition: border-color 0.5s, box-shadow 0.5s;
 
-			&::placeholder
-			{
+			&:focus {
+				border-color: $accent;
+			}
+
+			&::placeholder {
 				color: $grey-light;
 				font-weight: $weight-semibold;
 				opacity: 1;
 			}
 		}
 
-		input[type=checkbox], 
-		input[type=radio]
-		{
+		input[type="checkbox"],
+		input[type="radio"] {
 			cursor: pointer;
 			height: 12px;
 			width: 12px;
 			min-height: unset;
 		}
 
-		.pgly-wps--checkbox
-		{
+		.pgly-wps--checkbox {
 			display: table;
 			cursor: pointer;
 
-			.pgly-wps--icon
-			{
+			.pgly-wps--icon {
 				position: relative;
 				display: inline-table;
 				width: 18px;
@@ -118,9 +111,8 @@
 				vertical-align: middle;
 				border-radius: $radius-small;
 
-				&::before
-				{
-					content: '';
+				&::before {
+					content: "";
 					position: absolute;
 					width: 10px;
 					height: 10px;
@@ -130,66 +122,61 @@
 					margin-left: -5px;
 					background-color: transparent;
 					border-radius: $radius-small;
-					transition: background-color .2s;
+					transition: background-color 0.2s;
 				}
 			}
 
-			.pgly-wps--placeholder
-			{
+			.pgly-wps--placeholder {
 				display: inline-table;
-				font-size: 14px; 
+				font-size: 14px;
 				vertical-align: middle;
 			}
 
-			&.pgly-disabled--state
-			{
+			&.pgly-disabled--state {
 				color: $grey-light;
 
-				.pgly-wps--checkbox-icon
-				{ background-color: $grey-light; }
+				.pgly-wps--checkbox-icon {
+					background-color: $grey-light;
+				}
 			}
 
-			&.pgly-checked--state
-			{
-				.pgly-wps--icon::before
-				{ background-color: $accent; }
+			&.pgly-checked--state {
+				.pgly-wps--icon::before {
+					background-color: $accent;
+				}
 			}
 		}
 
-		.pgly-wps--select 
-		{
+		.pgly-wps--select {
 			position: relative;
 
-			.selected
-			{
-				cursor: default;
+			.selected {
+				cursor: pointer;
 				user-select: none;
 				padding-right: 42px;
 
-				svg
-				{
+				svg {
 					position: absolute;
 					width: 28px;
 					height: 28px;
 					right: 8px;
-					transition: transform .2s;
+					transition: transform 0.2s;
 				}
-				
-				&.open
-				{
+
+				&.open {
 					border-bottom: unset;
 					border-radius: 6px 6px 0px 0px;
 					border-right: 2px solid $accent;
 					border-left: 2px solid $accent;
 					border-top: 2px solid $accent;
 
-					svg 
-					{ transform: rotate(180deg); }
+					svg {
+						transform: rotate(180deg);
+					}
 				}
 			}
 
-			.items
-			{
+			.items {
 				color: $white;
 				overflow-x: hidden;
 				overflow-y: auto;
@@ -219,8 +206,7 @@
 					background-color: $grey-light;
 				}
 
-				.item
-				{
+				.item {
 					color: $black;
 					cursor: pointer;
 					user-select: none;
@@ -232,21 +218,18 @@
 					max-width: 100%;
 					padding: 8px 12px;
 
-					&.current
-					{
+					&.current {
 						background-color: rgba(255, 24, 141, 0.1);
 					}
 				}
-				
-				.item:hover
-				{
+
+				.item:hover {
 					color: $white;
 					background-color: $accent;
 				}
 			}
 
-			.selectHide 
-			{
+			.selectHide {
 				display: none;
 			}
 		}

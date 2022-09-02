@@ -1247,7 +1247,7 @@
 			</div>
 		</div>
 
-		<h2 class="pgly-wps--title pgly-wps-is-6">Uploader Selector</h2>
+		<h2 class="pgly-wps--title pgly-wps-is-6">Media Selector</h2>
 		<div class="pgly-wps--row">
 			<div class="pgly-wps--column">
 				<div class="pgly-wps--media-wrapper">
@@ -1260,6 +1260,32 @@
 						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Remove</button>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Selector</h2>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field" data-name="extended-selector-field" id="extended-selector-field">
+					<label class="pgly-wps--label" for="icon">Extended Select Field</label>
+					<div class="pgly-wps--select">
+						<div class="selected">
+							<span>One</span>
+							<svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
+								<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
+								<path d="M0-.75h48v48h-48z" fill="none"></path>
+							</svg>
+						</div>
+						<div class="items selectHide">
+							<div data-value="one" class="item current">One</div>
+							<div data-value="two" class="item">Two</div>
+							<div data-value="three" class="item">Three</div>
+						</div>
+					</div>
+				</div>
+				<script>
+					document.addEventListener( 'DOMContentLoaded', () => new window.PglySelectComponent( 'extended-selector-field' ) );
+				</script>
 			</div>
 		</div>
 	</div>
