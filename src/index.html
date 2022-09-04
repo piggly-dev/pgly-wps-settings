@@ -1193,57 +1193,139 @@
 		<h2 class="pgly-wps--title pgly-wps-is-6">Finder & Selector</h2>
 		<div class="pgly-wps--row">
 			<div class="pgly-wps--column">
-				<div class="pgly-wps--field">
-					<label class="pgly-wps--label">
-						Find for something
-					</label>
-					<div class="flex-wrapper">
-						<input class="focus" placeholder="Type here your value..." type="text">
-						<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-primary">
-							Search
-							<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
-								<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-							</svg>
-						</button>
-					</div>
-					<p class="pgly-wps--description">
-						It includes description.
-					</p>
-				</div>
-
-				<div class="pgly-wps--loader">
-					<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
-						<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-					</svg>
-
-					<div class="pgly-wps--row">
-						<div class="pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact">
-							<div class="pgly-wps--card pgly-wps-is-white pgly-wps-is-compact">
-								<div class="inside left">
-									This is the left content
-								</div>
-								<div class="pgly-wps--action-bar inside right">
-									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary">Edit</button>
-									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Remove</button>
-								</div>
+				<div id="extended-finder-and-selector">
+					<div class="pgly-wps--field">
+						<label class="pgly-wps--label">
+							Find for something
+						</label>
+						<div class="pgly-wps--input flex-wrapper">
+							<input class="focus" placeholder="Type here your value..." type="text">
+							<button class="pgly-wps--button pgly-async--behaviour pgly-wps-is-primary">
+								Search
+								<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+							</button>
+						</div>
+						<div class="pgly-wps--selected pgly-wps--card pgly-wps-is-white pgly-wps-is-compact"
+							style="display: none;">
+							<input name="name" type="hidden">
+							<div class="pgly-wps--label inside left"></div>
+							<div class="pgly-wps--action-bar inside right">
+								<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Unselect</button>
 							</div>
 						</div>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
 					</div>
-
-					<div class="pgly-wps--row">
-						<div class="pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact">
-							<div class="pgly-wps--card pgly-wps-is-white pgly-wps-is-compact">
-								<div class="inside left">
-									This is the left content
-								</div>
-								<div class="pgly-wps--action-bar inside right">
-									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary">Edit</button>
-									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Remove</button>
-								</div>
-							</div>
+					<div class="pgly-wps--loader">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<div class="pgly-wps--list">
 						</div>
 					</div>
 				</div>
+				<script>
+					document.addEventListener( 'DOMContentLoaded', () => {
+						new window.PglyFinderComponent( 'extended-finder-and-selector', {
+							load: async ( v ) => {
+								const data = [
+									{
+										value: 1,
+										label: "hfink0@i2i.jp",
+									},
+									{
+										value: 2,
+										label: "aguillem1@photobucket.com",
+									},
+									{
+										value: 3,
+										label: "fgoodbody2@goo.ne.jp",
+									},
+									{
+										value: 4,
+										label: "icavee3@ucoz.com",
+									},
+									{
+										value: 5,
+										label: "vdibben4@guardian.co.uk",
+									},
+									{
+										value: 6,
+										label: "fburren5@china.com.cn",
+									},
+									{
+										value: 7,
+										label: "sklempke6@ted.com",
+									},
+									{
+										value: 8,
+										label: "sallicock7@princeton.edu",
+									},
+									{
+										value: 9,
+										label: "smorecomb8@tripod.com",
+									},
+									{
+										value: 10,
+										label: "lpitkin9@google.it",
+									},
+									{
+										value: 11,
+										label: "jbulbrooka@simplemachines.org",
+									},
+									{
+										value: 12,
+										label: "jpymb@examiner.com",
+									},
+									{
+										value: 13,
+										label: "kclimerc@jugem.jp",
+									},
+									{
+										value: 14,
+										label: "akendled@hud.gov",
+									},
+									{
+										value: 15,
+										label: "gshewrye@mediafire.com",
+									},
+									{
+										value: 16,
+										label: "hmeaddowcroftf@dedecms.com",
+									},
+									{
+										value: 17,
+										label: "ebrissetg@shutterfly.com",
+									},
+									{
+										value: 18,
+										label: "dtroyh@dion.ne.jp"
+									},
+									{
+										value: 19,
+										label: "djodrellei@narod.ru"
+									},
+									{
+										value: 20,
+										label: "dtasselerj@marketwatch.com"
+									}
+								];
+
+								return await new Promise( res => {
+									setTimeout( () => {
+										res( data.filter( ( i ) => i.label.includes( v ) ) );
+									}, 2000 );
+								} );
+							},
+							labels: {
+								select: 'Select'
+							}
+						} )
+					} );
+				</script>
 			</div>
 		</div>
 
