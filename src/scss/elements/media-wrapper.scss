@@ -6,6 +6,28 @@
 		display: table;
 		width: 100%;
 
+		.pgly-wps--images {
+			display: flex;
+
+			.pgly-wps--image {
+				width: 100px;
+				height: 100px;
+				border-radius: 12px;
+				border: 1px rgba(#000, 0.24) dashed;
+				display: inline-flex;
+				margin: 3px;
+				background-position: center;
+				background-size: cover;
+			}
+
+			button {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
 		img {
 			width: 100%;
 			height: auto;
