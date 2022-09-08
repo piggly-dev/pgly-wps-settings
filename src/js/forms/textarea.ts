@@ -1,3 +1,4 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
 export default class PglyTextAreaComponent extends PglyBaseComponent {
@@ -5,7 +6,7 @@ export default class PglyTextAreaComponent extends PglyBaseComponent {
 
 	constructor(el: string | HTMLDivElement) {
 		super(el);
-		this.input = PglyTextAreaComponent.findElement(this.wrapper, 'textarea');
+		this.input = DOMManipulation.findElement(this.wrapper, 'textarea');
 	}
 
 	public getInput(): HTMLTextAreaElement {

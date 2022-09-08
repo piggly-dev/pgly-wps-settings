@@ -1,3 +1,4 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
 import EventHandler from '@/events/handler';
 import ValidatorEngine from '@/validator/engine';
 import ValidatorRule from '@/validator/rule';
@@ -15,7 +16,7 @@ export default abstract class PglyBaseComponent extends EventHandler {
 	constructor(el: string | HTMLDivElement) {
 		super();
 
-		this.wrapper = PglyBaseComponent.getElement<HTMLDivElement>(el);
+		this.wrapper = DOMManipulation.getElement<HTMLDivElement>(el);
 		this.message = this.wrapper.querySelector('.pgly-wps--message') as HTMLSpanElement;
 		this.error = { state: false, message: undefined };
 	}
@@ -53,21 +54,4 @@ export default abstract class PglyBaseComponent extends EventHandler {
 	public abstract getName(): string;
 
 	public abstract getValue(): any;
-
-	public static getElement<T = HTMLElement>(el: string | HTMLElement): T {
-		if (typeof el === 'string') {
-			const wrapper = document.getElementById(el);
-			if (!wrapper) throw new Error(`Cannot find element id #${el} on DOM...`);
-			return wrapper as T;
-		}
-
-		return el as T;
-	}
-
-	public static findElement<T = HTMLElement>(wrapper: HTMLElement, query: string): T {
-		const el = wrapper.querySelector(query);
-		if (!query)
-			throw new Error(`Cannot find element with query ${query} on wrapper...`);
-		return el as T;
-	}
 }

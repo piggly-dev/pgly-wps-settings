@@ -7,6 +7,7 @@ import PglyCheckboxComponent from './checkbox';
 import PglyInputComponent from './input';
 import PglyTextAreaComponent from './textarea';
 import EventHandler from '@/events/handler';
+import DOMManipulation from '@/behaviours/dommanipulation';
 
 export type TFormError = {
 	name: string;
@@ -23,7 +24,7 @@ export type TFormOptions = {
 	x_security: string;
 };
 
-export default class FormEngine extends EventHandler {
+export abstract class PglyBaseFormEngine extends EventHandler {
 	protected wrapper: HTMLFormElement;
 	protected inputs: Array<PglyBaseComponent>;
 	protected button: HTMLButtonElement;
@@ -33,8 +34,8 @@ export default class FormEngine extends EventHandler {
 	constructor(el: string | HTMLFormElement, options: TFormOptions) {
 		super();
 
-		this.wrapper = FormEngine.getElement(el);
-		this.button = FormEngine.findElement(this.wrapper, 'button.pgly-form--submit');
+		this.wrapper = DOMManipulation.getElement(el);
+		this.button = DOMManipulation.findElement(this.wrapper, 'button.pgly-form--submit');
 		this.inputs = [];
 		this.options = options;
 	}
@@ -89,6 +90,27 @@ export default class FormEngine extends EventHandler {
 		return this.loading;
 	}
 
+	protected abstract submit(data: TFormPreparedData): void;
+
+	protected loadState(loading: boolean) {
+		this.loading = loading;
+		this.button.classList.toggle('pgly-loading--state');
+	}
+
+	protected bind() {
+		this.wrapper.addEventListener('submit', e => {
+			e.preventDefault();
+			this.submit(this.prepare());
+		});
+
+		this.button.addEventListener('click', e => {
+			e.preventDefault();
+			this.submit(this.prepare());
+		});
+	}
+}
+
+export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 	protected submit(data: TFormPreparedData) {
 		if (this.loading) {
 			return;
@@ -116,39 +138,5 @@ export default class FormEngine extends EventHandler {
 				this.loadState(false);
 				this.emit('finished', { data: data.inputs });
 			});
-	}
-
-	protected loadState(loading: boolean) {
-		this.loading = loading;
-		this.button.classList.toggle('pgly-loading--state');
-	}
-
-	protected bind() {
-		this.wrapper.addEventListener('submit', e => {
-			e.preventDefault();
-			this.submit(this.prepare());
-		});
-
-		this.button.addEventListener('click', e => {
-			e.preventDefault();
-			this.submit(this.prepare());
-		});
-	}
-
-	public static getElement<T = HTMLElement>(el: string | HTMLElement): T {
-		if (typeof el === 'string') {
-			const wrapper = document.getElementById(el);
-			if (!wrapper) throw new Error(`Cannot find element id #${el} on DOM...`);
-			return wrapper as T;
-		}
-
-		return el as T;
-	}
-
-	public static findElement<T = HTMLElement>(wrapper: HTMLElement, query: string): T {
-		const el = wrapper.querySelector(query);
-		if (!query)
-			throw new Error(`Cannot find element with query ${query} on wrapper...`);
-		return el as T;
 	}
 }

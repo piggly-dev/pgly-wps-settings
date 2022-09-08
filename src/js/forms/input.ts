@@ -1,3 +1,4 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
 export default class PglyInputComponent extends PglyBaseComponent {
@@ -5,7 +6,7 @@ export default class PglyInputComponent extends PglyBaseComponent {
 
 	constructor(el: string | HTMLDivElement) {
 		super(el);
-		this.input = PglyInputComponent.findElement(this.wrapper, 'input');
+		this.input = DOMManipulation.findElement(this.wrapper, 'input');
 	}
 
 	public getInput(): HTMLInputElement {

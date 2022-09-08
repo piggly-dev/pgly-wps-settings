@@ -1,3 +1,4 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
 export default class PglyCheckboxComponent extends PglyBaseComponent {
@@ -7,7 +8,7 @@ export default class PglyCheckboxComponent extends PglyBaseComponent {
 	constructor(el: string | HTMLDivElement) {
 		super(el);
 
-		this.checkbox = PglyCheckboxComponent.findElement(
+		this.checkbox = DOMManipulation.findElement(
 			this.wrapper,
 			'.pgly-wps--checkbox'
 		);
