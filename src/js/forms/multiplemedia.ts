@@ -1,3 +1,6 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
+
 export type TMultipleMediaItem = {
 	value: string;
 	src: string;
@@ -10,27 +13,18 @@ export type TMultipleMediaOptions = {
 	onSelect?: (comp: PglyMultipleMediaComponent) => void;
 };
 
-export default class PglyMultipleMediaComponent {
-	protected wrapper: HTMLDivElement;
+export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 	protected input: HTMLInputElement;
 	protected images: HTMLDivElement;
 	protected options: TMultipleMediaOptions;
 
 	protected selection: Array<string> = [];
 
-	constructor(id: string, options: TMultipleMediaOptions) {
-		this.wrapper = document.getElementById(id) as HTMLDivElement;
+	constructor(el: string | HTMLDivElement, options: TMultipleMediaOptions) {
+		super(el);
 
-		if (!this.wrapper) {
-			throw Error(
-				`PglyMultipleMediaComponent -> Cannot find element #${id} on DOM.`
-			);
-		}
-
-		this.input = this.wrapper.querySelector('input') as HTMLInputElement;
-		this.images = this.wrapper.querySelector(
-			'pgly-wps--images'
-		) as HTMLDivElement;
+		this.input = DOMManipulation.findElement(this.wrapper, 'input');
+		this.images = DOMManipulation.findElement(this.wrapper, '.pgly-wps--images');
 		this.options = options;
 
 		if (this.input.value.length > 0) {
@@ -101,6 +95,14 @@ export default class PglyMultipleMediaComponent {
 			</div>`);
 
 		this.images.appendChild(frag);
+	}
+
+	public getName(): string {
+		return this.input.name;
+	}
+
+	public getValue(): string {
+		return this.input.value;
 	}
 
 	public remove(id: string) {

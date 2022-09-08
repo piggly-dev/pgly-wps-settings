@@ -1,3 +1,6 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
+
 export type TSingleMediaItem = {
 	value: string;
 	src: string;
@@ -9,23 +12,16 @@ export type TSingleMediaOptions = {
 	onSelect?: (comp: PglySingleMediaComponent) => void;
 };
 
-export default class PglySingleMediaComponent {
-	protected wrapper: HTMLDivElement;
+export default class PglySingleMediaComponent extends PglyBaseComponent {
 	protected input: HTMLInputElement;
 	protected image: HTMLImageElement;
 	protected options: TSingleMediaOptions;
 
-	constructor(id: string, options: TSingleMediaOptions) {
-		this.wrapper = document.getElementById(id) as HTMLDivElement;
+	constructor(el: string | HTMLDivElement, options: TSingleMediaOptions) {
+		super(el);
 
-		if (!this.wrapper) {
-			throw Error(
-				`PglySingleMediaComponent -> Cannot find element #${id} on DOM.`
-			);
-		}
-
-		this.input = this.wrapper.querySelector('input') as HTMLInputElement;
-		this.image = this.wrapper.querySelector('img') as HTMLImageElement;
+		this.input = DOMManipulation.findElement(this.wrapper, 'input');
+		this.image = DOMManipulation.findElement(this.wrapper, 'img');
 		this.options = options;
 
 		this.bind();
@@ -55,11 +51,7 @@ export default class PglySingleMediaComponent {
 		});
 
 		frame.on('select', () => {
-			const { id, url } = frame
-				.state()
-				.get('selection')
-				.first()
-				.toJSON();
+			const { id, url } = frame.state().get('selection').first().toJSON();
 
 			this.select({ value: id, src: url });
 		});
@@ -75,6 +67,14 @@ export default class PglySingleMediaComponent {
 	public clean() {
 		this.input.value = '';
 		this.image.src = '';
+	}
+
+	public getName(): string {
+		return this.input.name;
+	}
+
+	public getValue(): string {
+		return this.input.value;
 	}
 
 	protected bind() {
