@@ -8,14 +8,16 @@ export default class PglyCheckboxComponent extends PglyBaseComponent {
 	constructor(el: string | HTMLDivElement) {
 		super(el);
 
-		this.checkbox = DOMManipulation.findElement(
-			this.wrapper,
-			'.pgly-wps--checkbox'
-		);
+		this.checkbox = DOMManipulation.findElement(this.wrapper, '.pgly-wps--checkbox');
 
 		this.input = document.createElement('input');
 
-		this.prepare();
+		this.input = DOMManipulation.createHiddenInput(
+			this.checkbox,
+			this.checkbox.dataset.name ?? 'unknown',
+			this.checkbox.dataset.selected === 'true' ? '1' : '0'
+		);
+
 		this.bind();
 	}
 
@@ -29,14 +31,6 @@ export default class PglyCheckboxComponent extends PglyBaseComponent {
 
 	public getValue(): string {
 		return this.input.value;
-	}
-
-	protected prepare() {
-		this.input.type = 'hidden';
-		this.input.name = this.checkbox.dataset.name ?? 'unknown';
-		this.input.value = this.checkbox.dataset.selected === 'true' ? '1' : '0';
-
-		this.checkbox.appendChild(this.input);
 	}
 
 	protected bind() {

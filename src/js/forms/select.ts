@@ -1,36 +1,30 @@
-export default class PglySelectComponent {
-	protected wrapper: HTMLDivElement;
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
+
+export default class PglySelectComponent extends PglyBaseComponent {
+	protected input: HTMLInputElement;
 	protected items: HTMLDivElement;
 	protected selection: {
 		wrapper: HTMLDivElement;
 		value: HTMLSpanElement;
-		input: HTMLInputElement;
 	};
 
-	constructor(id: string) {
-		this.wrapper = document.getElementById(id) as HTMLDivElement;
+	constructor(el: string | HTMLDivElement) {
+		super(el);
 
-		if (!this.wrapper) {
-			throw Error(
-				`PglySelectInput -> Cannot find element #${id} on DOM.`
-			);
-		}
-
-		const selWrapper = this.wrapper.querySelector(
-			'.selected'
-		) as HTMLDivElement;
-
-		const itemsWrapper = this.wrapper.querySelector(
-			'.items'
-		) as HTMLDivElement;
+		this.items = DOMManipulation.findElement(this.wrapper, '.items');
 
 		this.selection = {
-			wrapper: selWrapper,
-			value: selWrapper.querySelector('span') as HTMLSpanElement,
-			input: this.createHiddenInput(selWrapper),
+			wrapper: DOMManipulation.findElement(this.wrapper, '.selected'),
+			value: DOMManipulation.findElement(this.wrapper, '.selected span'),
 		};
 
-		this.items = itemsWrapper;
+		this.input = DOMManipulation.createHiddenInput(
+			this.selection.wrapper,
+			this.wrapper.dataset.name ?? 'unknown',
+			this.items.querySelector<HTMLDivElement>('.current')?.dataset.value ?? ''
+		);
+
 		this.bind();
 	}
 
@@ -40,8 +34,13 @@ export default class PglySelectComponent {
 	}
 
 	public select(el: HTMLDivElement) {
+		const label = el.textContent;
+		const value = el.dataset.value ?? 'unknown';
+
 		this.selection.value.textContent = el.textContent;
-		this.selection.input.value = el.dataset.value ?? 'unknown';
+		this.input.value = el.dataset.value ?? 'unknown';
+
+		this.emit('change', { component: this, label, value });
 
 		this.flushItems(el);
 		this.toggle();
@@ -55,25 +54,23 @@ export default class PglySelectComponent {
 		selected.classList.add('current');
 	}
 
+	public getInput(): HTMLInputElement {
+		return this.input;
+	}
+
+	public getName(): string {
+		return this.input.name;
+	}
+
+	public getValue(): string {
+		return this.input.value;
+	}
+
 	protected bind() {
 		this.selection.wrapper.addEventListener('click', () => this.toggle());
 
 		this.items
 			.querySelectorAll<HTMLDivElement>('.item')
-			.forEach(el =>
-				el.addEventListener('click', () => this.select(el))
-			);
-	}
-
-	protected createHiddenInput(parent: HTMLDivElement): HTMLInputElement {
-		const el = document.createElement('input');
-		el.type = 'hidden';
-		el.name = this.wrapper.dataset.name ?? 'unknown';
-		el.value =
-			this.wrapper.querySelector<HTMLDivElement>('.items .current')
-				?.dataset.value ?? '';
-
-		parent.appendChild(el);
-		return el;
+			.forEach(el => el.addEventListener('click', () => this.select(el)));
 	}
 }

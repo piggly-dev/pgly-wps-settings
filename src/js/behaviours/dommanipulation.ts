@@ -15,4 +15,18 @@ export default class DOMManipulation {
 			throw new Error(`Cannot find element with query ${query} on wrapper...`);
 		return el as T;
 	}
+
+	public static createHiddenInput(
+		parent: HTMLElement,
+		name: string,
+		value: string
+	): HTMLInputElement {
+		const input = document.createElement('input');
+		input.type = 'hidden';
+		input.name = name;
+		input.value = value;
+
+		parent.appendChild(input);
+		return input;
+	}
 }
