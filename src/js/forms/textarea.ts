@@ -12,6 +12,10 @@ export default class PglyTextAreaComponent extends PglyBaseComponent {
 		return this.input;
 	}
 
+	public getName(): string {
+		return this.input.name;
+	}
+
 	public getValue(): string {
 		return this.input.value;
 	}

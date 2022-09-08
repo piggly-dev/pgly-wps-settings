@@ -1,34 +1,51 @@
-function PglyCheckbox($checkbox: HTMLInputElement) {
-	if ($checkbox.dataset.name === undefined) {
-		return;
+import PglyBaseComponent from './base';
+
+export default class PglyCheckboxComponent extends PglyBaseComponent {
+	protected input: HTMLInputElement;
+	protected checkbox: HTMLDivElement;
+
+	constructor(el: string | HTMLDivElement) {
+		super(el);
+
+		this.checkbox = PglyCheckboxComponent.findElement(
+			this.wrapper,
+			'.pgly-wps--checkbox'
+		);
+
+		this.input = document.createElement('input');
+
+		this.prepare();
+		this.bind();
 	}
 
-	const input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = $checkbox.dataset.name as string;
-	input.value = $checkbox.dataset.selected === 'true' ? '1' : '0';
-
-	if ($checkbox.dataset.id) {
-		input.id = $checkbox.dataset.id;
+	public getInput(): HTMLInputElement {
+		return this.input;
 	}
 
-	$checkbox.appendChild(input);
+	public getName(): string {
+		return this.input.name;
+	}
 
-	$checkbox.addEventListener('click', () => {
-		const selected: boolean = $checkbox.dataset.selected === 'true';
+	public getValue(): string {
+		return this.input.value;
+	}
 
-		$checkbox.dataset.selected = !selected ? 'true' : 'false';
-		$checkbox.classList.toggle('pgly-checked--state');
-		input.value = !selected ? '1' : '0';
-	});
+	protected prepare() {
+		this.input.type = 'hidden';
+		this.input.name = this.checkbox.dataset.name ?? 'unknown';
+		this.input.value = this.checkbox.dataset.selected === 'true' ? '1' : '0';
+
+		this.checkbox.appendChild(this.input);
+	}
+
+	protected bind() {
+		this.checkbox.addEventListener('click', () => {
+			const selected: boolean = this.checkbox.dataset.selected === 'true';
+
+			this.checkbox.dataset.selected = !selected ? 'true' : 'false';
+			this.checkbox.classList.toggle('pgly-checked--state');
+			this.input.value = !selected ? '1' : '0';
+			this.emit('change', { component: this, selected });
+		});
+	}
 }
-
-const handlePglyCheckbox = () => {
-	(document.querySelectorAll('.pgly-wps--checkbox') || []).forEach(
-		($checkbox: Element): void => {
-			PglyCheckbox($checkbox as HTMLInputElement);
-		}
-	);
-};
-
-export { PglyCheckbox, handlePglyCheckbox };
