@@ -1,13 +1,13 @@
 import axios from 'axios';
 import stringify from 'qs-stringify';
 
-import ValidatorRule from '@/validator/rule';
 import PglyBaseComponent from './base';
 import PglyCheckboxComponent from './checkbox';
 import PglyInputComponent from './input';
 import PglyTextAreaComponent from './textarea';
 import EventHandler from '@/events/handler';
 import DOMManipulation from '@/behaviours/dommanipulation';
+import { RuleValidator } from '@/validator/engine';
 
 export type TFormError = {
 	name: string;
@@ -22,54 +22,62 @@ export type TFormPreparedData = {
 
 export type TFormOptions = {
 	x_security?: string;
+	inputs?: Array<PglyBaseComponent>;
+	rules?: Record<string, Array<RuleValidator>>;
 };
 
 export abstract class PglyBaseFormEngine extends EventHandler {
-	protected wrapper: HTMLFormElement;
-	protected inputs: Array<PglyBaseComponent>;
-	protected button: HTMLButtonElement;
-	protected options: TFormOptions;
-	protected loading: boolean = false;
+	protected _wrapper: HTMLFormElement;
+	protected _inputs: Array<PglyBaseComponent>;
+	protected _button: HTMLButtonElement;
+	protected _options: TFormOptions;
+	protected _loading: boolean = false;
 
-	constructor(el: string | HTMLFormElement, options: TFormOptions) {
+	constructor(el: string | HTMLFormElement, options: Partial<TFormOptions> = {}) {
 		super();
 
-		this.wrapper = DOMManipulation.getElement(el);
-		this.button = DOMManipulation.findElement(this.wrapper, 'button.pgly-form--submit');
-		this.inputs = [];
-		this.options = options;
+		this._wrapper = DOMManipulation.getElement(el);
+		this._button = DOMManipulation.findElement(
+			this._wrapper,
+			'button.pgly-form--submit'
+		);
+
+		this._inputs = options.inputs ?? [];
+		this._options = options;
+
+		this._bind();
 	}
 
 	public add(input: PglyBaseComponent) {
-		this.inputs.push(input);
+		this._inputs.push(input);
 	}
 
 	public auto() {
-		const prefix = `.pgly-form`;
+		const prefix = `pgly-form`;
 
-		this.wrapper.querySelectorAll<HTMLDivElement>(`${prefix}--input`).forEach(el => {
+		this._wrapper.querySelectorAll<HTMLDivElement>(`.${prefix}--input`).forEach(el => {
 			if (el.classList.contains(`${prefix}--text`)) {
-				this.inputs.push(new PglyInputComponent(el));
+				this._inputs.push(new PglyInputComponent(el));
 				return;
 			}
 
 			if (el.classList.contains(`${prefix}--textarea`)) {
-				this.inputs.push(new PglyTextAreaComponent(el));
+				this._inputs.push(new PglyTextAreaComponent(el));
 				return;
 			}
 
 			if (el.classList.contains(`${prefix}--checkbox`)) {
-				this.inputs.push(new PglyCheckboxComponent(el));
+				this._inputs.push(new PglyCheckboxComponent(el));
 				return;
 			}
 		});
 	}
 
-	public prepare(rules: Record<string, Array<ValidatorRule>> = {}): TFormPreparedData {
+	public prepare(rules: Record<string, Array<RuleValidator>> = {}): TFormPreparedData {
 		const inputs: Record<string, any> = {};
 		const errors: Array<TFormError> = [];
 
-		this.inputs.forEach(el => {
+		this._inputs.forEach(el => {
 			if (rules[el.field().name()]) {
 				el.validate(rules[el.field().name()]);
 
@@ -89,32 +97,33 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 	}
 
 	public isLoading(): boolean {
-		return this.loading;
+		return this._loading;
 	}
 
 	protected abstract submit(data: TFormPreparedData): void;
 
 	protected loadState(loading: boolean) {
-		this.loading = loading;
-		this.button.classList.toggle('pgly-loading--state');
+		this._loading = loading;
+		this._button.classList.toggle('pgly-loading--state');
 	}
 
-	protected bind() {
-		this.wrapper.addEventListener('submit', e => {
+	protected _bind() {
+		this._wrapper.addEventListener('submit', e => {
 			e.preventDefault();
-			this.submit(this.prepare());
+			this.submit(this.prepare(this._options.rules ?? {}));
 		});
 
-		this.button.addEventListener('click', e => {
+		this._button.addEventListener('click', e => {
 			e.preventDefault();
-			this.submit(this.prepare());
+			this.submit(this.prepare(this._options.rules ?? {}));
 		});
 	}
 }
 
 export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 	protected submit(data: TFormPreparedData) {
-		if (this.loading) {
+		console.table(data.inputs);
+		if (this._loading) {
 			return;
 		}
 
@@ -125,11 +134,11 @@ export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 
 		this.loadState(true);
 
-		data.inputs.xSecurity = this.options.x_security;
+		data.inputs.xSecurity = this._options.x_security;
 		this.emit('prepared', data);
 
 		axios
-			.post(this.wrapper.action, stringify(data.inputs))
+			.post(this._wrapper.action, stringify(data.inputs))
 			.then(res => {
 				this.emit('submitted', { data: data.inputs, response: res.data });
 			})

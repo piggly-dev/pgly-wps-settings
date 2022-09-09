@@ -1,7 +1,6 @@
 import DOMManipulation from '@/behaviours/dommanipulation';
 import EventHandler from '@/events/handler';
-import ValidatorEngine from '@/validator/engine';
-import ValidatorRule from '@/validator/rule';
+import ValidatorEngine, { RuleValidator } from '@/validator/engine';
 import PglyFieldError from './error';
 import PglyField from './field';
 
@@ -41,12 +40,12 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 		return this._field;
 	}
 
-	public validate(rules: Array<ValidatorRule>): void {
+	public validate(rules: Array<RuleValidator>): void {
 		ValidatorEngine.apply<T>(
 			rules,
 			this._field.get(),
-			this._error.apply,
-			this._error.flush
+			(message: string) => this._error.apply(message),
+			() => this._error.flush()
 		);
 	}
 }

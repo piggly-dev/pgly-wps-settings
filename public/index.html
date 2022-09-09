@@ -1406,6 +1406,104 @@
 				</script>
 			</div>
 		</div>
+
+		<h1 class="pgly-wps--title">Form Inputs</h1>
+		<form id="main-form">
+			<script lang="javascript">
+				document.addEventListener( 'DOMContentLoaded', () => {
+					const requiredRule = ( v ) => {
+						if ( !v ) throw new Error( 'The field is required...' );
+					}
+
+					const form = new pglyWps.PglyAsyncFormEngine(
+						'main-form', {
+						rules: {
+							'regular-text': [requiredRule],
+							'regular-textarea': [requiredRule],
+							'required-checkbox': [requiredRule]
+						}
+					} );
+					form.auto();
+
+				} )
+			</script>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--text" data-name="regular-text" data-def="">
+						<label class="pgly-wps--label">
+							Regular Input
+						</label>
+						<div class="pgly-wps--tagged">
+							<input placeholder="Type here your value..." type="text" value="">
+							<span class="pgly-wps--tag">Tag for help</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--textarea" data-name="regular-textarea"
+						data-def="">
+						<label class="pgly-wps--label">
+							Regular Textarea
+						</label>
+						<div>
+							<textarea></textarea>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--checkbox" data-name="optional-checkbox"
+						data-def="true">
+						<label class="pgly-wps--label">
+							Optional Checkbox
+						</label>
+						<div class="pgly-wps--checkbox">
+							<div class="pgly-wps--icon"></div>
+							<div class="pgly-wps--placeholder">My checkbox</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--checkbox" data-name="required-checkbox"
+						data-def="false">
+						<label class="pgly-wps--label">
+							Required Checkbox
+						</label>
+						<div class="pgly-wps--checkbox">
+							<div class="pgly-wps--icon"></div>
+							<div class="pgly-wps--placeholder">My checkbox</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<button class="pgly-wps--button pgly-wps-is-primary pgly-form--submit">Submit</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 

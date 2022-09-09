@@ -5,6 +5,8 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import livereload from 'rollup-plugin-livereload';
 
+const extensions = ['.js', '.ts'];
+
 function serve() {
 	// Keep a reference to a spawned server process
 	let server;
@@ -44,12 +46,14 @@ module.exports = [
 		},
 		plugins: [
 			json(),
-			resolve({ browser: true }),
+			resolve({ browser: true, extensions }),
 			commonjs(),
 			typescript({ declaration: false, declarationDir: './dist/types' }),
 			babel({
 				exclude: 'node_modules/**',
 				babelHelpers: 'bundled',
+				include: ['src/js/**/*'],
+				extensions,
 			}),
 			serve(),
 			livereload('public'),

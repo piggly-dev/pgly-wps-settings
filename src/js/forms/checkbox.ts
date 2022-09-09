@@ -8,9 +8,9 @@ export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 		super(el);
 
 		this.checkbox = DOMManipulation.findElement(this._wrapper, '.pgly-wps--checkbox');
-		this.field().set(this.checkbox.classList.contains('pgly-checked--state'));
 
 		this._bind();
+		this.field().set(this._wrapper.dataset.def === 'true');
 	}
 
 	protected _select(v: boolean) {

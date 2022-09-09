@@ -6,6 +6,8 @@ import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import uglify from '@lopatnov/rollup-plugin-uglify';
 
+const extensions = ['.js', '.ts'];
+
 module.exports = [
 	{
 		input: 'src/js/index.ts',
@@ -20,11 +22,13 @@ module.exports = [
 		},
 		plugins: [
 			json(),
-			resolve({ browser: true }),
+			resolve({ browser: true, extensions }),
 			typescript(),
 			babel({
 				exclude: 'node_modules/**',
 				babelHelpers: 'bundled',
+				include: ['src/js/**/*'],
+				extensions,
 			}),
 		],
 	},

@@ -40,7 +40,9 @@ export default class PglyFieldError {
 	}
 
 	protected _render() {
-		this._comp.wrapper.classList.toggle('pgly-wps--error');
+		this._comp.wrapper.classList.remove('pgly-wps--error');
+		if (this._state) this._comp.wrapper.classList.add('pgly-wps--error');
+
 		this._comp.message.textContent = this._message ?? '';
 	}
 
