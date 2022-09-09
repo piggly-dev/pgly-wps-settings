@@ -1,53 +1,30 @@
 import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
-export default class PglyCheckboxComponent extends PglyBaseComponent {
-	protected input: HTMLInputElement;
+export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 	protected checkbox: HTMLDivElement;
 
 	constructor(el: string | HTMLDivElement) {
 		super(el);
 
-		this.checkbox = DOMManipulation.findElement(this.wrapper, '.pgly-wps--checkbox');
+		this.checkbox = DOMManipulation.findElement(this._wrapper, '.pgly-wps--checkbox');
+		this.field().set(this.checkbox.classList.contains('pgly-checked--state'));
 
-		this.input = document.createElement('input');
-
-		this.input = DOMManipulation.createHiddenInput(
-			this.checkbox,
-			this.checkbox.dataset.name ?? 'unknown',
-			this.checkbox.dataset.selected === 'true' ? '1' : '0'
-		);
-
-		this.bind();
+		this._bind();
 	}
 
-	public setValue(v: boolean): this {
-		this.select(v);
-		return this;
+	protected _select(v: boolean) {
+		this.checkbox.classList.remove('pgly-checked--state');
+		if (v) this.checkbox.classList.add('pgly-checked--state');
 	}
 
-	public getInput(): HTMLInputElement {
-		return this.input;
-	}
+	protected _bind() {
+		this.on('change', ({ value }) => {
+			this._select(value);
+		});
 
-	public getName(): string {
-		return this.input.name;
-	}
-
-	public getValue(): string {
-		return this.input.value;
-	}
-
-	protected select(v: boolean) {
-		this.checkbox.dataset.selected = !v ? 'true' : 'false';
-		this.checkbox.classList.toggle('pgly-checked--state');
-		this.input.value = !v ? '1' : '0';
-		this.emit('change', { component: this, selected: v });
-	}
-
-	protected bind() {
 		this.checkbox.addEventListener('click', () => {
-			this.select(this.checkbox.dataset.selected === 'true');
+			this.field().set(!this.field().get());
 		});
 	}
 }

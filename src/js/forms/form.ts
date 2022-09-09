@@ -1,5 +1,5 @@
 import axios from 'axios';
-const qs = require('qs');
+import stringify from 'qs-stringify';
 
 import ValidatorRule from '@/validator/rule';
 import PglyBaseComponent from './base';
@@ -11,7 +11,7 @@ import DOMManipulation from '@/behaviours/dommanipulation';
 
 export type TFormError = {
 	name: string;
-	value: string;
+	value: any;
 	message?: string;
 };
 
@@ -70,19 +70,19 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		const errors: Array<TFormError> = [];
 
 		this.inputs.forEach(el => {
-			if (rules[el.getName()]) {
-				el.validate(rules[el.getName()]);
+			if (rules[el.field().name()]) {
+				el.validate(rules[el.field().name()]);
 
-				if (el.hasError()) {
+				if (el.error().has()) {
 					errors.push({
-						name: el.getName(),
-						value: el.getValue(),
-						message: el.getError().message,
+						name: el.field().name(),
+						value: el.field().get(),
+						message: el.error().message(),
 					});
 				}
 			}
 
-			inputs[el.getName()] = el.getValue();
+			inputs[el.field().name()] = el.field().get();
 		});
 
 		return { inputs, errors };
@@ -129,7 +129,7 @@ export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 		this.emit('prepared', data);
 
 		axios
-			.post(this.wrapper.action, qs.stringify(data.inputs))
+			.post(this.wrapper.action, stringify(data.inputs))
 			.then(res => {
 				this.emit('submitted', { data: data.inputs, response: res.data });
 			})

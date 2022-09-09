@@ -7,38 +7,38 @@ export type TSingleMediaItem = {
 };
 
 export type TSingleMediaOptions = {
-	title: string;
-	button: string;
+	labels: {
+		title: string;
+		button: string;
+	};
 	onSelect?: (comp: PglySingleMediaComponent) => void;
 };
 
-export default class PglySingleMediaComponent extends PglyBaseComponent {
-	protected input: HTMLInputElement;
+export default class PglySingleMediaComponent extends PglyBaseComponent<string> {
 	protected image: HTMLImageElement;
 	protected options: TSingleMediaOptions;
 
 	constructor(el: string | HTMLDivElement, options: TSingleMediaOptions) {
 		super(el);
 
-		this.input = DOMManipulation.findElement(this.wrapper, 'input');
-		this.image = DOMManipulation.findElement(this.wrapper, 'img');
 		this.options = options;
+		this.image = DOMManipulation.findElement(this._wrapper, 'img');
 
 		this.bind();
 	}
 
 	public wpFrame() {
 		const frame = (wp.media.frames.metaImageFrame = wp.media({
-			title: this.options.title,
+			title: this.options.labels.title,
 			library: {
 				type: 'image',
 			},
-			button: { text: this.options.button },
+			button: { text: this.options.labels.button },
 			multiple: false,
 		}));
 
 		frame.on('open', () => {
-			const value = this.input.value;
+			const value = this.field().get();
 
 			if (value.length <= 0) return;
 
@@ -52,7 +52,6 @@ export default class PglySingleMediaComponent extends PglyBaseComponent {
 
 		frame.on('select', () => {
 			const { id, url } = frame.state().get('selection').first().toJSON();
-
 			this.select({ value: id, src: url });
 		});
 
@@ -60,30 +59,17 @@ export default class PglySingleMediaComponent extends PglyBaseComponent {
 	}
 
 	public select(data: TSingleMediaItem) {
-		this.input.value = data.value;
+		this.field().set(data.value);
 		this.image.src = data.src;
 	}
 
 	public clean() {
-		this.input.value = '';
+		this.field().set('');
 		this.image.src = '';
 	}
 
-	public setValue(data: TSingleMediaItem): this {
-		this.select(data);
-		return this;
-	}
-
-	public getName(): string {
-		return this.input.name;
-	}
-
-	public getValue(): string {
-		return this.input.value;
-	}
-
 	protected bind() {
-		this.wrapper.addEventListener('click', e => {
+		this._wrapper.addEventListener('click', e => {
 			const el = e.target as HTMLElement | null;
 
 			if (!el) return;

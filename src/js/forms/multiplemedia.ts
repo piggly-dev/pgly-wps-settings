@@ -14,7 +14,6 @@ export type TMultipleMediaOptions = {
 };
 
 export default class PglyMultipleMediaComponent extends PglyBaseComponent {
-	protected input: HTMLInputElement;
 	protected images: HTMLDivElement;
 	protected options: TMultipleMediaOptions;
 
@@ -23,12 +22,11 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 	constructor(el: string | HTMLDivElement, options: TMultipleMediaOptions) {
 		super(el);
 
-		this.input = DOMManipulation.findElement(this.wrapper, 'input');
-		this.images = DOMManipulation.findElement(this.wrapper, '.pgly-wps--images');
+		this.images = DOMManipulation.findElement(this._wrapper, '.pgly-wps--images');
 		this.options = options;
 
-		if (this.input.value.length > 0) {
-			this.selection = this.input.value.split(',');
+		if (this.field().get().length > 0) {
+			this.selection = this.field().get().split(',');
 		}
 
 		this.bind();
@@ -75,15 +73,17 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 				this.selection.push(i.id);
 			});
 
-			this.input.value = this.selection.join(',');
+			this.field().set(this.selection.join(','));
 		});
 
 		frame.open();
 	}
 
 	public select(data: TMultipleMediaItem) {
+		const name = this.field().name();
+
 		const frag = document.createRange()
-			.createContextualFragment(`<div id="${this.options.name}-img-${data.value}" class="pgly-wps--image" style="background-image: url(${data.src})">
+			.createContextualFragment(`<div id="${name}-img-${data.value}" class="pgly-wps--image" style="background-image: url(${data.src})">
 				<button data-id="${data.value}" class="pgly-wps--icon-button pgly-wps--remove pgly-wps-is-compact pgly-wps-is-rounded pgly-wps-is-danger">
 					<svg height="512px" style="enable-background:new 0 0 512 512;" version="1.1"
 						viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -97,14 +97,6 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 		this.images.appendChild(frag);
 	}
 
-	public getName(): string {
-		return this.input.name;
-	}
-
-	public getValue(): string {
-		return this.input.value;
-	}
-
 	public remove(id: string) {
 		const img = document.getElementById(`${this.options.name}-img-${id}`);
 
@@ -115,7 +107,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 	}
 
 	public clean() {
-		this.input.value = '';
+		this.field().set('');
 
 		while (this.images.firstChild) {
 			this.images.removeChild(this.images.firstChild);
@@ -125,7 +117,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent {
 	}
 
 	protected bind() {
-		this.wrapper.addEventListener('click', e => {
+		this._wrapper.addEventListener('click', e => {
 			const el = e.target as HTMLElement | null;
 
 			if (!el) return;
