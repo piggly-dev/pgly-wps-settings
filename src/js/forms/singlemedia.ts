@@ -69,6 +69,11 @@ export default class PglySingleMediaComponent extends PglyBaseComponent {
 		this.image.src = '';
 	}
 
+	public setValue(data: TSingleMediaItem): this {
+		this.select(data);
+		return this;
+	}
+
 	public getName(): string {
 		return this.input.name;
 	}

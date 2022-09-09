@@ -21,6 +21,11 @@ export default class PglyCheckboxComponent extends PglyBaseComponent {
 		this.bind();
 	}
 
+	public setValue(v: boolean): this {
+		this.select(v);
+		return this;
+	}
+
 	public getInput(): HTMLInputElement {
 		return this.input;
 	}
@@ -33,14 +38,16 @@ export default class PglyCheckboxComponent extends PglyBaseComponent {
 		return this.input.value;
 	}
 
+	protected select(v: boolean) {
+		this.checkbox.dataset.selected = !v ? 'true' : 'false';
+		this.checkbox.classList.toggle('pgly-checked--state');
+		this.input.value = !v ? '1' : '0';
+		this.emit('change', { component: this, selected: v });
+	}
+
 	protected bind() {
 		this.checkbox.addEventListener('click', () => {
-			const selected: boolean = this.checkbox.dataset.selected === 'true';
-
-			this.checkbox.dataset.selected = !selected ? 'true' : 'false';
-			this.checkbox.classList.toggle('pgly-checked--state');
-			this.input.value = !selected ? '1' : '0';
-			this.emit('change', { component: this, selected });
+			this.select(this.checkbox.dataset.selected === 'true');
 		});
 	}
 }

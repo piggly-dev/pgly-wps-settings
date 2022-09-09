@@ -21,7 +21,7 @@ export type TFormPreparedData = {
 };
 
 export type TFormOptions = {
-	x_security: string;
+	x_security?: string;
 };
 
 export abstract class PglyBaseFormEngine extends EventHandler {
@@ -45,18 +45,20 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 	}
 
 	public auto() {
-		this.wrapper.querySelectorAll<HTMLDivElement>('.pgly-form--input').forEach(el => {
-			if (el.classList.contains('.pgly-form--text')) {
+		const prefix = `.pgly-form`;
+
+		this.wrapper.querySelectorAll<HTMLDivElement>(`${prefix}--input`).forEach(el => {
+			if (el.classList.contains(`${prefix}--text`)) {
 				this.inputs.push(new PglyInputComponent(el));
 				return;
 			}
 
-			if (el.classList.contains('.pgly-form--textarea')) {
+			if (el.classList.contains(`${prefix}--textarea`)) {
 				this.inputs.push(new PglyTextAreaComponent(el));
 				return;
 			}
 
-			if (el.classList.contains('.pgly-form--checkbox')) {
+			if (el.classList.contains(`${prefix}--checkbox`)) {
 				this.inputs.push(new PglyCheckboxComponent(el));
 				return;
 			}

@@ -2,56 +2,51 @@ import DOMManipulation from '@/behaviours/dommanipulation';
 import EventHandler from '@/events/handler';
 import ValidatorEngine from '@/validator/engine';
 import ValidatorRule from '@/validator/rule';
+import PglyFieldError from './error';
+import PglyField from './field';
 
 export type TInputError = {
 	state: boolean;
 	message?: string;
 };
 
-export default abstract class PglyBaseComponent extends EventHandler {
-	protected wrapper: HTMLDivElement;
-	protected message: HTMLSpanElement;
-	protected error: TInputError;
+export default abstract class PglyBaseComponent<T = any> extends EventHandler {
+	protected _wrapper: HTMLDivElement;
+	protected _field: PglyField<T>;
+	protected _error: PglyFieldError;
 
 	constructor(el: string | HTMLDivElement) {
 		super();
 
-		this.wrapper = DOMManipulation.getElement<HTMLDivElement>(el);
-		this.message = this.wrapper.querySelector('.pgly-wps--message') as HTMLSpanElement;
-		this.error = { state: false, message: undefined };
+		this._wrapper = DOMManipulation.getElement<HTMLDivElement>(el);
+		const { name, def = undefined } = this._wrapper.dataset;
+
+		if (!name) {
+			console.error('Wrapper has no data-name attribute', this._wrapper);
+
+			throw new Error(
+				'PglyBaseComponent.PglyField must have a data-name attribute in its wrapper...'
+			);
+		}
+
+		this._error = new PglyFieldError(this, this._wrapper);
+		this._field = new PglyField<T>(this, name, def as T);
 	}
 
-	public applyError(message: string) {
-		this.error = { state: true, message: message };
-
-		this.wrapper.classList.toggle('pgly-wps--error');
-		this.message.textContent = message;
-
-		this.emit('error', { component: this, message: message });
+	public error(): PglyFieldError {
+		return this._error;
 	}
 
-	public flushError() {
-		this.error = { state: false, message: undefined };
-
-		this.wrapper.classList.toggle('pgly-wps--error');
-		this.message.textContent = '';
-
-		this.emit('flushError', { component: this });
+	public field(): PglyField<T> {
+		return this._field;
 	}
 
-	public getError(): TInputError {
-		return this.error;
+	public validate(rules: Array<ValidatorRule>): void {
+		ValidatorEngine.apply<T>(
+			rules,
+			this._field.get(),
+			this._error.apply,
+			this._error.flush
+		);
 	}
-
-	public hasError(): boolean {
-		return this.error.state;
-	}
-
-	public validate<T = any>(rules: Array<ValidatorRule>): void {
-		ValidatorEngine.apply<T>(rules, this.getValue(), this.applyError, this.flushError);
-	}
-
-	public abstract getName(): string;
-
-	public abstract getValue(): any;
 }
