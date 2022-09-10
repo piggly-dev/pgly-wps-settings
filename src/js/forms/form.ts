@@ -8,6 +8,8 @@ import PglyTextAreaComponent from './textarea';
 import EventHandler from '@/events/handler';
 import DOMManipulation from '@/behaviours/dommanipulation';
 import { RuleValidator } from '@/validator/engine';
+import PglySelectComponent from './select';
+import { TOrUndefined } from '@/types';
 
 export type TFormError = {
 	name: string;
@@ -52,6 +54,10 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		this._inputs.push(input);
 	}
 
+	public get(name: string): TOrUndefined<PglyBaseComponent> {
+		return this._inputs.find(i => i.field().name() === name);
+	}
+
 	public auto() {
 		const prefix = `pgly-form`;
 
@@ -68,6 +74,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--checkbox`)) {
 				this._inputs.push(new PglyCheckboxComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--eselect`)) {
+				this._inputs.push(new PglySelectComponent(el));
 				return;
 			}
 		});

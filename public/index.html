@@ -1394,7 +1394,7 @@
 								<path d="M0-.75h48v48h-48z" fill="none"></path>
 							</svg>
 						</div>
-						<div class="items selectHide">
+						<div class="items hidden">
 							<div data-value="one" class="item current">One</div>
 							<div data-value="two" class="item">Two</div>
 							<div data-value="three" class="item">Three</div>
@@ -1420,11 +1420,44 @@
 						rules: {
 							'regular-text': [requiredRule],
 							'regular-textarea': [requiredRule],
-							'required-checkbox': [requiredRule]
+							'required-checkbox': [requiredRule],
+							'extended-select': [requiredRule]
 						}
 					} );
+
 					form.auto();
 
+					form.get( 'extended-select-sync' ).synchronous( [{
+						label: 'One',
+						value: 'one',
+						selected: true
+					}, {
+						label: 'Two',
+						value: 'two',
+						selected: false
+					}, {
+						label: 'Three',
+						value: 'three',
+						selected: false
+					}] );
+
+					form.get( 'extended-select-async' ).asynchronous( () => {
+						return new Promise( ( res ) => {
+							setTimeout( () => res( [{
+								label: 'One',
+								value: 'one',
+								selected: false
+							}, {
+								label: 'Two',
+								value: 'two',
+								selected: false
+							}, {
+								label: 'Three',
+								value: 'three',
+								selected: false
+							}] ), 2000 );
+						} )
+					} );
 				} )
 			</script>
 			<div class="pgly-wps--row">
@@ -1489,6 +1522,68 @@
 						<div class="pgly-wps--checkbox">
 							<div class="pgly-wps--icon"></div>
 							<div class="pgly-wps--placeholder">My checkbox</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--eselect" data-name="extended-select-sync"
+						data-def="">
+						<label class="pgly-wps--label">
+							Extended Select Field as Synchronous
+						</label>
+						<div class="pgly-wps--select">
+							<div class="selected empty">
+								<span>Select one option...</span>
+								<svg class="pgly-wps--arrow" height="48" viewBox="0 0 48 48" width="48"
+									xmlns="http://www.w3.org/2000/svg">
+									<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
+									<path d="M0-.75h48v48h-48z" fill="none"></path>
+								</svg>
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+							</div>
+							<div class="items hidden">
+								<div class="placeholder clickable">Select one option...</div>
+								<div class="container"></div>
+							</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--eselect" data-name="extended-select-async"
+						data-def="">
+						<label class="pgly-wps--label">
+							Extended Select Field as Asynchronous
+						</label>
+						<div class="pgly-wps--select">
+							<div class="selected empty">
+								<span>Select one option...</span>
+								<svg class="pgly-wps--arrow" height="48" viewBox="0 0 48 48" width="48"
+									xmlns="http://www.w3.org/2000/svg">
+									<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
+									<path d="M0-.75h48v48h-48z" fill="none"></path>
+								</svg>
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+							</div>
+							<div class="items hidden">
+								<div class="placeholder">Select one option...</div>
+								<div class="container"></div>
+							</div>
 						</div>
 						<span class="pgly-wps--message"></span>
 						<p class="pgly-wps--description">

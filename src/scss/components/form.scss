@@ -150,18 +150,29 @@
 		.pgly-wps--select {
 			position: relative;
 
+			.pgly-wps--arrow {
+				display: inline-block;
+				position: absolute;
+				width: 28px;
+				height: 28px;
+				right: 8px;
+				transition: transform 0.2s;
+			}
+
+			.pgly-wps--spinner {
+				display: none;
+				position: absolute;
+				width: 18px;
+				height: 18px;
+				top: 50%;
+				right: 12px;
+				transform: translateY(-50%);
+			}
+
 			.selected {
 				cursor: pointer;
 				user-select: none;
 				padding-right: 42px;
-
-				svg {
-					position: absolute;
-					width: 28px;
-					height: 28px;
-					right: 8px;
-					transition: transform 0.2s;
-				}
 
 				&.open {
 					border-bottom: unset;
@@ -174,6 +185,23 @@
 						transform: rotate(180deg);
 					}
 				}
+			}
+
+			.pgly-loading--state {
+				background-color: #e4e4e4;
+				border-color: #e4e4e4;
+
+				.pgly-wps--arrow {
+					display: none;
+				}
+
+				.pgly-wps--spinner {
+					display: inline-block;
+				}
+			}
+
+			.empty {
+				color: rgba(0, 0, 0, 0.52) !important;
 			}
 
 			.items {
@@ -206,9 +234,8 @@
 					background-color: $grey-light;
 				}
 
-				.item {
-					color: $black;
-					cursor: pointer;
+				.item,
+				.placeholder {
 					user-select: none;
 					line-height: 2;
 					min-height: 46px;
@@ -217,19 +244,37 @@
 					width: 100%;
 					max-width: 100%;
 					padding: 8px 12px;
+				}
+
+				.item {
+					color: $black;
+					cursor: pointer;
 
 					&.current {
 						background-color: rgba(255, 24, 141, 0.1);
 					}
+
+					&:hover {
+						color: $white;
+						background-color: $accent;
+					}
 				}
 
-				.item:hover {
-					color: $white;
-					background-color: $accent;
+				.placeholder {
+					color: rgba(0, 0, 0, 0.52);
+
+					&.clickable {
+						cursor: pointer;
+
+						&:hover {
+							color: $white;
+							background-color: $accent;
+						}
+					}
 				}
 			}
 
-			.selectHide {
+			.hidden {
 				display: none;
 			}
 		}

@@ -4,6 +4,7 @@ export default class PglyField<T = any> {
 	protected _parent: PglyBaseComponent;
 	protected _value: T;
 	protected _name: string;
+	protected _label?: string;
 
 	constructor(parent: PglyBaseComponent, name: string, def: T) {
 		this._parent = parent;
@@ -15,9 +16,19 @@ export default class PglyField<T = any> {
 		return this._name;
 	}
 
-	public set(value: T) {
+	public label(): string | undefined {
+		return this._label;
+	}
+
+	public set(value: T, label?: string) {
 		this._value = value;
-		this._parent.emit('change', { component: this._parent, value: this._value });
+		this._label = label;
+
+		this._parent.emit('change', {
+			component: this._parent,
+			value: this._value,
+			label: this._label,
+		});
 	}
 
 	public get(): T {

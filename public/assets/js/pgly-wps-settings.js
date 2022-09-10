@@ -41,6 +41,44 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
+    function __awaiter(thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
     var has = Object.prototype.hasOwnProperty;
 
     /**
@@ -228,12 +266,18 @@
         return this._name;
       };
 
-      PglyField.prototype.set = function (value) {
+      PglyField.prototype.label = function () {
+        return this._label;
+      };
+
+      PglyField.prototype.set = function (value, label) {
         this._value = value;
+        this._label = label;
 
         this._parent.emit('change', {
           component: this._parent,
-          value: this._value
+          value: this._value,
+          label: this._label
         });
       };
 
@@ -361,6 +405,177 @@
       return PglyTextAreaComponent;
     }(PglyBaseComponent);
 
+    var PglySelectComponent =
+    /** @class */
+    function (_super) {
+      __extends(PglySelectComponent, _super);
+
+      function PglySelectComponent(el) {
+        var _this = _super.call(this, el) || this;
+
+        _this.items = [];
+        _this.loading = false;
+        _this._comps = {
+          selection: DOMManipulation.findElement(_this._wrapper, '.selected'),
+          value: DOMManipulation.findElement(_this._wrapper, '.selected span'),
+          items: DOMManipulation.findElement(_this._wrapper, '.items'),
+          container: DOMManipulation.findElement(_this._wrapper, '.items .container')
+        };
+
+        _this._bind();
+
+        return _this;
+      }
+
+      PglySelectComponent.prototype.synchronous = function (items) {
+        this.loading = false;
+        this.items = items;
+
+        this._render();
+      };
+
+      PglySelectComponent.prototype.asynchronous = function (callback) {
+        return __awaiter(this, void 0, void 0, function () {
+          var _a;
+
+          return __generator(this, function (_b) {
+            switch (_b.label) {
+              case 0:
+                this.loading = true;
+
+                this._comps.selection.classList.add('pgly-loading--state');
+
+                _a = this;
+                return [4
+                /*yield*/
+                , callback()];
+
+              case 1:
+                _a.items = _b.sent();
+
+                this._render();
+
+                this.loading = false;
+
+                this._comps.selection.classList.remove('pgly-loading--state');
+
+                return [2
+                /*return*/
+                ];
+            }
+          });
+        });
+      };
+
+      PglySelectComponent.prototype.select = function (el) {
+        var _a, _b, _c;
+
+        this._comps.selection.classList.remove('empty');
+
+        this.field().set((_a = el.dataset.value) !== null && _a !== void 0 ? _a : '', (_b = el.textContent) !== null && _b !== void 0 ? _b : '');
+        this._comps.value.textContent = (_c = this.field().label()) !== null && _c !== void 0 ? _c : '';
+
+        if (this.field().get() === '') {
+          this._comps.selection.classList.add('empty');
+        }
+
+        this._flush(el);
+
+        this._close();
+      };
+
+      PglySelectComponent.prototype.empty = function (label) {
+        var _a;
+
+        this.field().set('', label);
+        this._comps.value.textContent = (_a = this.field().label()) !== null && _a !== void 0 ? _a : '';
+
+        this._comps.selection.classList.add('empty');
+
+        this._flush();
+
+        this._close();
+      };
+
+      PglySelectComponent.prototype._flush = function (selected) {
+        this._comps.items.querySelectorAll('.item').forEach(function (el) {
+          el.classList.remove('current');
+        });
+
+        if (selected) selected.classList.add('current');
+      };
+
+      PglySelectComponent.prototype._toggle = function () {
+        this._comps.selection.classList.toggle('open');
+
+        this._comps.items.classList.toggle('hidden');
+      };
+
+      PglySelectComponent.prototype._close = function () {
+        this._comps.selection.classList.remove('open');
+
+        this._comps.items.classList.add('hidden');
+      };
+
+      PglySelectComponent.prototype._render = function () {
+        var _this = this;
+
+        while (this._comps.container.firstChild) {
+          this._comps.container.removeChild(this._comps.container.firstChild);
+        }
+
+        this.items.forEach(function (item) {
+          var _a;
+
+          var el = document.createElement('div');
+          el.className = 'item';
+          el.dataset.value = item.value;
+          el.textContent = item.label;
+
+          if (item.selected) {
+            el.className += ' current';
+
+            _this.field().set(item.value, item.label);
+
+            _this._comps.selection.classList.remove('empty');
+
+            _this._comps.value.textContent = (_a = _this.field().label()) !== null && _a !== void 0 ? _a : '';
+          }
+
+          _this._comps.container.appendChild(el);
+        });
+      };
+
+      PglySelectComponent.prototype._bind = function () {
+        var _this = this;
+
+        this._comps.selection.addEventListener('click', function () {
+          if (_this.loading) return;
+
+          _this._toggle();
+        });
+
+        this._comps.items.addEventListener('click', function (el) {
+          if (_this.loading) return;
+          var target = el.target;
+
+          if (target.classList.contains('item')) {
+            _this.select(target);
+
+            return;
+          }
+
+          if (target.classList.contains('clickable')) {
+            _this.empty(target.textContent);
+
+            return;
+          }
+        });
+      };
+
+      return PglySelectComponent;
+    }(PglyBaseComponent);
+
     var PglyBaseFormEngine =
     /** @class */
     function (_super) {
@@ -390,6 +605,12 @@
         this._inputs.push(input);
       };
 
+      PglyBaseFormEngine.prototype.get = function (name) {
+        return this._inputs.find(function (i) {
+          return i.field().name() === name;
+        });
+      };
+
       PglyBaseFormEngine.prototype.auto = function () {
         var _this = this;
 
@@ -410,6 +631,12 @@
 
           if (el.classList.contains(prefix + "--checkbox")) {
             _this._inputs.push(new PglyCheckboxComponent(el));
+
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--eselect")) {
+            _this._inputs.push(new PglySelectComponent(el));
 
             return;
           }
