@@ -62,5 +62,28 @@ $card-colors: $colors !default;
 				}
 			}
 		}
+
+		.pgly-wps--item {
+			font-size: 14px;
+			line-height: 1;
+			margin-bottom: 8px;
+			position: relative;
+			padding: 8px;
+			display: inline-block;
+			margin: 6px;
+
+			strong {
+				font-weight: $weight-bold;
+				text-transform: uppercase;
+				font-size: 11px;
+				display: block;
+			}
+
+			span {
+				font-size: 15px;
+				word-break: break-word;
+				display: block;
+			}
+		}
 	}
 }

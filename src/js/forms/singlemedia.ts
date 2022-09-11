@@ -45,6 +45,10 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 		this.field().set('', '');
 	}
 
+	public emptyValue() {
+		this.clean();
+	}
+
 	protected _bind() {
 		this.on('change', () => {
 			this._image.src = this.field().label() ?? '';

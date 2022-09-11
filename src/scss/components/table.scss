@@ -1,7 +1,6 @@
-.pgly-wps--settings
-{
-	.wp-list-table
-	{
+.pgly-wps--settings {
+	.wp-list-table,
+	.pgly-wps--table {
 		background: $white !important;
 		border: none !important;
 		border-radius: $radius-small;
@@ -9,24 +8,25 @@
 		margin: 18px 0;
 		overflow: hidden !important;
 		padding: 0;
+		width: 100%;
 
-		tbody
-		{
-			tr:nth-child(odd)
-			{ background-color: $grey-lightest !important; }
+		tbody {
+			tr:nth-child(odd) {
+				background-color: $grey-lightest !important;
+			}
 		}
 
-		thead, tfoot
-		{
-			th
-			{ 
+		thead,
+		tfoot {
+			th {
+				border: none;
 				font-weight: $weight-bold !important;
-				color: $white !important; 
+				color: $white !important;
 				background-color: $black-bis;
 				font-size: 13px;
+				text-align: left;
 
-				a
-				{
+				a {
 					line-height: 1 !important;
 					padding: 12px !important;
 					color: $accent !important;
@@ -34,16 +34,15 @@
 			}
 		}
 
-		tr
-		{
+		tr {
 			background: $white !important;
 			border: none !important;
 			display: flex !important;
 			flex-wrap: wrap !important;
 			overflow: hidden !important;
 
-			td, th
-			{
+			td,
+			th {
 				border: none !important;
 				box-sizing: border-box;
 				color: $black;
@@ -52,81 +51,72 @@
 				padding: 12px;
 				overflow: hidden !important;
 
-				strong
-				{ font-weight: bold; }
-				
-				.line
-				{ 
-					display: block; 
+				strong {
+					font-weight: bold;
+				}
+
+				.line {
+					display: block;
 					margin-bottom: 5px;
 
-					&:last-child
-					{ margin-bottom: 0; }
+					&:last-child {
+						margin-bottom: 0;
+					}
 				}
-				
-				@for $i from 1 through 12 
-				{
-					&.pgly-wps-cell--#{$i}
-					{ width: calc(100% / 12 * #{$i}); }
+
+				@for $i from 1 through 12 {
+					&.pgly-wps-cell--#{$i} {
+						width: calc(100% / 12 * #{$i});
+					}
 				}
 			}
 		}
 	}
 
-	.tablenav .tablenav-pages .button .screen-reader-text
-	{
+	.tablenav .tablenav-pages .button .screen-reader-text {
 		display: none;
 	}
 
-	.pgly-wps--table
-	{
-		border-radius: $radius-small;
-		margin: 18px 0;
-		padding: 0;
-		overflow: hidden;
-
-		& > .pgly-wps--row:nth-child(odd)
-		{
+	.pgly-wps--table {
+		& > .pgly-wps--row:nth-child(odd) {
 			background-color: $grey-lightest;
 		}
 
-		& .pgly-wps--row
-		{
+		& .pgly-wps--row {
 			display: flex;
 			flex-wrap: wrap;
 			overflow: hidden;
 			background: $white;
 
-			&:first-of-type
-			{
+			&:first-of-type {
 				font-weight: $weight-bold;
 				color: $white;
 				background-color: $black-ter;
 			}
 
-			& .pgly-wps--cell
-			{
+			& .pgly-wps--cell {
 				box-sizing: border-box;
 				flex-grow: 1;
 				padding: 12px;
 				overflow: hidden;
 
-				strong
-				{ font-weight: bold; }
-				
-				span
-				{ 
-					display: block; 
+				strong {
+					font-weight: bold;
+				}
+
+				span {
+					display: block;
 					margin-bottom: 5px;
 
-					&:last-child
-					{ margin-bottom: 0; }
+					&:last-child {
+						margin-bottom: 0;
+					}
 				}
-				
-				@for $i from 1 through 12 
-				{
-					&.pgly-wps-cell--#{$i}
-					{ width: calc(100% / 12 * #{$i}); }
+
+				@for $i from 1 through 12 {
+					&.pgly-wps-cell--#{$i} {
+						width: calc(100% / 12 * #{$i});
+					}
 				}
 			}
 		}

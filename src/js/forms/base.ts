@@ -32,6 +32,8 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 		this._field = new PglyField<T>(this, name, undefined as T);
 	}
 
+	public abstract emptyValue(): void;
+
 	public error(): PglyFieldError {
 		return this._error;
 	}

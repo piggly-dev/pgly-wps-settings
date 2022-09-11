@@ -2,18 +2,36 @@ import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
 export default class PglyInputComponent extends PglyBaseComponent<string> {
+	protected _keyEvent: boolean = false;
+	protected _input: HTMLInputElement;
+
 	constructor(el: string | HTMLDivElement) {
 		super(el);
-		
-		DOMManipulation.findElement(this._wrapper, 'input').addEventListener('keyup', e => {
-			this._field.set((e.target as HTMLInputElement).value);
-		});
 
+		this._input = DOMManipulation.findElement(this._wrapper, 'input');
+
+		this._bind();
 		this._default();
 	}
 
+	public emptyValue(): void {
+		this.field().set('');
+	}
+
+	protected _bind() {
+		this.on('change', () => {
+			if (this._keyEvent) return;
+			this._input.value = this.field().get();
+		});
+
+		this._input.addEventListener('keyup', e => {
+			this._keyEvent = true;
+			this._field.set((e.target as HTMLInputElement).value);
+			this._keyEvent = false;
+		});
+	}
+
 	protected _default(): void {
-		const input = DOMManipulation.findElement<HTMLInputElement>(this._wrapper, 'input');
-		this.field().set(input.value);
+		this.field().set(this._input.value);
 	}
 }

@@ -8,9 +8,16 @@ export type TSelectItem = {
 	selected: boolean;
 };
 
+export type TSelectOptions = {
+	labels: {
+		placeholder: string;
+	};
+};
+
 export default class PglySelectComponent extends PglyBaseComponent {
 	protected items: Array<TSelectItem> = [];
 	protected _loader: PglyLoadable;
+	protected _options: TSelectOptions;
 
 	protected _comps: {
 		selection: HTMLDivElement;
@@ -30,9 +37,18 @@ export default class PglySelectComponent extends PglyBaseComponent {
 		};
 
 		this._loader = new PglyLoadable(this);
+		this._options = {
+			labels: {
+				placeholder: 'Select an option...',
+			},
+		};
 
 		this._bind();
 		this._default();
+	}
+
+	public options(options: Partial<TSelectOptions>) {
+		this._options = { ...this._options, ...options };
 	}
 
 	public loader(): PglyLoadable {
@@ -52,6 +68,10 @@ export default class PglySelectComponent extends PglyBaseComponent {
 		this.items = await callback();
 		this._render();
 		this.loader().done();
+	}
+
+	public emptyValue(): void {
+		this.field().set('', '');
 	}
 
 	protected _flush() {
@@ -78,7 +98,8 @@ export default class PglySelectComponent extends PglyBaseComponent {
 			this._comps.selection.classList.add('empty');
 		}
 
-		this._comps.value.textContent = this.field().label() as string;
+		this._comps.value.textContent =
+			this.field().label() ?? this._options.labels.placeholder ?? '';
 
 		this._flush();
 		this._close();

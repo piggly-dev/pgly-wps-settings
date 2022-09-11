@@ -12,6 +12,10 @@ export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 		this._default();
 	}
 
+	public emptyValue(): void {
+		this.field().set(false);
+	}
+
 	protected _select(v: boolean) {
 		this._checkbox.classList.remove('pgly-checked--state');
 		if (v) this._checkbox.classList.add('pgly-checked--state');

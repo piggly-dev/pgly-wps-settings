@@ -92,6 +92,10 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		return this._loader;
 	}
 
+	public emptyValue() {
+		this.field().set('', '');
+	}
+
 	protected _select() {
 		const hasValue = this.field().get() !== '';
 

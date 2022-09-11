@@ -1432,7 +1432,65 @@
 
 						const item = data[Math.floor( Math.random() * data.length )];
 						component.select( item );
+					} );
+
+					form.get( 'form-group' ).options( {
+						view: {
+							'first-name': 'First Name',
+							'last-name': 'Last Name',
+						},
+						rules: {
+							'regular-text': [requiredRule],
+							'regular-textarea': [requiredRule],
+							'required-checkbox': [requiredRule],
+							'extended-select': [requiredRule],
+							'finder': [requiredRule],
+							'single-media': [requiredRule]
+						}
 					} )
+
+					form.get( 'form-group' ).synchronous( [{
+						"first-name": { label: undefined, value: "Damian" },
+						"last-name": { label: undefined, value: "Revett" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Hilario" },
+						"last-name": { label: undefined, value: "Vogele" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Adoree" },
+						"last-name": { label: undefined, value: "Belden" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Noble" },
+						"last-name": { label: undefined, value: "Glasper" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Farand" },
+						"last-name": { label: undefined, value: "Ducker" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Ansley" },
+						"last-name": { label: undefined, value: "Bowry" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Denna" },
+						"last-name": { label: undefined, value: "Daout" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Sacha" },
+						"last-name": { label: undefined, value: "Fuzzard" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Carolin" },
+						"last-name": { label: undefined, value: "Hellwich" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Lauralee" },
+						"last-name": { label: undefined, value: "Pulham" },
+						"required-checkbox": { label: undefined, value: true },
+					}]
+					);
 				} )
 			</script>
 			<div class="pgly-wps--row">
@@ -1768,6 +1826,65 @@
 							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
 								Clean all
 							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--group pgly-form--input pgly-form--group" data-name="form-group">
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column pgly-wps-col--6">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="first-name">
+									<label class="pgly-wps--label">
+										First Name
+									</label>
+									<input placeholder="Type here your first name" type="text">
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+							<div class="pgly-wps--column pgly-wps-col--6">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="last-name">
+									<label class="pgly-wps--label">
+										Last Name
+									</label>
+									<input placeholder="Type here your last name" type="text">
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--checkbox"
+									data-name="required-checkbox" data-def="false">
+									<label class="pgly-wps--label">
+										Required Checkbox
+									</label>
+									<div class="pgly-wps--checkbox">
+										<div class="pgly-wps--icon"></div>
+										<div class="pgly-wps--placeholder">My checkbox</div>
+									</div>
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column">
+								<button class="pgly-wps--button pgly-wps-is-primary pgly-gform--submit">Save data</button>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column pgly-wps--items">
+							</div>
 						</div>
 					</div>
 				</div>

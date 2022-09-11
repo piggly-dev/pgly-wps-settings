@@ -13,6 +13,7 @@ import { TOrUndefined } from '@/types';
 import PglyFinderComponent from './finder';
 import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
+import { PglyGroupFormComponent } from './group';
 
 export type TFormError = {
 	name: string;
@@ -61,6 +62,10 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		return this._inputs.find(i => i.field().name() === name);
 	}
 
+	public remove(name: string) {
+		this._inputs = this._inputs.filter(i => i.field().name() !== name);
+	}
+
 	public auto() {
 		const prefix = `pgly-form`;
 
@@ -97,6 +102,13 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--multiple-media`)) {
 				this._inputs.push(new PglyMultipleMediaComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--group`)) {
+				const comp = new PglyGroupFormComponent(el);
+				comp.auto();
+				this._inputs.push(comp);
 				return;
 			}
 		});

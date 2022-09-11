@@ -28,6 +28,8 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 			},
 		};
 
+		this.field().set([]);
+
 		this._bind();
 		this._default();
 	}
@@ -60,6 +62,10 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		while (this._images.firstChild) {
 			this._images.removeChild(this._images.firstChild);
 		}
+	}
+
+	public emptyValue() {
+		this.clean();
 	}
 
 	protected _render(data: TMultipleMediaItem) {
