@@ -1,3 +1,7 @@
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
+import PglyLoadable from './loadable';
+
 export type TFinderItem = {
 	value: string;
 	label: string;
@@ -7,170 +11,180 @@ export type TFinderOptions = {
 	load: (v: string) => Promise<Array<TFinderItem>>;
 	labels: {
 		select: string;
+		unselect: string;
 	};
 };
 
-export default class PglyFinderComponent {
-	protected wrapper: HTMLDivElement;
-
-	protected search: {
+export default class PglyFinderComponent extends PglyBaseComponent<string> {
+	protected _search: {
 		wrapper: HTMLDivElement;
 		input: HTMLInputElement;
 		button: HTMLButtonElement;
 	};
 
-	protected selected: {
+	protected _selected: {
 		wrapper: HTMLDivElement;
-		input: HTMLInputElement;
 		label: HTMLDivElement;
 		button: HTMLButtonElement;
 	};
 
-	protected items: {
+	protected _items: {
 		loader: HTMLDivElement;
 		list: HTMLDivElement;
 	};
 
-	protected response: Array<TFinderItem>;
-	protected options: TFinderOptions;
-	protected loading: boolean = false;
+	protected _response: Array<TFinderItem>;
+	protected _loader: PglyLoadable;
 
-	constructor(id: string, options: TFinderOptions) {
-		this.wrapper = document.getElementById(id) as HTMLDivElement;
+	protected _options: Partial<TFinderOptions> = {
+		labels: {
+			select: 'Select',
+			unselect: 'Unselect',
+		},
+	};
 
-		if (!this.wrapper) {
-			throw Error(
-				`PglyFinderComponent -> Cannot find element #${id} on DOM.`
-			);
-		}
-
-		this.response = [];
-		this.options = options;
-
-		this.search = {
-			wrapper: this.wrapper.querySelector(
+	constructor(el: string | HTMLDivElement) {
+		super(el);
+		this._search = {
+			wrapper: DOMManipulation.findElement(
+				this._wrapper,
 				'.pgly-wps--field .pgly-wps--input'
-			) as HTMLDivElement,
-			input: this.wrapper.querySelector(
-				'.pgly-wps--field input'
-			) as HTMLInputElement,
-			button: this.wrapper.querySelector(
-				'.pgly-wps--field button'
-			) as HTMLButtonElement,
+			),
+			input: DOMManipulation.findElement(this._wrapper, '.pgly-wps--field input'),
+			button: DOMManipulation.findElement(this._wrapper, '.pgly-wps--field button'),
 		};
 
-		this.selected = {
-			wrapper: this.wrapper.querySelector(
+		this._selected = {
+			wrapper: DOMManipulation.findElement(
+				this._wrapper,
 				'.pgly-wps--field .pgly-wps--selected'
-			) as HTMLDivElement,
-			input: this.wrapper.querySelector(
-				'.pgly-wps--field .pgly-wps--selected input'
-			) as HTMLInputElement,
-			label: this.wrapper.querySelector(
+			),
+			label: DOMManipulation.findElement(
+				this._wrapper,
 				'.pgly-wps--field .pgly-wps--selected .pgly-wps--label'
-			) as HTMLInputElement,
-			button: this.wrapper.querySelector(
+			),
+			button: DOMManipulation.findElement(
+				this._wrapper,
 				'.pgly-wps--field .pgly-wps--selected button'
-			) as HTMLButtonElement,
+			),
 		};
 
-		this.items = {
-			loader: this.wrapper.querySelector(
-				'.pgly-wps--loader'
-			) as HTMLDivElement,
-			list: this.wrapper.querySelector(
+		this._items = {
+			loader: this._wrapper.querySelector('.pgly-wps--loader') as HTMLDivElement,
+			list: this._wrapper.querySelector(
 				'.pgly-wps--loader .pgly-wps--list'
 			) as HTMLDivElement,
 		};
 
-		this.bind();
+		this._response = [];
+		this._loader = new PglyLoadable(this);
+
+		this._bind();
+	}
+
+	public options(options: Partial<TFinderOptions>) {
+		this._options = { ...this._options, ...options };
+	}
+
+	public loader(): PglyLoadable {
+		return this._loader;
 	}
 
 	public select(index: number, item: TFinderItem) {
-		this.selected.input.value = item.value;
-		this.selected.label.textContent = item.label;
-		this.selected.wrapper.dataset.index = index.toString();
-		this.search.input.value = '';
+		this.field().set(item.value, item.label);
 
-		this.flushItems();
-		this.search.wrapper.style.display = 'none';
-		this.selected.wrapper.style.display = 'flex';
+		this._selected.label.textContent = item.label;
+		this._selected.wrapper.dataset.index = index.toString();
+		this._search.input.value = '';
+
+		this._flush();
+		this._search.wrapper.style.display = 'none';
+		this._selected.wrapper.style.display = 'flex';
 	}
 
 	public unselect() {
-		this.selected.input.value = '';
-		this.selected.label.textContent = '';
-		this.selected.wrapper.dataset.index = '';
-		this.search.input.value = '';
+		this.field().set('', '');
 
-		this.search.wrapper.style.display = 'flex';
-		this.selected.wrapper.style.display = 'none';
+		this._selected.label.textContent = '';
+		this._selected.wrapper.dataset.index = '';
+		this._search.input.value = '';
+
+		this._search.wrapper.style.display = 'flex';
+		this._selected.wrapper.style.display = 'none';
 	}
 
-	protected flushItems() {
-		while (this.items.list.firstChild) {
-			this.items.list.removeChild(this.items.list.firstChild);
+	protected _flush() {
+		while (this._items.list.firstChild) {
+			this._items.list.removeChild(this._items.list.firstChild);
 		}
 	}
 
-	protected changeState() {
-		this.loading = !this.loading;
-		this.search.button.classList.toggle('pgly-loading--state');
-		this.items.loader.classList.toggle('pgly-loading--state');
-	}
-
 	protected async load(): Promise<void> {
-		if (this.search.input.value.length === 0 || this.loading) {
+		if (
+			this._search.input.value.length === 0 ||
+			this.loader().isLoading() ||
+			!this._options.load
+		) {
 			return;
 		}
 
 		let response: Array<TFinderItem>;
-		this.changeState();
+		this.loader().prepare();
 
 		try {
-			response = await this.options.load(this.search.input.value);
+			response = await this._options.load(this._search.input.value);
 		} catch (err) {
-			return this.changeState();
+			return this.loader().done();
 		}
 
-		this.flushItems();
+		this._flush();
 
 		response.forEach((item, idx) => {
-			this.items.list.appendChild(this.template(idx, item));
+			this._items.list.appendChild(this._render(idx, item));
 		});
 
-		return this.changeState();
+		return this.loader().done();
 	}
 
-	protected onSelect(e: HTMLElement) {
-		if (!e.classList.contains('pgly-wps--button')) {
-			return;
-		}
+	protected _bind() {
+		this.on('beforeLoad', () => {
+			this._search.button.classList.add('pgly-loading--state');
+			this._items.loader.classList.add('pgly-loading--state');
+		});
 
-		const { label = '', value = '', index = '0' } = e.dataset;
-		this.select(parseInt(index), { label, value });
+		this.on('afterLoad', () => {
+			this._search.button.classList.remove('pgly-loading--state');
+			this._items.loader.classList.remove('pgly-loading--state');
+		});
+
+		this._search.button.addEventListener('click', e => {
+			e.preventDefault();
+			this.load();
+		});
+		this._selected.button.addEventListener('click', e => {
+			e.preventDefault();
+			this.unselect();
+		});
+
+		this._items.list.addEventListener('click', e => {
+			const target = e.target as HTMLElement;
+
+			if (target.classList.contains('pgly-wps--button')) {
+				const { label = '', value = '', index = '0' } = target.dataset;
+				return this.select(parseInt(index), { label, value });
+			}
+		});
 	}
 
-	protected bind() {
-		this.search.button.addEventListener('click', () => this.load());
-		this.selected.button.addEventListener('click', () => this.unselect());
-
-		this.items.list.addEventListener('click', e =>
-			this.onSelect(e.target as HTMLElement)
-		);
-	}
-
-	protected template(index: number, item: TFinderItem) {
+	protected _render(index: number, item: TFinderItem) {
 		const row = document.createElement('div');
 		row.className = 'pgly-wps--row';
 
 		const col = document.createElement('div');
-		col.className =
-			'pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact';
+		col.className = 'pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact';
 
 		const card = document.createElement('div');
-		card.className =
-			'pgly-wps--card pgly-wps-is-white pgly-wps-is-compact';
+		card.className = 'pgly-wps--card pgly-wps-is-white pgly-wps-is-compact';
 
 		const content = document.createElement('div');
 		content.className = 'inside left';
@@ -180,9 +194,8 @@ export default class PglyFinderComponent {
 		actionBar.className = 'pgly-wps--action-bar inside right';
 
 		const button = document.createElement('button');
-		button.className =
-			'pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary';
-		button.textContent = this.options.labels.select ?? 'Select';
+		button.className = 'pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary';
+		button.textContent = this._options.labels?.select ?? 'Select';
 		button.dataset.label = item.label;
 		button.dataset.value = item.value;
 		button.dataset.index = index.toString();

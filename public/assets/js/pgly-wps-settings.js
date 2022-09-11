@@ -41,6 +41,17 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
+    var __assign = function() {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+
     function __awaiter(thisArg, _arguments, P, generator) {
         function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
         return new (P || (P = Promise))(function (resolve, reject) {
@@ -576,6 +587,235 @@
       return PglySelectComponent;
     }(PglyBaseComponent);
 
+    var PglyLoadable =
+    /** @class */
+    function () {
+      function PglyLoadable(parent) {
+        this._loading = false;
+        this._parent = parent;
+      }
+
+      PglyLoadable.prototype.prepare = function () {
+        this._parent.emit('beforeLoad', {
+          loading: false
+        });
+
+        this._loading = true;
+      };
+
+      PglyLoadable.prototype.done = function () {
+        this._loading = false;
+
+        this._parent.emit('afterLoad', {
+          loading: false
+        });
+      };
+
+      PglyLoadable.prototype.isLoading = function () {
+        return this._loading;
+      };
+
+      return PglyLoadable;
+    }();
+
+    var PglyFinderComponent =
+    /** @class */
+    function (_super) {
+      __extends(PglyFinderComponent, _super);
+
+      function PglyFinderComponent(el) {
+        var _this = _super.call(this, el) || this;
+
+        _this._options = {
+          labels: {
+            select: 'Select',
+            unselect: 'Unselect'
+          }
+        };
+        _this._search = {
+          wrapper: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field .pgly-wps--input'),
+          input: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field input'),
+          button: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field button')
+        };
+        _this._selected = {
+          wrapper: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field .pgly-wps--selected'),
+          label: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field .pgly-wps--selected .pgly-wps--label'),
+          button: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--field .pgly-wps--selected button')
+        };
+        _this._items = {
+          loader: _this._wrapper.querySelector('.pgly-wps--loader'),
+          list: _this._wrapper.querySelector('.pgly-wps--loader .pgly-wps--list')
+        };
+        _this._response = [];
+        _this._loader = new PglyLoadable(_this);
+
+        _this._bind();
+
+        return _this;
+      }
+
+      PglyFinderComponent.prototype.options = function (options) {
+        this._options = __assign(__assign({}, this._options), options);
+      };
+
+      PglyFinderComponent.prototype.loader = function () {
+        return this._loader;
+      };
+
+      PglyFinderComponent.prototype.select = function (index, item) {
+        this.field().set(item.value, item.label);
+        this._selected.label.textContent = item.label;
+        this._selected.wrapper.dataset.index = index.toString();
+        this._search.input.value = '';
+
+        this._flush();
+
+        this._search.wrapper.style.display = 'none';
+        this._selected.wrapper.style.display = 'flex';
+      };
+
+      PglyFinderComponent.prototype.unselect = function () {
+        this.field().set('', '');
+        this._selected.label.textContent = '';
+        this._selected.wrapper.dataset.index = '';
+        this._search.input.value = '';
+        this._search.wrapper.style.display = 'flex';
+        this._selected.wrapper.style.display = 'none';
+      };
+
+      PglyFinderComponent.prototype._flush = function () {
+        while (this._items.list.firstChild) {
+          this._items.list.removeChild(this._items.list.firstChild);
+        }
+      };
+
+      PglyFinderComponent.prototype.load = function () {
+        return __awaiter(this, void 0, void 0, function () {
+          var response;
+
+          var _this = this;
+
+          return __generator(this, function (_a) {
+            switch (_a.label) {
+              case 0:
+                if (this._search.input.value.length === 0 || this.loader().isLoading() || !this._options.load) {
+                  return [2
+                  /*return*/
+                  ];
+                }
+
+                this.loader().prepare();
+                _a.label = 1;
+
+              case 1:
+                _a.trys.push([1, 3,, 4]);
+
+                return [4
+                /*yield*/
+                , this._options.load(this._search.input.value)];
+
+              case 2:
+                response = _a.sent();
+                return [3
+                /*break*/
+                , 4];
+
+              case 3:
+                _a.sent();
+                return [2
+                /*return*/
+                , this.loader().done()];
+
+              case 4:
+                this._flush();
+
+                response.forEach(function (item, idx) {
+                  _this._items.list.appendChild(_this._render(idx, item));
+                });
+                return [2
+                /*return*/
+                , this.loader().done()];
+            }
+          });
+        });
+      };
+
+      PglyFinderComponent.prototype._bind = function () {
+        var _this = this;
+
+        this.on('beforeLoad', function () {
+          _this._search.button.classList.add('pgly-loading--state');
+
+          _this._items.loader.classList.add('pgly-loading--state');
+        });
+        this.on('afterLoad', function () {
+          _this._search.button.classList.remove('pgly-loading--state');
+
+          _this._items.loader.classList.remove('pgly-loading--state');
+        });
+
+        this._search.button.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this.load();
+        });
+
+        this._selected.button.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this.unselect();
+        });
+
+        this._items.list.addEventListener('click', function (e) {
+          var target = e.target;
+
+          if (target.classList.contains('pgly-wps--button')) {
+            var _a = target.dataset,
+                _b = _a.label,
+                label = _b === void 0 ? '' : _b,
+                _c = _a.value,
+                value = _c === void 0 ? '' : _c,
+                _d = _a.index,
+                index = _d === void 0 ? '0' : _d;
+            return _this.select(parseInt(index), {
+              label: label,
+              value: value
+            });
+          }
+        });
+      };
+
+      PglyFinderComponent.prototype._render = function (index, item) {
+        var _a, _b;
+
+        var row = document.createElement('div');
+        row.className = 'pgly-wps--row';
+        var col = document.createElement('div');
+        col.className = 'pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact';
+        var card = document.createElement('div');
+        card.className = 'pgly-wps--card pgly-wps-is-white pgly-wps-is-compact';
+        var content = document.createElement('div');
+        content.className = 'inside left';
+        content.textContent = item.label;
+        var actionBar = document.createElement('div');
+        actionBar.className = 'pgly-wps--action-bar inside right';
+        var button = document.createElement('button');
+        button.className = 'pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary';
+        button.textContent = (_b = (_a = this._options.labels) === null || _a === void 0 ? void 0 : _a.select) !== null && _b !== void 0 ? _b : 'Select';
+        button.dataset.label = item.label;
+        button.dataset.value = item.value;
+        button.dataset.index = index.toString();
+        actionBar.appendChild(button);
+        card.appendChild(content);
+        card.appendChild(actionBar);
+        col.appendChild(card);
+        row.appendChild(col);
+        return row;
+      };
+
+      return PglyFinderComponent;
+    }(PglyBaseComponent);
+
     var PglyBaseFormEngine =
     /** @class */
     function (_super) {
@@ -637,6 +877,12 @@
 
           if (el.classList.contains(prefix + "--eselect")) {
             _this._inputs.push(new PglySelectComponent(el));
+
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--finder")) {
+            _this._inputs.push(new PglyFinderComponent(el));
 
             return;
           }

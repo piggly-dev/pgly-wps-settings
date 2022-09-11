@@ -10,6 +10,7 @@ import DOMManipulation from '@/behaviours/dommanipulation';
 import { RuleValidator } from '@/validator/engine';
 import PglySelectComponent from './select';
 import { TOrUndefined } from '@/types';
+import PglyFinderComponent from './finder';
 
 export type TFormError = {
 	name: string;
@@ -79,6 +80,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--eselect`)) {
 				this._inputs.push(new PglySelectComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--finder`)) {
+				this._inputs.push(new PglyFinderComponent(el));
 				return;
 			}
 		});
