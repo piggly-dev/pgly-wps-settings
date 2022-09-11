@@ -18,7 +18,7 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 		super();
 
 		this._wrapper = DOMManipulation.getElement<HTMLDivElement>(el);
-		const { name, def = undefined } = this._wrapper.dataset;
+		const { name } = this._wrapper.dataset;
 
 		if (!name) {
 			console.error('Wrapper has no data-name attribute', this._wrapper);
@@ -29,7 +29,7 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 		}
 
 		this._error = new PglyFieldError(this, this._wrapper);
-		this._field = new PglyField<T>(this, name, def as unknown as T);
+		this._field = new PglyField<T>(this, name, undefined as T);
 	}
 
 	public error(): PglyFieldError {
@@ -48,4 +48,6 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 			() => this._error.flush()
 		);
 	}
+
+	protected abstract _default(): void;
 }

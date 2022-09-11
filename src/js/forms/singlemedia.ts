@@ -30,6 +30,7 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 		this._image = DOMManipulation.findElement(this._wrapper, 'img');
 
 		this._bind();
+		this._default();
 	}
 
 	public options(options: Partial<TSingleMediaOptions>) {
@@ -37,16 +38,18 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 	}
 
 	public select(data: TSingleMediaItem) {
-		this.field().set(data.value);
-		this._image.src = data.src;
+		this.field().set(data.value, data.src);
 	}
 
 	public clean() {
-		this.field().set('');
-		this._image.src = '';
+		this.field().set('', '');
 	}
 
 	protected _bind() {
+		this.on('change', () => {
+			this._image.src = this.field().label() ?? '';
+		});
+
 		this._wrapper.addEventListener('click', e => {
 			const el = e.target as HTMLElement | null;
 
@@ -63,6 +66,12 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 				return this.clean();
 			}
 		});
+	}
+
+	protected _default(): void {
+		if (!this._image.dataset.value) return;
+
+		this.field().set(this._image.dataset.value, this._image.dataset.src);
 	}
 
 	public static wpFrame({ component }: { component: PglySingleMediaComponent }) {

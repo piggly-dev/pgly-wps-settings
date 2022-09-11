@@ -33,6 +33,7 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		list: HTMLDivElement;
 	};
 
+	protected currIndex?: number;
 	protected _response: Array<TFinderItem>;
 	protected _loader: PglyLoadable;
 
@@ -80,6 +81,7 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		this._loader = new PglyLoadable(this);
 
 		this._bind();
+		this._default();
 	}
 
 	public options(options: Partial<TFinderOptions>) {
@@ -90,27 +92,18 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		return this._loader;
 	}
 
-	public select(index: number, item: TFinderItem) {
-		this.field().set(item.value, item.label);
+	protected _select() {
+		const hasValue = this.field().get() !== '';
 
-		this._selected.label.textContent = item.label;
-		this._selected.wrapper.dataset.index = index.toString();
+		this._selected.label.textContent = this.field().label() as string;
 		this._search.input.value = '';
 
-		this._flush();
-		this._search.wrapper.style.display = 'none';
-		this._selected.wrapper.style.display = 'flex';
-	}
+		if (hasValue !== undefined) {
+			this._flush();
+		}
 
-	public unselect() {
-		this.field().set('', '');
-
-		this._selected.label.textContent = '';
-		this._selected.wrapper.dataset.index = '';
-		this._search.input.value = '';
-
-		this._search.wrapper.style.display = 'flex';
-		this._selected.wrapper.style.display = 'none';
+		this._search.wrapper.style.display = hasValue ? 'none' : 'flex';
+		this._selected.wrapper.style.display = hasValue ? 'flex' : 'none';
 	}
 
 	protected _flush() {
@@ -139,14 +132,18 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 
 		this._flush();
 
-		response.forEach((item, idx) => {
-			this._items.list.appendChild(this._render(idx, item));
+		response.forEach(item => {
+			this._items.list.appendChild(this._render(item));
 		});
 
 		return this.loader().done();
 	}
 
 	protected _bind() {
+		this.on('change', () => {
+			this._select();
+		});
+
 		this.on('beforeLoad', () => {
 			this._search.button.classList.add('pgly-loading--state');
 			this._items.loader.classList.add('pgly-loading--state');
@@ -161,22 +158,26 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 			e.preventDefault();
 			this.load();
 		});
+
 		this._selected.button.addEventListener('click', e => {
 			e.preventDefault();
-			this.unselect();
+
+			this.currIndex = undefined;
+			return this.field().set('', '');
 		});
 
 		this._items.list.addEventListener('click', e => {
 			const target = e.target as HTMLElement;
+			e.preventDefault();
 
 			if (target.classList.contains('pgly-wps--button')) {
-				const { label = '', value = '', index = '0' } = target.dataset;
-				return this.select(parseInt(index), { label, value });
+				const { label = '', value = '' } = target.dataset;
+				return this.field().set(value, label);
 			}
 		});
 	}
 
-	protected _render(index: number, item: TFinderItem) {
+	protected _render(item: TFinderItem) {
 		const row = document.createElement('div');
 		row.className = 'pgly-wps--row';
 
@@ -198,7 +199,6 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		button.textContent = this._options.labels?.select ?? 'Select';
 		button.dataset.label = item.label;
 		button.dataset.value = item.value;
-		button.dataset.index = index.toString();
 
 		actionBar.appendChild(button);
 		card.appendChild(content);
@@ -207,5 +207,14 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		row.appendChild(col);
 
 		return row;
+	}
+
+	protected _default(): void {
+		if (!this._selected.wrapper.dataset.value) return;
+
+		this.field().set(
+			this._selected.wrapper.dataset.value,
+			this._selected.wrapper.dataset.label
+		);
 	}
 }

@@ -1,5 +1,6 @@
 import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
+import PglyLoadable from './loadable';
 
 export type TSelectItem = {
 	label: string;
@@ -9,7 +10,7 @@ export type TSelectItem = {
 
 export default class PglySelectComponent extends PglyBaseComponent {
 	protected items: Array<TSelectItem> = [];
-	protected loading: boolean = false;
+	protected _loader: PglyLoadable;
 
 	protected _comps: {
 		selection: HTMLDivElement;
@@ -28,56 +29,36 @@ export default class PglySelectComponent extends PglyBaseComponent {
 			container: DOMManipulation.findElement(this._wrapper, '.items .container'),
 		};
 
+		this._loader = new PglyLoadable(this);
+
 		this._bind();
+		this._default();
+	}
+
+	public loader(): PglyLoadable {
+		return this._loader;
 	}
 
 	public synchronous(items: Array<TSelectItem>) {
-		this.loading = false;
+		this.loader().prepare();
 
 		this.items = items;
 		this._render();
+		this.loader().done();
 	}
 
 	public async asynchronous(callback: () => Promise<Array<TSelectItem>>) {
-		this.loading = true;
-		this._comps.selection.classList.add('pgly-loading--state');
-
+		this.loader().prepare();
 		this.items = await callback();
 		this._render();
-
-		this.loading = false;
-		this._comps.selection.classList.remove('pgly-loading--state');
+		this.loader().done();
 	}
 
-	public select(el: HTMLDivElement) {
-		this._comps.selection.classList.remove('empty');
-
-		this.field().set(el.dataset.value ?? '', el.textContent ?? '');
-		this._comps.value.textContent = this.field().label() ?? '';
-
-		if (this.field().get() === '') {
-			this._comps.selection.classList.add('empty');
-		}
-
-		this._flush(el);
-		this._close();
-	}
-
-	public empty(label: string) {
-		this.field().set('', label);
-		this._comps.value.textContent = this.field().label() ?? '';
-		this._comps.selection.classList.add('empty');
-
-		this._flush();
-		this._close();
-	}
-
-	protected _flush(selected?: HTMLDivElement) {
-		this._comps.items.querySelectorAll<HTMLDivElement>('.item').forEach(el => {
+	protected _flush() {
+		this._comps.items.querySelectorAll<HTMLElement>('.item').forEach(el => {
 			el.classList.remove('current');
+			if (el.dataset.value === this.field().get()) el.classList.add('current');
 		});
-
-		if (selected) selected.classList.add('current');
 	}
 
 	protected _toggle() {
@@ -88,6 +69,19 @@ export default class PglySelectComponent extends PglyBaseComponent {
 	protected _close() {
 		this._comps.selection.classList.remove('open');
 		this._comps.items.classList.add('hidden');
+	}
+
+	protected _renderSelection() {
+		if (this.field().get() !== '') {
+			this._comps.selection.classList.remove('empty');
+		} else {
+			this._comps.selection.classList.add('empty');
+		}
+
+		this._comps.value.textContent = this.field().label() as string;
+
+		this._flush();
+		this._close();
 	}
 
 	protected _render() {
@@ -113,24 +107,49 @@ export default class PglySelectComponent extends PglyBaseComponent {
 	}
 
 	protected _bind() {
+		this.on('beforeLoad', () => {
+			this._comps.selection.classList.add('pgly-loading--state');
+		});
+
+		this.on('afterLoad', () => {
+			this._comps.selection.classList.remove('pgly-loading--state');
+		});
+
+		this.on('change', () => {
+			this._renderSelection();
+		});
+
 		this._comps.selection.addEventListener('click', () => {
-			if (this.loading) return;
+			if (this.loader().isLoading()) return;
 			this._toggle();
 		});
 
-		this._comps.items.addEventListener('click', el => {
-			if (this.loading) return;
-			const target: any = el.target;
+		this._comps.items.addEventListener('click', e => {
+			if (this.loader().isLoading()) return;
+			const target = e.target as HTMLElement;
 
-			if (target.classList.contains('item')) {
-				this.select(target);
-				return;
-			}
+			if (!target) return;
 
-			if (target.classList.contains('clickable')) {
-				this.empty(target.textContent);
-				return;
+			e.preventDefault();
+
+			if (
+				target.classList.contains('item') ||
+				target.classList.contains('clickable')
+			) {
+				const value = target.dataset.value ?? '';
+				const label = target.textContent ?? '';
+
+				return this.field().set(value, label);
 			}
 		});
+	}
+
+	protected _default(): void {
+		if (!this._comps.selection.dataset.value) return;
+
+		this.field().set(
+			this._comps.selection.dataset.value,
+			this._comps.selection.dataset.label
+		);
 	}
 }

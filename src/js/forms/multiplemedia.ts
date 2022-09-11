@@ -28,8 +28,8 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 			},
 		};
 
-		this.field().set([]);
 		this._bind();
+		this._default();
 	}
 
 	public options(options: Partial<TMultipleMediaOptions>) {
@@ -147,5 +147,18 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		});
 
 		frame.open();
+	}
+
+	protected _default(): void {
+		if (!this._images.dataset.values || !this._images.dataset.srcs) return;
+
+		const values = this._images.dataset.values.split(',');
+		const srcs = this._images.dataset.srcs.split(',');
+
+		this.field().set(values);
+
+		values.forEach((value, idx) => {
+			this._render({ value, src: srcs[idx] ?? '' });
+		});
 	}
 }

@@ -308,10 +308,7 @@
         var _this = _super.call(this) || this;
 
         _this._wrapper = DOMManipulation.getElement(el);
-        var _a = _this._wrapper.dataset,
-            name = _a.name,
-            _b = _a.def,
-            def = _b === void 0 ? undefined : _b;
+        var name = _this._wrapper.dataset.name;
 
         if (!name) {
           console.error('Wrapper has no data-name attribute', _this._wrapper);
@@ -319,7 +316,7 @@
         }
 
         _this._error = new PglyFieldError(_this, _this._wrapper);
-        _this._field = new PglyField(_this, name, def);
+        _this._field = new PglyField(_this, name, undefined);
         return _this;
       }
 
@@ -352,18 +349,19 @@
       function PglyCheckboxComponent(el) {
         var _this = _super.call(this, el) || this;
 
-        _this.checkbox = DOMManipulation.findElement(_this._wrapper, '.pgly-wps--checkbox');
+        _this._checkbox = DOMManipulation.findElement(_this._wrapper, '.pgly-wps--checkbox');
 
         _this._bind();
 
-        _this.field().set(_this._wrapper.dataset.def === 'true');
+        _this._default();
 
         return _this;
       }
 
       PglyCheckboxComponent.prototype._select = function (v) {
-        this.checkbox.classList.remove('pgly-checked--state');
-        if (v) this.checkbox.classList.add('pgly-checked--state');
+        this._checkbox.classList.remove('pgly-checked--state');
+
+        if (v) this._checkbox.classList.add('pgly-checked--state');
       };
 
       PglyCheckboxComponent.prototype._bind = function () {
@@ -374,9 +372,14 @@
 
           _this._select(value);
         });
-        this.checkbox.addEventListener('click', function () {
+
+        this._checkbox.addEventListener('click', function () {
           _this.field().set(!_this.field().get());
         });
+      };
+
+      PglyCheckboxComponent.prototype._default = function () {
+        this.field().set(this._checkbox.dataset.value === 'true');
       };
 
       return PglyCheckboxComponent;
@@ -393,8 +396,16 @@
         DOMManipulation.findElement(_this._wrapper, 'input').addEventListener('keyup', function (e) {
           _this._field.set(e.target.value);
         });
+
+        _this._default();
+
         return _this;
       }
+
+      PglyInputComponent.prototype._default = function () {
+        var input = DOMManipulation.findElement(this._wrapper, 'input');
+        this.field().set(input.value);
+      };
 
       return PglyInputComponent;
     }(PglyBaseComponent);
@@ -410,11 +421,50 @@
         DOMManipulation.findElement(_this._wrapper, 'textarea').addEventListener('keyup', function (e) {
           _this._field.set(e.target.value);
         });
+
+        _this._default();
+
         return _this;
       }
 
+      PglyTextAreaComponent.prototype._default = function () {
+        var input = DOMManipulation.findElement(this._wrapper, 'textarea');
+        this.field().set(input.value);
+      };
+
       return PglyTextAreaComponent;
     }(PglyBaseComponent);
+
+    var PglyLoadable =
+    /** @class */
+    function () {
+      function PglyLoadable(parent) {
+        this._loading = false;
+        this._parent = parent;
+      }
+
+      PglyLoadable.prototype.prepare = function () {
+        this._parent.emit('beforeLoad', {
+          loading: false
+        });
+
+        this._loading = true;
+      };
+
+      PglyLoadable.prototype.done = function () {
+        this._loading = false;
+
+        this._parent.emit('afterLoad', {
+          loading: false
+        });
+      };
+
+      PglyLoadable.prototype.isLoading = function () {
+        return this._loading;
+      };
+
+      return PglyLoadable;
+    }();
 
     var PglySelectComponent =
     /** @class */
@@ -425,24 +475,32 @@
         var _this = _super.call(this, el) || this;
 
         _this.items = [];
-        _this.loading = false;
         _this._comps = {
           selection: DOMManipulation.findElement(_this._wrapper, '.selected'),
           value: DOMManipulation.findElement(_this._wrapper, '.selected span'),
           items: DOMManipulation.findElement(_this._wrapper, '.items'),
           container: DOMManipulation.findElement(_this._wrapper, '.items .container')
         };
+        _this._loader = new PglyLoadable(_this);
 
         _this._bind();
+
+        _this._default();
 
         return _this;
       }
 
+      PglySelectComponent.prototype.loader = function () {
+        return this._loader;
+      };
+
       PglySelectComponent.prototype.synchronous = function (items) {
-        this.loading = false;
+        this.loader().prepare();
         this.items = items;
 
         this._render();
+
+        this.loader().done();
       };
 
       PglySelectComponent.prototype.asynchronous = function (callback) {
@@ -452,10 +510,7 @@
           return __generator(this, function (_b) {
             switch (_b.label) {
               case 0:
-                this.loading = true;
-
-                this._comps.selection.classList.add('pgly-loading--state');
-
+                this.loader().prepare();
                 _a = this;
                 return [4
                 /*yield*/
@@ -466,10 +521,7 @@
 
                 this._render();
 
-                this.loading = false;
-
-                this._comps.selection.classList.remove('pgly-loading--state');
-
+                this.loader().done();
                 return [2
                 /*return*/
                 ];
@@ -478,42 +530,13 @@
         });
       };
 
-      PglySelectComponent.prototype.select = function (el) {
-        var _a, _b, _c;
+      PglySelectComponent.prototype._flush = function () {
+        var _this = this;
 
-        this._comps.selection.classList.remove('empty');
-
-        this.field().set((_a = el.dataset.value) !== null && _a !== void 0 ? _a : '', (_b = el.textContent) !== null && _b !== void 0 ? _b : '');
-        this._comps.value.textContent = (_c = this.field().label()) !== null && _c !== void 0 ? _c : '';
-
-        if (this.field().get() === '') {
-          this._comps.selection.classList.add('empty');
-        }
-
-        this._flush(el);
-
-        this._close();
-      };
-
-      PglySelectComponent.prototype.empty = function (label) {
-        var _a;
-
-        this.field().set('', label);
-        this._comps.value.textContent = (_a = this.field().label()) !== null && _a !== void 0 ? _a : '';
-
-        this._comps.selection.classList.add('empty');
-
-        this._flush();
-
-        this._close();
-      };
-
-      PglySelectComponent.prototype._flush = function (selected) {
         this._comps.items.querySelectorAll('.item').forEach(function (el) {
           el.classList.remove('current');
+          if (el.dataset.value === _this.field().get()) el.classList.add('current');
         });
-
-        if (selected) selected.classList.add('current');
       };
 
       PglySelectComponent.prototype._toggle = function () {
@@ -526,6 +549,20 @@
         this._comps.selection.classList.remove('open');
 
         this._comps.items.classList.add('hidden');
+      };
+
+      PglySelectComponent.prototype._renderSelection = function () {
+        if (this.field().get() !== '') {
+          this._comps.selection.classList.remove('empty');
+        } else {
+          this._comps.selection.classList.add('empty');
+        }
+
+        this._comps.value.textContent = this.field().label();
+
+        this._flush();
+
+        this._close();
       };
 
       PglySelectComponent.prototype._render = function () {
@@ -560,63 +597,45 @@
       PglySelectComponent.prototype._bind = function () {
         var _this = this;
 
+        this.on('beforeLoad', function () {
+          _this._comps.selection.classList.add('pgly-loading--state');
+        });
+        this.on('afterLoad', function () {
+          _this._comps.selection.classList.remove('pgly-loading--state');
+        });
+        this.on('change', function () {
+          _this._renderSelection();
+        });
+
         this._comps.selection.addEventListener('click', function () {
-          if (_this.loading) return;
+          if (_this.loader().isLoading()) return;
 
           _this._toggle();
         });
 
-        this._comps.items.addEventListener('click', function (el) {
-          if (_this.loading) return;
-          var target = el.target;
+        this._comps.items.addEventListener('click', function (e) {
+          var _a, _b;
 
-          if (target.classList.contains('item')) {
-            _this.select(target);
+          if (_this.loader().isLoading()) return;
+          var target = e.target;
+          if (!target) return;
+          e.preventDefault();
 
-            return;
-          }
-
-          if (target.classList.contains('clickable')) {
-            _this.empty(target.textContent);
-
-            return;
+          if (target.classList.contains('item') || target.classList.contains('clickable')) {
+            var value = (_a = target.dataset.value) !== null && _a !== void 0 ? _a : '';
+            var label = (_b = target.textContent) !== null && _b !== void 0 ? _b : '';
+            return _this.field().set(value, label);
           }
         });
+      };
+
+      PglySelectComponent.prototype._default = function () {
+        if (!this._comps.selection.dataset.value) return;
+        this.field().set(this._comps.selection.dataset.value, this._comps.selection.dataset.label);
       };
 
       return PglySelectComponent;
     }(PglyBaseComponent);
-
-    var PglyLoadable =
-    /** @class */
-    function () {
-      function PglyLoadable(parent) {
-        this._loading = false;
-        this._parent = parent;
-      }
-
-      PglyLoadable.prototype.prepare = function () {
-        this._parent.emit('beforeLoad', {
-          loading: false
-        });
-
-        this._loading = true;
-      };
-
-      PglyLoadable.prototype.done = function () {
-        this._loading = false;
-
-        this._parent.emit('afterLoad', {
-          loading: false
-        });
-      };
-
-      PglyLoadable.prototype.isLoading = function () {
-        return this._loading;
-      };
-
-      return PglyLoadable;
-    }();
 
     var PglyFinderComponent =
     /** @class */
@@ -651,6 +670,8 @@
 
         _this._bind();
 
+        _this._default();
+
         return _this;
       }
 
@@ -662,25 +683,17 @@
         return this._loader;
       };
 
-      PglyFinderComponent.prototype.select = function (index, item) {
-        this.field().set(item.value, item.label);
-        this._selected.label.textContent = item.label;
-        this._selected.wrapper.dataset.index = index.toString();
+      PglyFinderComponent.prototype._select = function () {
+        var hasValue = this.field().get() !== '';
+        this._selected.label.textContent = this.field().label();
         this._search.input.value = '';
 
-        this._flush();
+        if (hasValue !== undefined) {
+          this._flush();
+        }
 
-        this._search.wrapper.style.display = 'none';
-        this._selected.wrapper.style.display = 'flex';
-      };
-
-      PglyFinderComponent.prototype.unselect = function () {
-        this.field().set('', '');
-        this._selected.label.textContent = '';
-        this._selected.wrapper.dataset.index = '';
-        this._search.input.value = '';
-        this._search.wrapper.style.display = 'flex';
-        this._selected.wrapper.style.display = 'none';
+        this._search.wrapper.style.display = hasValue ? 'none' : 'flex';
+        this._selected.wrapper.style.display = hasValue ? 'flex' : 'none';
       };
 
       PglyFinderComponent.prototype._flush = function () {
@@ -729,8 +742,8 @@
               case 4:
                 this._flush();
 
-                response.forEach(function (item, idx) {
-                  _this._items.list.appendChild(_this._render(idx, item));
+                response.forEach(function (item) {
+                  _this._items.list.appendChild(_this._render(item));
                 });
                 return [2
                 /*return*/
@@ -743,6 +756,9 @@
       PglyFinderComponent.prototype._bind = function () {
         var _this = this;
 
+        this.on('change', function () {
+          _this._select();
+        });
         this.on('beforeLoad', function () {
           _this._search.button.classList.add('pgly-loading--state');
 
@@ -762,30 +778,26 @@
 
         this._selected.button.addEventListener('click', function (e) {
           e.preventDefault();
-
-          _this.unselect();
+          _this.currIndex = undefined;
+          return _this.field().set('', '');
         });
 
         this._items.list.addEventListener('click', function (e) {
           var target = e.target;
+          e.preventDefault();
 
           if (target.classList.contains('pgly-wps--button')) {
             var _a = target.dataset,
                 _b = _a.label,
                 label = _b === void 0 ? '' : _b,
                 _c = _a.value,
-                value = _c === void 0 ? '' : _c,
-                _d = _a.index,
-                index = _d === void 0 ? '0' : _d;
-            return _this.select(parseInt(index), {
-              label: label,
-              value: value
-            });
+                value = _c === void 0 ? '' : _c;
+            return _this.field().set(value, label);
           }
         });
       };
 
-      PglyFinderComponent.prototype._render = function (index, item) {
+      PglyFinderComponent.prototype._render = function (item) {
         var _a, _b;
 
         var row = document.createElement('div');
@@ -804,13 +816,17 @@
         button.textContent = (_b = (_a = this._options.labels) === null || _a === void 0 ? void 0 : _a.select) !== null && _b !== void 0 ? _b : 'Select';
         button.dataset.label = item.label;
         button.dataset.value = item.value;
-        button.dataset.index = index.toString();
         actionBar.appendChild(button);
         card.appendChild(content);
         card.appendChild(actionBar);
         col.appendChild(card);
         row.appendChild(col);
         return row;
+      };
+
+      PglyFinderComponent.prototype._default = function () {
+        if (!this._selected.wrapper.dataset.value) return;
+        this.field().set(this._selected.wrapper.dataset.value, this._selected.wrapper.dataset.label);
       };
 
       return PglyFinderComponent;
@@ -834,6 +850,8 @@
 
         _this._bind();
 
+        _this._default();
+
         return _this;
       }
 
@@ -842,17 +860,21 @@
       };
 
       PglySingleMediaComponent.prototype.select = function (data) {
-        this.field().set(data.value);
-        this._image.src = data.src;
+        this.field().set(data.value, data.src);
       };
 
       PglySingleMediaComponent.prototype.clean = function () {
-        this.field().set('');
-        this._image.src = '';
+        this.field().set('', '');
       };
 
       PglySingleMediaComponent.prototype._bind = function () {
         var _this = this;
+
+        this.on('change', function () {
+          var _a;
+
+          _this._image.src = (_a = _this.field().label()) !== null && _a !== void 0 ? _a : '';
+        });
 
         this._wrapper.addEventListener('click', function (e) {
           var el = e.target;
@@ -873,6 +895,11 @@
             return _this.clean();
           }
         });
+      };
+
+      PglySingleMediaComponent.prototype._default = function () {
+        if (!this._image.dataset.value) return;
+        this.field().set(this._image.dataset.value, this._image.dataset.src);
       };
 
       PglySingleMediaComponent.wpFrame = function (_a) {
@@ -928,9 +955,9 @@
           }
         };
 
-        _this.field().set([]);
-
         _this._bind();
+
+        _this._default();
 
         return _this;
       }
@@ -1053,6 +1080,26 @@
           });
         });
         frame.open();
+      };
+
+      PglyMultipleMediaComponent.prototype._default = function () {
+        var _this = this;
+
+        if (!this._images.dataset.values || !this._images.dataset.srcs) return;
+
+        var values = this._images.dataset.values.split(',');
+
+        var srcs = this._images.dataset.srcs.split(',');
+
+        this.field().set(values);
+        values.forEach(function (value, idx) {
+          var _a;
+
+          _this._render({
+            value: value,
+            src: (_a = srcs[idx]) !== null && _a !== void 0 ? _a : ''
+          });
+        });
       };
 
       return PglyMultipleMediaComponent;
