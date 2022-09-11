@@ -12,6 +12,7 @@ import PglySelectComponent from './select';
 import { TOrUndefined } from '@/types';
 import PglyFinderComponent from './finder';
 import PglySingleMediaComponent from './singlemedia';
+import PglyMultipleMediaComponent from './multiplemedia';
 
 export type TFormError = {
 	name: string;
@@ -91,6 +92,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--single-media`)) {
 				this._inputs.push(new PglySingleMediaComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--multiple-media`)) {
+				this._inputs.push(new PglyMultipleMediaComponent(el));
 				return;
 			}
 		});

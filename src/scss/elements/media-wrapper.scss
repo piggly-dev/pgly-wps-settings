@@ -22,7 +22,9 @@
 				display: inline-flex;
 				margin: 3px;
 				background-position: center;
-				background-size: cover;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-color: #e7e7e7;
 			}
 
 			button {

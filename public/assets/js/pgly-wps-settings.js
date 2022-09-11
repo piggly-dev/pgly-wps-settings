@@ -860,7 +860,7 @@
           e.preventDefault();
 
           if (el.classList.contains('pgly-wps--select')) {
-            _this.emit('select', {
+            return _this.emit('select', {
               component: _this
             });
           }
@@ -910,6 +910,152 @@
       };
 
       return PglySingleMediaComponent;
+    }(PglyBaseComponent);
+
+    var PglyMultipleMediaComponent =
+    /** @class */
+    function (_super) {
+      __extends(PglyMultipleMediaComponent, _super);
+
+      function PglyMultipleMediaComponent(el) {
+        var _this = _super.call(this, el) || this;
+
+        _this._images = DOMManipulation.findElement(_this._wrapper, '.pgly-wps--images');
+        _this._options = {
+          labels: {
+            title: 'Select a media',
+            button: 'Select'
+          }
+        };
+
+        _this.field().set([]);
+
+        _this._bind();
+
+        return _this;
+      }
+
+      PglyMultipleMediaComponent.prototype.options = function (options) {
+        this._options = __assign(__assign({}, this._options), options);
+      };
+
+      PglyMultipleMediaComponent.prototype.select = function (data) {
+        this.field().get().push(data.value);
+
+        this._render(data);
+      };
+
+      PglyMultipleMediaComponent.prototype.remove = function (id) {
+        var img = document.getElementById(this.field().name() + "-img-" + id);
+        if (!img) return;
+
+        this._images.removeChild(img);
+
+        this.field().set(this.field().get().filter(function (i) {
+          return i != id;
+        }));
+      };
+
+      PglyMultipleMediaComponent.prototype.clean = function () {
+        this.field().set([]);
+
+        while (this._images.firstChild) {
+          this._images.removeChild(this._images.firstChild);
+        }
+      };
+
+      PglyMultipleMediaComponent.prototype._render = function (data) {
+        var wrapper = document.createElement('div');
+        wrapper.id = this.field().name() + "-img-" + data.value;
+        wrapper.className = 'pgly-wps--image';
+        wrapper.style.backgroundImage = "url(" + data.src + ")";
+        var button = document.createElement('button');
+        button.className = 'pgly-wps--icon-button pgly-wps--remove pgly-wps-is-compact pgly-wps-is-rounded pgly-wps-is-danger pgly-wps--close';
+        button.dataset.value = data.value;
+        wrapper.appendChild(button);
+
+        this._images.appendChild(wrapper);
+      };
+
+      PglyMultipleMediaComponent.prototype._bind = function () {
+        var _this = this;
+
+        this._wrapper.addEventListener('click', function (e) {
+          var el = e.target;
+          if (!el) return;
+          e.preventDefault();
+
+          if (el.classList.contains('pgly-wps--remove')) {
+            var _a = el.dataset.value,
+                value = _a === void 0 ? '' : _a;
+
+            _this.emit('remove', {
+              component: _this,
+              value: value
+            });
+
+            return _this.remove(value);
+          }
+
+          if (el.classList.contains('pgly-wps--select')) {
+            return _this.emit('select', {
+              component: _this
+            });
+          }
+
+          if (el.classList.contains('pgly-wps--clean')) {
+            _this.emit('clean', {
+              component: _this
+            });
+
+            return _this.clean();
+          }
+        });
+      };
+
+      PglyMultipleMediaComponent.wpFrame = function (_a) {
+        var component = _a.component;
+        var frame = wp.media.frames.metaImageFrame = wp.media({
+          title: component._options.labels.title,
+          library: {
+            type: 'image'
+          },
+          button: {
+            text: component._options.labels.button
+          },
+          multiple: true
+        });
+        frame.on('open', function () {
+          component.field().get().forEach(function (id) {
+            // Select media in wordpress library
+            var selection = frame.state().get('selection');
+            var att = wp.media.attachment(id);
+            att.fetch();
+            selection.add(att ? [att] : []);
+          });
+        });
+        frame.on('select', function () {
+          // multiple selection
+          var selected = frame.state().get('selection').map(function (i) {
+            return i.toJSON();
+          });
+
+          while (component._images.firstChild) {
+            component._images.removeChild(component._images.firstChild);
+          }
+
+          component.field().set([]);
+          selected.forEach(function (i) {
+            component.select({
+              value: i.id,
+              src: i.url
+            });
+          });
+        });
+        frame.open();
+      };
+
+      return PglyMultipleMediaComponent;
     }(PglyBaseComponent);
 
     var PglyBaseFormEngine =
@@ -985,6 +1131,12 @@
 
           if (el.classList.contains(prefix + "--single-media")) {
             _this._inputs.push(new PglySingleMediaComponent(el));
+
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--multiple-media")) {
+            _this._inputs.push(new PglyMultipleMediaComponent(el));
 
             return;
           }

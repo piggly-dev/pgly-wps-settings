@@ -55,7 +55,7 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 			e.preventDefault();
 
 			if (el.classList.contains('pgly-wps--select')) {
-				this.emit('select', { component: this });
+				return this.emit('select', { component: this });
 			}
 
 			if (el.classList.contains('pgly-wps--clean')) {

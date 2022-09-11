@@ -4,6 +4,28 @@ $icon-button-dimensions-medium: 32px !default;
 $icon-button-dimensions-large: 42px !default;
 
 .pgly-wps--settings {
+	.pgly-wps--close {
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			width: 12px;
+			height: 3px;
+			border-radius: 12px;
+			background-color: $danger;
+			margin-left: -6px;
+			margin-top: -1.5px;
+		}
+
+		&::before {
+			transform: rotate(-45deg);
+		}
+
+		&::after {
+			transform: rotate(45deg);
+		}
+	}
+
 	.pgly-wps--icon-button {
 		border: none;
 		border-radius: $radius-small;
