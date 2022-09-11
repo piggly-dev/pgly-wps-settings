@@ -1673,6 +1673,10 @@
   border: 1px rgba(0, 0, 0, 0.24) dashed;
   display: table;
   width: 100%;
+  text-align: center;
+}
+.pgly-wps--settings .pgly-wps--media-wrapper .container {
+  margin: 18px 0;
 }
 .pgly-wps--settings .pgly-wps--media-wrapper .pgly-wps--images {
   display: flex;

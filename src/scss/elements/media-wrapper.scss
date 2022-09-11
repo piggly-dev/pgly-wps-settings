@@ -5,6 +5,11 @@
 		border: 1px rgba(#000, 0.24) dashed;
 		display: table;
 		width: 100%;
+		text-align: center;
+
+		.container {
+			margin: 18px 0;
+		}
 
 		.pgly-wps--images {
 			display: flex;

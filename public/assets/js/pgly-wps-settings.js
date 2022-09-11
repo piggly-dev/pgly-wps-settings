@@ -816,6 +816,102 @@
       return PglyFinderComponent;
     }(PglyBaseComponent);
 
+    var PglySingleMediaComponent =
+    /** @class */
+    function (_super) {
+      __extends(PglySingleMediaComponent, _super);
+
+      function PglySingleMediaComponent(el) {
+        var _this = _super.call(this, el) || this;
+
+        _this._options = {
+          labels: {
+            title: 'Select a media',
+            button: 'Select'
+          }
+        };
+        _this._image = DOMManipulation.findElement(_this._wrapper, 'img');
+
+        _this._bind();
+
+        return _this;
+      }
+
+      PglySingleMediaComponent.prototype.options = function (options) {
+        this._options = __assign(__assign({}, this._options), options);
+      };
+
+      PglySingleMediaComponent.prototype.select = function (data) {
+        this.field().set(data.value);
+        this._image.src = data.src;
+      };
+
+      PglySingleMediaComponent.prototype.clean = function () {
+        this.field().set('');
+        this._image.src = '';
+      };
+
+      PglySingleMediaComponent.prototype._bind = function () {
+        var _this = this;
+
+        this._wrapper.addEventListener('click', function (e) {
+          var el = e.target;
+          if (!el) return;
+          e.preventDefault();
+
+          if (el.classList.contains('pgly-wps--select')) {
+            _this.emit('select', {
+              component: _this
+            });
+          }
+
+          if (el.classList.contains('pgly-wps--clean')) {
+            _this.emit('clean', {
+              component: _this
+            });
+
+            return _this.clean();
+          }
+        });
+      };
+
+      PglySingleMediaComponent.wpFrame = function (_a) {
+        var component = _a.component;
+        var frame = wp.media.frames.metaImageFrame = wp.media({
+          title: component._options.labels.title,
+          library: {
+            type: 'image'
+          },
+          button: {
+            text: component._options.labels.button
+          },
+          multiple: false
+        });
+        frame.on('open', function () {
+          var value = component.field().get();
+          if (value.length <= 0) return; // Select media in wordpress library
+
+          var selection = frame.state().get('selection');
+          var att = wp.media.attachment(value);
+          att.fetch();
+          selection.add(att ? [att] : []);
+        });
+        frame.on('select', function () {
+          var _a = frame.state().get('selection').first().toJSON(),
+              id = _a.id,
+              url = _a.url;
+
+          component.select({
+            value: id,
+            src: url
+          });
+        });
+        frame.open();
+      };
+
+      return PglySingleMediaComponent;
+    }(PglyBaseComponent);
+
     var PglyBaseFormEngine =
     /** @class */
     function (_super) {
@@ -883,6 +979,12 @@
 
           if (el.classList.contains(prefix + "--finder")) {
             _this._inputs.push(new PglyFinderComponent(el));
+
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--single-media")) {
+            _this._inputs.push(new PglySingleMediaComponent(el));
 
             return;
           }

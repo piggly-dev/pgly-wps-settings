@@ -1242,32 +1242,6 @@
 			</div>
 		</div>
 
-		<h2 class="pgly-wps--title pgly-wps-is-6">Selector</h2>
-		<div class="pgly-wps--row">
-			<div class="pgly-wps--column">
-				<div class="pgly-wps--field" data-name="extended-selector-field" id="extended-selector-field">
-					<label class="pgly-wps--label" for="icon">Extended Select Field</label>
-					<div class="pgly-wps--select">
-						<div class="selected">
-							<span>One</span>
-							<svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
-								<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
-								<path d="M0-.75h48v48h-48z" fill="none"></path>
-							</svg>
-						</div>
-						<div class="items hidden">
-							<div data-value="one" class="item current">One</div>
-							<div data-value="two" class="item">Two</div>
-							<div data-value="three" class="item">Three</div>
-						</div>
-					</div>
-				</div>
-				<script>
-					document.addEventListener( 'DOMContentLoaded', () => new window.PglySelectComponent( 'extended-selector-field' ) );
-				</script>
-			</div>
-		</div>
-
 		<h1 class="pgly-wps--title">Form Inputs</h1>
 		<form id="main-form">
 			<script lang="javascript">
@@ -1283,7 +1257,8 @@
 							'regular-textarea': [requiredRule],
 							'required-checkbox': [requiredRule],
 							'extended-select': [requiredRule],
-							'finder': [requiredRule]
+							'finder': [requiredRule],
+							'single-media': [requiredRule]
 						}
 					} );
 
@@ -1416,6 +1391,43 @@
 							select: 'Select'
 						}
 					} );
+
+					form.get( 'single-media' ).on( 'select', ( { component } ) => {
+						const data = [{
+							"value": 1,
+							"src": "http://dummyimage.com/412x100.png/ff4444/ffffff"
+						}, {
+							"value": 2,
+							"src": "http://dummyimage.com/430x100.png/ff4444/ffffff"
+						}, {
+							"value": 3,
+							"src": "http://dummyimage.com/479x100.png/ff4444/ffffff"
+						}, {
+							"value": 4,
+							"src": "http://dummyimage.com/540x100.png/cc0000/ffffff"
+						}, {
+							"value": 5,
+							"src": "http://dummyimage.com/342x100.png/cc0000/ffffff"
+						}, {
+							"value": 6,
+							"src": "http://dummyimage.com/399x100.png/5fa2dd/ffffff"
+						}, {
+							"value": 7,
+							"src": "http://dummyimage.com/599x100.png/cc0000/ffffff"
+						}, {
+							"value": 8,
+							"src": "http://dummyimage.com/415x100.png/ff4444/ffffff"
+						}, {
+							"value": 9,
+							"src": "http://dummyimage.com/455x100.png/ff4444/ffffff"
+						}, {
+							"value": 10,
+							"src": "http://dummyimage.com/550x100.png/dddddd/000000"
+						}];
+
+						const item = data[Math.floor( Math.random() * data.length )];
+						component.select( item );
+					} )
 				} )
 			</script>
 			<div class="pgly-wps--row">
@@ -1586,6 +1598,32 @@
 								<div class="pgly-wps--list">
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-wps--media-wrapper pgly-form--input pgly-form--single-media"
+						data-name="single-media">
+						<label class="pgly-wps--label">
+							Banner
+						</label>
+						<div class="container">
+							<img />
+							<span class="pgly-wps--placeholder">Press "select" to random image</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+						<div class="pgly-wps--action-bar">
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+								Select
+							</button>
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+								Clean Selection
+							</button>
 						</div>
 					</div>
 				</div>
