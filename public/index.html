@@ -12,7 +12,32 @@
 <body>
 	<div class="pgly-wps--settings">
 		<div id="pgly-wps--toaster" class="pgly-wps--toaster pgly-wps-in-s"></div>
+		<button id="pgly-wps--toaster-action" class="pgly-wps--button pgly-wps-is-primary">Send Toaster</button>
+		<script>
+			document.addEventListener( 'DOMContentLoaded', () => {
+				const toaster = new pglyWps.PglyToast( 'pgly-wps--toaster' );
+				const button = document.getElementById( 'pgly-wps--toaster-action' );
+
+				button.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					toaster.launch( 'Hello world!' );
+				} )
+			} )
+		</script>
 		<div id="pgly-wps--notification"></div>
+		<button id="pgly-wps--notification-action" class="pgly-wps--button pgly-wps-is-primary">Send Notification</button>
+		<script>
+			document.addEventListener( 'DOMContentLoaded', () => {
+				const toaster = new pglyWps.PglyNotification( 'pgly-wps--notification' );
+				const button = document.getElementById( 'pgly-wps--notification-action' );
+
+				button.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					toaster.launch( 'Hello world!' );
+				} )
+			} )
+		</script>
+
 		<h1 class="pgly-wps--title">Title</h1>
 		<h2 class="pgly-wps--subtitle">Subtitle</h2>
 

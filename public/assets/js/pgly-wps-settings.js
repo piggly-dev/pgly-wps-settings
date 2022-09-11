@@ -1847,9 +1847,136 @@
       return PglyAsyncFormEngine;
     }(PglyBaseFormEngine);
 
+    var PglyNotification =
+    /** @class */
+    function () {
+      function PglyNotification(el) {
+        this._container = DOMManipulation.getElement(el);
+
+        this._bind();
+      }
+
+      PglyNotification.prototype.launch = function (message, options) {
+        var _this = this;
+
+        var op = __assign({
+          timer: 2000,
+          type: 'regular',
+          light: false
+        }, options);
+
+        var notification = document.createElement('div');
+        notification.classList.add('pgly-wps--notification', "pgly-wps-is-" + op.type);
+
+        if (op.light) {
+          notification.classList.add("pgly-wps-is-light");
+        }
+
+        var del = document.createElement('button');
+        del.classList.add('pgly-wps--delete');
+        var msg = document.createElement('div');
+        msg.textContent = message;
+        notification.appendChild(del);
+        notification.appendChild(msg);
+
+        this._container.appendChild(notification);
+
+        var removed = false;
+        setTimeout(function () {
+          if (!removed) _this._container.removeChild(notification);
+        }, op.timer);
+        del.addEventListener('click', function () {
+          _this._container.removeChild(notification);
+
+          removed = true;
+        });
+      };
+
+      PglyNotification.prototype._bind = function () {
+        document.querySelectorAll('.pgly-wps--notification .pgly-wps--delete').forEach(function (el) {
+          var _a;
+
+          var notification = el.parentNode;
+          var timer = parseInt((_a = notification.dataset.timer) !== null && _a !== void 0 ? _a : '0');
+          var removed = false;
+
+          if (timer > 0) {
+            setTimeout(function () {
+              var _a;
+
+              if (!removed) (_a = notification === null || notification === void 0 ? void 0 : notification.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(notification);
+            }, timer);
+          }
+
+          el.addEventListener('click', function () {
+            var _a;
+
+            removed = true;
+            (_a = notification === null || notification === void 0 ? void 0 : notification.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(notification);
+          });
+        });
+      };
+
+      return PglyNotification;
+    }();
+
+    var PglyToast =
+    /** @class */
+    function () {
+      function PglyToast(el) {
+        this._container = DOMManipulation.getElement(el);
+      }
+
+      PglyToast.prototype.launch = function (message, options) {
+        var _this = this;
+
+        var op = __assign({
+          timer: 2000,
+          type: 'regular',
+          light: false
+        }, options);
+
+        var toast = document.createElement('div');
+        toast.classList.add('pgly-wps--toast', "pgly-wps-is-" + op.type);
+
+        if (op.light) {
+          toast.classList.add("pgly-wps-is-light");
+        }
+
+        var del = document.createElement('button');
+        del.classList.add('pgly-wps--delete');
+        var msg = document.createElement('div');
+        msg.textContent = message;
+        toast.appendChild(del);
+        toast.appendChild(msg);
+
+        this._container.appendChild(toast);
+
+        var removed = false;
+        setTimeout(function () {
+          if (!removed) _this._container.removeChild(toast);
+        }, op.timer);
+        del.addEventListener('click', function () {
+          _this._container.removeChild(toast);
+
+          removed = true;
+        });
+      };
+
+      return PglyToast;
+    }();
+
     exports.PglyAsyncFormEngine = PglyAsyncFormEngine;
+    exports.PglyCheckboxComponent = PglyCheckboxComponent;
+    exports.PglyFinderComponent = PglyFinderComponent;
+    exports.PglyGroupFormComponent = PglyGroupFormComponent;
     exports.PglyInputComponent = PglyInputComponent;
+    exports.PglyMultipleMediaComponent = PglyMultipleMediaComponent;
+    exports.PglyNotification = PglyNotification;
+    exports.PglySelectComponent = PglySelectComponent;
+    exports.PglySingleMediaComponent = PglySingleMediaComponent;
     exports.PglyTextAreaComponent = PglyTextAreaComponent;
+    exports.PglyToast = PglyToast;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
