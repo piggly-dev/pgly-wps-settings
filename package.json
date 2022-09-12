@@ -1,16 +1,21 @@
 {
-	"name": "pgly-wps-settings",
-	"version": "0.1.4",
+	"name": "@piggly/pgly-wps-settings",
+	"version": "0.2.0",
 	"description": "A CSS/JS webkit to Wordpress Plugin Settings",
-	"main": "index.js",
+	"main": "dist/umd/pgly-wps-settings.js",
+	"browser": "dist/umd/pgly-wps-settings.js",
+	"module": "dist/esm/index.js",
+	"unpkg": "dist/umd/pgly-wps-settings.min.js",
+	"types": "dist/types/index.d.ts",
 	"scripts": {
 		"ts:check": "tsc --noEmit",
 		"ts:check-watch": "npm run ts:check -- --watch",
 		"ts:build": "tsc --emitDeclarationOnly",
-		"js:umd": "rimraf ./dist/js && rollup -c",
-		"js:cjs": "rimraf ./lib && tsc --module commonjs --outDir lib",
-		"js:esm": "rimraf ./esm && tsc --module ESNext --outDir esm",
+		"js:umd": "rimraf ./dist/umd && rollup -c",
+		"js:cjs": "rimraf ./dist/cjs && tsc --module commonjs --outDir ./dist/cjs",
+		"js:esm": "rimraf ./dist/esm && tsc --module ESNext --outDir ./dist/esm",
 		"js:watch": "rimraf ./public/assets/js && rollup -c rollup.config.dev.js -w",
+		"js:deploy": "npm run js:umd && npm run js:cjs && npm run js:esm",
 		"dev:start": "sirv public --port 3000 --host 0.0.0.0 --dev",
 		"css:build": "npm run css:build-sass && npm run css:build-autoprefix && npm run css:build-cleancss",
 		"css:build-autoprefix": "postcss --use autoprefixer --map false --output dist/css/pgly-wps-settings.v$npm_package_version.css dist/css/pgly-wps-settings.v$npm_package_version.css",
@@ -19,10 +24,14 @@
 		"css:clean": "rimraf ./dist/css",
 		"css:deploy": "npm run css:clean && npm run css:build",
 		"css:watch": "rimraf ./public/assets/css && sass --watch --style expanded src/scss/global.scss public/assets/css/pgly-wps-settings.css",
-		"lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix assets/ts",
-		"format": "prettier --write \"assets/ts/**/*.ts\" \"assets/js/**/*.js\"",
-		"build": "npm run css:build && npm run js:umd",
-		"version": "echo $npm_package_version"
+		"lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix src/js",
+		"format": "prettier --write \"src/js/**/*.ts\" \"src/js/**/*.js\"",
+		"build": "npm run css:deploy && npm run js:deploy",
+		"publish": "npm publish --access public",
+		"prepare": "npm run build",
+		"prepublishOnly": "npm run lint",
+		"preversion": "npm run lint",
+		"version": "npm run format"
 	},
 	"author": {
 		"name": "Caique Araujo",
@@ -75,7 +84,6 @@
 	"dependencies": {
 		"@babel/runtime": "^7.18.9",
 		"axios": "^0.21.1",
-		"qs": "^6.7.0",
 		"qs-stringify": "^1.2.1"
 	}
 }

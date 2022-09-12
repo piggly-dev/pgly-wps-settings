@@ -29,7 +29,7 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 		}
 
 		this._error = new PglyFieldError(this, this._wrapper);
-		this._field = new PglyField<T>(this, name, undefined as T);
+		this._field = new PglyField<T>(this, name, undefined as unknown as T);
 	}
 
 	public abstract emptyValue(): void;

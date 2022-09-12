@@ -1,6 +1,5 @@
-import { version } from 'package.json';
-
 import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
@@ -13,7 +12,7 @@ module.exports = [
 		input: 'src/js/index.ts',
 		external: ['axios'],
 		output: {
-			file: `dist/js/pgly-wps-settings.v${version}.js`,
+			file: `dist/umd/pgly-wps-settings.js`,
 			name: 'pglyWps',
 			format: 'umd',
 			globals: {
@@ -23,7 +22,8 @@ module.exports = [
 		plugins: [
 			json(),
 			resolve({ browser: true, extensions }),
-			typescript(),
+			commonjs(),
+			typescript({ declaration: false }),
 			babel({
 				exclude: 'node_modules/**',
 				babelHelpers: 'bundled',
@@ -36,7 +36,7 @@ module.exports = [
 		input: 'src/js/index.ts',
 		external: ['axios'],
 		output: {
-			file: `dist/js/pgly-wps-settings.v${version}.min.js`,
+			file: `dist/umd/pgly-wps-settings.min.js`,
 			name: 'pglyWps',
 			format: 'umd',
 			globals: {
@@ -45,13 +45,16 @@ module.exports = [
 		},
 		plugins: [
 			json(),
-			resolve({ browser: true }),
-			typescript(),
+			resolve({ browser: true, extensions }),
+			commonjs(),
+			typescript({ declaration: false }),
 			babel({
 				exclude: 'node_modules/**',
 				babelHelpers: 'bundled',
+				include: ['src/js/**/*'],
+				extensions,
 			}),
-			uglify(),
+			uglify({ compress: true }),
 		],
 	},
 ];
