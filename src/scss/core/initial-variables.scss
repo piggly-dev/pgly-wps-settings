@@ -1,31 +1,32 @@
 // Colors
-$black:     hsl(0, 0%, 4%) !default;
+$black: hsl(0, 0%, 4%) !default;
 $black-bis: hsl(0, 0%, 7%) !default;
 $black-ter: hsl(0, 0%, 14%) !default;
 
-$grey-darker:   hsl(240, 10%, 21%) !default;
-$grey-dark:     hsl(240, 10%, 29%) !default;
-$grey:          hsl(240, 10%, 48%) !default;
-$grey-light:    hsl(240, 22%, 71%) !default;
-$grey-lighter:  hsl(240, 33%, 86%) !default;
+$grey-darker: hsl(240, 10%, 21%) !default;
+$grey-dark: hsl(240, 10%, 29%) !default;
+$grey: hsl(240, 10%, 48%) !default;
+$grey-light: hsl(240, 22%, 71%) !default;
+$grey-lighter: hsl(240, 33%, 86%) !default;
 $grey-lightest: hsl(240, 33%, 93%) !default;
 
 $white-ter: hsl(0, 0%, 96%) !default;
 $white-bis: hsl(0, 0%, 98%) !default;
-$white:     hsl(0, 0%, 100%) !default;
+$white: hsl(0, 0%, 100%) !default;
 
-$orange:    hsl(16, 86%, 54%) !default;
-$yellow:    hsl(45, 100%, 54%) !default;
-$green:     hsl(157, 80%, 43%) !default;
+$orange: hsl(16, 86%, 54%) !default;
+$yellow: hsl(45, 100%, 54%) !default;
+$green: hsl(157, 80%, 43%) !default;
 $turquoise: hsl(184, 89%, 48%) !default;
-$cyan:      hsl(186, 84%, 63%) !default;
-$blue:      hsl(240, 83%, 62%) !default;
-$pink:      hsl(330, 100%, 55%) !default;
-$purple:    hsl(273, 63%, 45%) !default;
-$red:       hsl(358, 83%, 52%) !default;
+$cyan: hsl(186, 84%, 63%) !default;
+$blue: hsl(240, 83%, 62%) !default;
+$pink: hsl(330, 100%, 55%) !default;
+$purple: hsl(273, 63%, 45%) !default;
+$red: hsl(358, 83%, 52%) !default;
 
 // Typography
-$family-sans-serif: BlinkMacSystemFont, -apple-system, "Montserrat", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$family-sans-serif: BlinkMacSystemFont, -apple-system, "Montserrat", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+	"Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
 $family-monospace: monospace !default;
 $render-mode: optimizeLegibility !default;
 

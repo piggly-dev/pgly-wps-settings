@@ -1,35 +1,37 @@
-function PglyCheckbox ( $checkbox: HTMLInputElement )
-{
-	if ( $checkbox.dataset.name === undefined )
-	{ return; }
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
 
-	const input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = $checkbox.dataset.name as string;
-	input.value = $checkbox.dataset.selected === 'true' ? '1' : '0';
+export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
+	protected _checkbox: HTMLDivElement;
 
-	if ( $checkbox.dataset.id )
-	{ input.id = $checkbox.dataset.id; }
+	constructor(el: string | HTMLDivElement) {
+		super(el);
+		this._checkbox = DOMManipulation.findElement(this._wrapper, '.pgly-wps--checkbox');
 
-	$checkbox.appendChild(input);
+		this._bind();
+		this._default();
+	}
 
-	$checkbox.addEventListener('click', () => {
-		const selected: boolean = $checkbox.dataset.selected === 'true';
-		
-		$checkbox.dataset.selected = !selected ? 'true' : 'false';
-		$checkbox.classList.toggle('pgly-checked--state');
-		input.value = !selected ? '1' : '0';
-	});
-}
+	public emptyValue(): void {
+		this.field().set(false);
+	}
 
-const handlePglyCheckbox = () => {
-	(document.querySelectorAll('.pgly-wps--checkbox') || [])
-		.forEach(($checkbox: Element) : void => {
-			PglyCheckbox(($checkbox as HTMLInputElement));
+	protected _select(v: boolean) {
+		this._checkbox.classList.remove('pgly-checked--state');
+		if (v) this._checkbox.classList.add('pgly-checked--state');
+	}
+
+	protected _bind() {
+		this.on('change', ({ value }) => {
+			this._select(value);
 		});
-}
 
-export {
-	PglyCheckbox,
-	handlePglyCheckbox
-};
+		this._checkbox.addEventListener('click', () => {
+			this.field().set(!this.field().get());
+		});
+	}
+
+	protected _default(): void {
+		this.field().set(this._checkbox.dataset.value === 'true');
+	}
+}

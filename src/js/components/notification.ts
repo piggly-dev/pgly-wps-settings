@@ -1,82 +1,74 @@
-export interface IPglyNotificationElement {
-	message: string,
-	timer?: number,
-	type?: string,
-	light?: boolean,
-	container?: string
-}
+import DOMManipulation from '@/behaviours/dommanipulation';
 
-export interface IPglyNotification
-{
-	container: HTMLElement|null;
-	_init(options: IPglyNotificationElement): void;
-	_new(options: IPglyNotificationElement): void
-}
-
-function PglyNotification ( this: IPglyNotification, options: IPglyNotificationElement )
-{
-	if ( !options.message )
-	{ throw new Error('You need to set a message to display the notification'); }
-
-	options.timer     = options.timer || 2000;
-	options.type      = options.type || 'regular';
-	options.light     = options.light || false;
-	options.container = options.container || 'pgly-wps--notification';
-
-	this.container = document.getElementById(options.container);
-	if ( !this.container ) return;
-
-	this._init(options);
-}
-
-PglyNotification.prototype._init = function ( options: IPglyNotificationElement ) {
-	Promise
-		.resolve()
-		.then(() => {
-			this._new(options);
-		});
+export type TPglyNotificationOptions = {
+	timer: number;
+	type: string;
+	light: boolean;
 };
 
-PglyNotification.prototype._new = function ( options: IPglyNotificationElement ) {
-	const notification = document.createElement('div');
-	notification.classList.add('pgly-wps--notification', `pgly-wps-is-${options.type}`);
+export default class PglyNotification {
+	protected _container: HTMLDivElement;
 
-	if ( options.light )
-	{ notification.classList.add(`pgly-wps-is-light`); }
+	constructor(el: string | HTMLDivElement) {
+		this._container = DOMManipulation.getElement(el);
+		this._bind();
+	}
 
-	const del = document.createElement('button');
-	del.classList.add('pgly-wps--delete');
+	public launch(message: string, options: Partial<TPglyNotificationOptions>) {
+		const op = {
+			timer: 2000,
+			type: 'regular',
+			light: false,
+			...options,
+		};
 
-	del.addEventListener('click', () => {
-		this.container.removeChild(notification);
-	});
+		const notification = document.createElement('div');
+		notification.classList.add('pgly-wps--notification', `pgly-wps-is-${op.type}`);
 
-	const msg = document.createElement('div');
-	msg.innerHTML = options.message;
+		if (op.light) {
+			notification.classList.add(`pgly-wps-is-light`);
+		}
 
-	notification.appendChild(del);
-	notification.appendChild(msg);
-	this.container.appendChild(notification);
+		const del = document.createElement('button');
+		del.classList.add('pgly-wps--delete');
 
-	setTimeout(()=>this.container.removeChild(notification), options.timer);
-}
+		const msg = document.createElement('div');
+		msg.textContent = message;
 
-const handlePglyNotifications = () => {
-	(document.querySelectorAll('.pgly-wps--notification .pgly-wps--delete') || [])
-		.forEach(($delete: Element) : void => {
-			const $notification = $delete.parentNode;
-			const timer = parseInt(($notification as HTMLElement).dataset.timer || '0');
+		notification.appendChild(del);
+		notification.appendChild(msg);
+		this._container.appendChild(notification);
 
-			if ( timer > 0 )
-			{ setTimeout(()=>$notification?.parentNode?.removeChild($notification), timer); }
+		let removed = false;
 
-			$delete.addEventListener('click', () => {
-				$notification?.parentNode?.removeChild($notification);
+		setTimeout(() => {
+			if (!removed) this._container.removeChild(notification);
+		}, op.timer);
+
+		del.addEventListener('click', () => {
+			this._container.removeChild(notification);
+			removed = true;
+		});
+	}
+
+	public _bind() {
+		document
+			.querySelectorAll('.pgly-wps--notification .pgly-wps--delete')
+			.forEach(el => {
+				const notification = el.parentNode as HTMLElement;
+				const timer = parseInt(notification.dataset.timer ?? '0');
+				let removed = false;
+
+				if (timer > 0) {
+					setTimeout(() => {
+						if (!removed) notification?.parentNode?.removeChild(notification);
+					}, timer);
+				}
+
+				el.addEventListener('click', () => {
+					removed = true;
+					notification?.parentNode?.removeChild(notification);
+				});
 			});
-		});
+	}
 }
-
-export {
-	PglyNotification,
-	handlePglyNotifications
-};

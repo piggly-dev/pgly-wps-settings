@@ -1,0 +1,19 @@
+.pgly-wps--settings {
+	.flex-wrapper {
+		display: flex;
+		align-items: center;
+
+		* {
+			margin-bottom: 0 !important;
+			margin-right: 12px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		.focus {
+			flex: 1;
+		}
+	}
+}

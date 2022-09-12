@@ -1,0 +1,49 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import DOMManipulation from '@/behaviours/dommanipulation';
+import PglyBaseComponent from './base';
+var PglyInputComponent = /** @class */ (function (_super) {
+    __extends(PglyInputComponent, _super);
+    function PglyInputComponent(el) {
+        var _this = _super.call(this, el) || this;
+        _this._keyEvent = false;
+        _this._input = DOMManipulation.findElement(_this._wrapper, 'input');
+        _this._bind();
+        _this._default();
+        return _this;
+    }
+    PglyInputComponent.prototype.emptyValue = function () {
+        this.field().set('');
+    };
+    PglyInputComponent.prototype._bind = function () {
+        var _this = this;
+        this.on('change', function () {
+            if (_this._keyEvent)
+                return;
+            _this._input.value = _this.field().get();
+        });
+        this._input.addEventListener('keyup', function (e) {
+            _this._keyEvent = true;
+            _this._field.set(e.target.value);
+            _this._keyEvent = false;
+        });
+    };
+    PglyInputComponent.prototype._default = function () {
+        this.field().set(this._input.value);
+    };
+    return PglyInputComponent;
+}(PglyBaseComponent));
+export default PglyInputComponent;
