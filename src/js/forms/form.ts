@@ -32,12 +32,15 @@ export type TFormOptions = {
 	rules?: Record<string, Array<RuleValidator>>;
 };
 
+export type TFormBody<T = any> = (data: Record<string, any>) => T;
+
 export abstract class PglyBaseFormEngine extends EventHandler {
 	protected _wrapper: HTMLFormElement;
 	protected _inputs: Array<PglyBaseComponent>;
 	protected _button: HTMLButtonElement;
 	protected _options: TFormOptions;
 	protected _loading: boolean = false;
+	protected _formatter: TFormBody;
 
 	constructor(el: string | HTMLFormElement, options: Partial<TFormOptions> = {}) {
 		super();
@@ -50,8 +53,13 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 		this._inputs = options.inputs ?? [];
 		this._options = options;
+		this._formatter = data => stringify(data);
 
 		this._bind();
+	}
+
+	public formatter(func: TFormBody) {
+		this._formatter = func;
 	}
 
 	public add(input: PglyBaseComponent) {
@@ -178,17 +186,23 @@ export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 		data.inputs.xSecurity = this._options.x_security;
 		this.emit('prepared', data);
 
-		axios
-			.post(this._wrapper.action, stringify(data.inputs))
+		const { method = 'POST', action } = this._wrapper;
+
+		let request =
+			method.toUpperCase() === 'POST'
+				? axios.post(action, this._formatter(data.inputs))
+				: axios.get(action, this._formatter(data.inputs));
+
+		request
 			.then(res => {
-				this.emit('submitted', { data: data.inputs, response: res.data });
+				this.emit('requestSuccess', { data: data.inputs, response: res.data });
 			})
 			.catch(err => {
-				this.emit('unsubmitted', { data: data.inputs, error: err });
+				this.emit('requestError', { data: data.inputs, error: err });
 			})
 			.finally(() => {
 				this.loadState(false);
-				this.emit('finished', { data: data.inputs });
+				this.emit('requestEnd', { data: data.inputs });
 			});
 	}
 }
