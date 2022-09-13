@@ -16,13 +16,16 @@ export declare type TFormOptions = {
     inputs?: Array<PglyBaseComponent>;
     rules?: Record<string, Array<RuleValidator>>;
 };
+export declare type TFormBody<T = any> = (data: Record<string, any>) => T;
 export declare abstract class PglyBaseFormEngine extends EventHandler {
     protected _wrapper: HTMLFormElement;
     protected _inputs: Array<PglyBaseComponent>;
     protected _button: HTMLButtonElement;
     protected _options: TFormOptions;
     protected _loading: boolean;
+    protected _formatter: TFormBody;
     constructor(el: string | HTMLFormElement, options?: Partial<TFormOptions>);
+    formatter(func: TFormBody): void;
     add(input: PglyBaseComponent): void;
     get(name: string): TOrUndefined<PglyBaseComponent>;
     remove(name: string): void;

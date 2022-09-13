@@ -1,6 +1,12 @@
 # @piggly/pgly-wps-settings
 
-Development of CSS and JS files to to be used at **Wordpress** plugins developed by **Piggly**. You can, however, fell free to use it. For now, we do not provide the documentation, but a fast looking to each code will help.
+![NPM](https://img.shields.io/npm/v/@piggly/pgly-wps-settings?style=for-the-badge) ![Typescript](https://img.shields.io/badge/language-typescript-blue?style=for-the-badge) ![SASS](https://img.shields.io/badge/language-scss-bf4080?style=for-the-badge) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](LICENSE)
+
+> This library is not stable yet, must include tests. May change any time will release of version 1.x.x
+
+This library works with **WordPress** plug-ins made by **Piggly** company. It creates form inputs and has a solid and unique CSS style. The CSS will work well in the WordPress Admin area because it wraps elements to a master class `.pgly-wps-settings`. However, you are free to use it for other purposes.
+
+>  For now, we do not provide any documentation, but a fast looking to each code will help you to use it.
 
 ## Contributions
 

@@ -25,6 +25,7 @@ import PglyFinderComponent from './finder';
 import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import { PglyGroupFormComponent } from './group';
+import PglyBasicSelectComponent from './basicselect';
 var PglyBaseFormEngine = /** @class */ (function (_super) {
     __extends(PglyBaseFormEngine, _super);
     function PglyBaseFormEngine(el, options) {
@@ -36,9 +37,13 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
         _this._button = DOMManipulation.findElement(_this._wrapper, 'button.pgly-form--submit');
         _this._inputs = (_a = options.inputs) !== null && _a !== void 0 ? _a : [];
         _this._options = options;
+        _this._formatter = function (data) { return stringify(data); };
         _this._bind();
         return _this;
     }
+    PglyBaseFormEngine.prototype.formatter = function (func) {
+        this._formatter = func;
+    };
     PglyBaseFormEngine.prototype.add = function (input) {
         this._inputs.push(input);
     };
@@ -62,6 +67,10 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
             }
             if (el.classList.contains(prefix + "--checkbox")) {
                 _this._inputs.push(new PglyCheckboxComponent(el));
+                return;
+            }
+            if (el.classList.contains(prefix + "--select")) {
+                _this._inputs.push(new PglyBasicSelectComponent(el));
                 return;
             }
             if (el.classList.contains(prefix + "--eselect")) {
@@ -148,17 +157,20 @@ var PglyAsyncFormEngine = /** @class */ (function (_super) {
         this.loadState(true);
         data.inputs.xSecurity = this._options.x_security;
         this.emit('prepared', data);
-        axios
-            .post(this._wrapper.action, stringify(data.inputs))
+        var _a = this._wrapper, _b = _a.method, method = _b === void 0 ? 'POST' : _b, action = _a.action;
+        var request = method.toUpperCase() === 'POST'
+            ? axios.post(action, this._formatter(data.inputs))
+            : axios.get(action, this._formatter(data.inputs));
+        request
             .then(function (res) {
-            _this.emit('submitted', { data: data.inputs, response: res.data });
+            _this.emit('requestSuccess', { data: data.inputs, response: res.data });
         })
             .catch(function (err) {
-            _this.emit('unsubmitted', { data: data.inputs, error: err });
+            _this.emit('requestError', { data: data.inputs, error: err });
         })
             .finally(function () {
             _this.loadState(false);
-            _this.emit('finished', { data: data.inputs });
+            _this.emit('requestEnd', { data: data.inputs });
         });
     };
     return PglyAsyncFormEngine;

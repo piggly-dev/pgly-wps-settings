@@ -33,6 +33,10 @@
 		"preversion": "npm run lint",
 		"version": "npm run format"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/piggly-dev/pgly-wps-settings.git"
+	},
 	"author": {
 		"name": "Caique Araujo",
 		"email": "caique@piggly.com.br",

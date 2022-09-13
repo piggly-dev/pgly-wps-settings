@@ -71,6 +71,7 @@ import PglyFinderComponent from './finder';
 import PglySelectComponent from './select';
 import UUID from '@/helpers/uuid';
 import PglyLoadable from './loadable';
+import PglyBasicSelectComponent from './basicselect';
 var PglyGroupFormItems = /** @class */ (function () {
     function PglyGroupFormItems(parent) {
         this._items = [];
@@ -191,28 +192,34 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
                 _this._inputs[name_3] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--eselect")) {
-                var component = new PglySelectComponent(el);
+            if (el.classList.contains(prefix + "--select")) {
+                var component = new PglyBasicSelectComponent(el);
                 var name_4 = component.field().name();
                 _this._inputs[name_4] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--finder")) {
-                var component = new PglyFinderComponent(el);
+            if (el.classList.contains(prefix + "--eselect")) {
+                var component = new PglySelectComponent(el);
                 var name_5 = component.field().name();
                 _this._inputs[name_5] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--single-media")) {
-                var component = new PglySingleMediaComponent(el);
+            if (el.classList.contains(prefix + "--finder")) {
+                var component = new PglyFinderComponent(el);
                 var name_6 = component.field().name();
                 _this._inputs[name_6] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--multiple-media")) {
-                var component = new PglyMultipleMediaComponent(el);
+            if (el.classList.contains(prefix + "--single-media")) {
+                var component = new PglySingleMediaComponent(el);
                 var name_7 = component.field().name();
                 _this._inputs[name_7] = component;
+                return;
+            }
+            if (el.classList.contains(prefix + "--multiple-media")) {
+                var component = new PglyMultipleMediaComponent(el);
+                var name_8 = component.field().name();
+                _this._inputs[name_8] = component;
                 return;
             }
         });
