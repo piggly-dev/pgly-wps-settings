@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #f0f0f1;">
+
+<head>
+	<title>Piggly WPS Settings</title>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="/assets/js/pgly-wps-settings.js"></script>
+	<link href="/assets/css/pgly-wps-settings.css" rel="stylesheet" />
+	<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+</head>
+
+<body>
+	<div class="pgly-wps--settings">
+		<div id="pgly-wps--toaster" class="pgly-wps--toaster pgly-wps-in-s"></div>
+		<button id="pgly-wps--toaster-action" class="pgly-wps--button pgly-wps-is-primary">Send Toaster</button>
+		<script>
+			document.addEventListener( 'DOMContentLoaded', () => {
+				const toaster = new pglyWps.PglyToast( 'pgly-wps--toaster' );
+				const button = document.getElementById( 'pgly-wps--toaster-action' );
+
+				button.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					toaster.launch( 'Hello world!' );
+				} )
+			} )
+		</script>
+		<div id="pgly-wps--notification"></div>
+		<button id="pgly-wps--notification-action" class="pgly-wps--button pgly-wps-is-primary">Send Notification</button>
+		<script>
+			document.addEventListener( 'DOMContentLoaded', () => {
+				const toaster = new pglyWps.PglyNotification( 'pgly-wps--notification' );
+				const button = document.getElementById( 'pgly-wps--notification-action' );
+
+				button.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					toaster.launch( 'Hello world!' );
+				} )
+			} )
+		</script>
+
+		<h1 class="pgly-wps--title">Title</h1>
+		<h2 class="pgly-wps--subtitle">Subtitle</h2>
+
+		<h1 class="pgly-wps--title pgly-wps-is-1">Title 1</h1>
+		<h2 class="pgly-wps--title pgly-wps-is-2">Title 2</h2>
+		<h3 class="pgly-wps--title pgly-wps-is-3">Title 3</h3>
+		<h4 class="pgly-wps--title pgly-wps-is-4">Title 4</h4>
+		<h5 class="pgly-wps--title pgly-wps-is-5">Title 5</h5>
+		<h6 class="pgly-wps--title pgly-wps-is-6">Title 6</h6>
+
+		<h1 class="pgly-wps--subtitle pgly-wps-is-1">Subtitle 1</h1>
+		<h2 class="pgly-wps--subtitle pgly-wps-is-2">Subtitle 2</h2>
+		<h3 class="pgly-wps--subtitle pgly-wps-is-3">Subtitle 3</h3>
+		<h4 class="pgly-wps--subtitle pgly-wps-is-4">Subtitle 4</h4>
+		<h5 class="pgly-wps--subtitle pgly-wps-is-5">Subtitle 5</h5>
+		<h6 class="pgly-wps--subtitle pgly-wps-is-6">Subtitle 6</h6>
+
+		<p class="pgly-wps--title pgly-wps-is-1">Title 1</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-3">Subtitle 3</p>
+
+		<p class="pgly-wps--title pgly-wps-is-2">Title 2</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-4">Subtitle 4</p>
+
+		<p class="pgly-wps--title pgly-wps-is-3">Title 3</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-5">Subtitle 5</p>
+
+		<p class="pgly-wps--title pgly-wps-is-1 pgly-wps-is-spaced">Title 1</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-3">Subtitle 3</p>
+
+		<p class="pgly-wps--title pgly-wps-is-2 pgly-wps-is-spaced">Title 2</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-4">Subtitle 4</p>
+
+		<p class="pgly-wps--title pgly-wps-is-3 pgly-wps-is-spaced">Title 3</p>
+		<p class="pgly-wps--subtitle pgly-wps-is-5">Subtitle 5</p>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Badges</h2>
+		<div class="pgly-wps--badges">
+			<span class="pgly-wps--badge">Tag label</span>
+			<span class="pgly-wps--badge pgly-wps-is-black">Black</span>
+			<span class="pgly-wps--badge pgly-wps-is-dark">Dark</span>
+			<span class="pgly-wps--badge pgly-wps-is-light">Light</span>
+			<span class="pgly-wps--badge pgly-wps-is-white">White</span>
+			<span class="pgly-wps--badge pgly-wps-is-primary">Primary</span>
+			<span class="pgly-wps--badge pgly-wps-is-accent">Accent</span>
+			<span class="pgly-wps--badge pgly-wps-is-info">Info</span>
+			<span class="pgly-wps--badge pgly-wps-is-success">Success</span>
+			<span class="pgly-wps--badge pgly-wps-is-warning">Warning</span>
+			<span class="pgly-wps--badge pgly-wps-is-danger">Danger</span>
+			<span class="pgly-wps--badge pgly-wps-is-primary pgly-wps-is-light">Primary</span>
+			<span class="pgly-wps--badge pgly-wps-is-accent pgly-wps-is-light">Accent</span>
+			<span class="pgly-wps--badge pgly-wps-is-info pgly-wps-is-light">Info</span>
+			<span class="pgly-wps--badge pgly-wps-is-success pgly-wps-is-light">Success</span>
+			<span class="pgly-wps--badge pgly-wps-is-warning pgly-wps-is-light">Warning</span>
+			<span class="pgly-wps--badge pgly-wps-is-danger pgly-wps-is-light">Danger</span>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Regular Icon Buttons</h2>
+		<button class="pgly-wps--icon-button"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-primary"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-accent"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-info"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-success pgly-wps-is-rounded"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-warning pgly-wps-is-rounded"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-danger pgly-wps-is-rounded"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-primary"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-accent"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-info"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-rounded pgly-wps-is-success"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-rounded pgly-wps-is-warning"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-compact pgly-wps-is-rounded pgly-wps-is-danger"><i
+				class="fas fa-caret-square-down"></i></button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Medium Icon Buttons</h2>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-primary"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-accent"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-info"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-success"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-warning"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-danger"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-compact"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-compact pgly-wps-is-primary"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-compact pgly-wps-is-accent"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-compact pgly-wps-is-info"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-success"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-warning"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-medium pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-danger"><i
+				class="fas fa-caret-square-down"></i></button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Large Icon Buttons</h2>
+		<button class="pgly-wps--icon-button pgly-wps-is-large"><i class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-primary"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-accent"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-info"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-success"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-warning"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-danger"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-compact"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-compact pgly-wps-is-primary"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-compact pgly-wps-is-accent"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-compact pgly-wps-is-info"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-success"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-warning"><i
+				class="fas fa-caret-square-down"></i></button>
+		<button
+			class="pgly-wps--icon-button pgly-wps-is-large pgly-wps-is-rounded pgly-wps-is-compact pgly-wps-is-danger"><i
+				class="fas fa-caret-square-down"></i></button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Regular Icon Buttons</h2>
+		<button class="pgly-wps--icon-button pgly-async--behaviour pgly-loading--state pgly-wps-is-primary">
+			<i class="fas fa-caret-square-down"></i>
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--icon-button pgly-async--behaviour pgly-loading--state pgly-wps-is-medium pgly-wps-is-primary">
+			<i class="fas fa-caret-square-down"></i>
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--icon-button pgly-async--behaviour pgly-loading--state pgly-wps-is-large pgly-wps-is-primary">
+			<i class="fas fa-caret-square-down"></i>
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Regular Buttons</h2>
+		<button class="pgly-wps--button">Regular</button>
+		<button class="pgly-wps--button pgly-wps-is-primary">Regular Primary</button>
+		<button class="pgly-wps--button pgly-wps-is-accent">Regular Accent</button>
+		<button class="pgly-wps--button pgly-wps-is-info">Regular Info</button>
+		<button class="pgly-wps--button pgly-wps-is-success">Regular Success</button>
+		<button class="pgly-wps--button pgly-wps-is-warning">Regular Warning</button>
+		<button class="pgly-wps--button pgly-wps-is-danger">Regular Danger</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Compact Buttons</h2>
+		<button class="pgly-wps--button pgly-wps-is-compact">Compact</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary">Compact Primary</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-accent">Compact Accent</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-info">Compact Info</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-success">Compact Success</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-warning">Compact Warning</button>
+		<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Compact Danger</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Expanded Buttons</h2>
+		<button class="pgly-wps--button pgly-wps-is-expanded">Expanded</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-primary">Expanded Primary</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-accent">Expanded Accent</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-info">Expanded Info</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-success">Expanded Success</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-warning">Expanded Warning</button>
+		<button class="pgly-wps--button pgly-wps-is-expanded pgly-wps-is-danger">Expanded Danger</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Spinners</h2>
+		<svg class="pgly-wps--spinner pgly-wps-is-black" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-accent" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-info" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-success" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-warning" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+		<svg class="pgly-wps--spinner pgly-wps-is-danger" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Regular Loading Buttons</h2>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-primary">
+			Regular Primary
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-accent">
+			Regular Accent
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-info">
+			Regular Info
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-success">
+			Regular Success
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-warning">
+			Regular Warning
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-danger">
+			Regular Danger
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Compact Loading Buttons</h2>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-primary">
+			Compact Primary
+			<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-accent">
+			Compact Accent
+			<svg class="pgly-wps--spinner pgly-wps-is-accent" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-info">
+			Compact Info
+			<svg class="pgly-wps--spinner pgly-wps-is-info" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-success">
+			Compact Success
+			<svg class="pgly-wps--spinner pgly-wps-is-success" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-warning">
+			Compact Warning
+			<svg class="pgly-wps--spinner pgly-wps-is-warning" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-compact pgly-wps-is-danger">
+			Compact Danger
+			<svg class="pgly-wps--spinner pgly-wps-is-danger" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Expanded Loading Buttons</h2>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-primary">
+			Expanded Primary
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-accent">
+			Expanded Accent
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-info">
+			Expanded Info
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-success">
+			Expanded Success
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-warning">
+			Expanded Warning
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+		<button
+			class="pgly-wps--button pgly-async--behaviour pgly-loading--state pgly-wps-is-expanded pgly-wps-is-danger">
+			Expanded Danger
+			<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</button>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Navigator</h2>
+		<div class="pgly-wps--navigator pgly-wps-are-medium">
+			<a href="#" class="pgly-wps--item pgly-wps-is-selected">One</a>
+			<a href="#" class="pgly-wps--item">Two</a>
+			<a href="#" class="pgly-wps--item">Three</a>
+			<a href="#" class="pgly-wps--item">Four</a>
+			<a href="#" class="pgly-wps--item">Five</a>
+			<a href="#" class="pgly-wps--item">Six</a>
+			<a href="#" class="pgly-wps--item">Seven</a>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Notifications</h2>
+		<div class="pgly-wps--notification">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-primary">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-accent">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-info">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-success">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-warning">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-danger">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-primary pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-accent pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-info pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-success pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-warning pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+		<div class="pgly-wps--notification pgly-wps-is-danger pgly-wps-is-light">
+			<button class="pgly-wps--delete"></button>
+			Lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit
+			amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+			efficitur. Primar lorem ipsum dolor sit amet, consectetur
+			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>,
+			tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet
+			fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Form</h2>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field">
+					<label class="pgly-wps--label">
+						Normal Input
+					</label>
+					<div class="pgly-wps--tagged">
+						<input placeholder="Type here your value..." type="text">
+						<span class="pgly-wps--tag">Tag for help</span>
+					</div>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field">
+					<label class="pgly-wps--label">
+						Normal Select
+					</label>
+					<div>
+						<select>
+							<option>Select your value...</option>
+							<option>Value 1</option>
+							<option>Value 2</option>
+							<option>Value 3</option>
+						</select>
+					</div>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field">
+					<label class="pgly-wps--label">
+						Normal Textarea
+					</label>
+					<div>
+						<textarea></textarea>
+					</div>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field">
+					<label class="pgly-wps--label">
+						Extended Checkbox
+					</label>
+					<div class="pgly-wps--checkbox" data-name="checkbox-name" data-selected="false">
+						<div class="pgly-wps--icon"></div>
+						<div class="pgly-wps--placeholder">My checkbox</div>
+					</div>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Form Errors</h2>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field pgly-wps--error">
+					<label class="pgly-wps--label">
+						Normal Input
+					</label>
+					<div>
+						<input placeholder="Type here your value..." type="text">
+					</div>
+					<span class="pgly-wps--message">
+						Error message
+					</span>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field pgly-wps--error">
+					<label class="pgly-wps--label">
+						Normal Select
+					</label>
+					<div>
+						<select>
+							<option>Select your value...</option>
+							<option>Value 1</option>
+							<option>Value 2</option>
+							<option>Value 3</option>
+						</select>
+					</div>
+					<span class="pgly-wps--message">
+						Error message
+					</span>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field pgly-wps--error">
+					<label class="pgly-wps--label">
+						Normal Textarea
+					</label>
+					<div>
+						<textarea></textarea>
+					</div>
+					<span class="pgly-wps--message">
+						Error message
+					</span>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--field pgly-wps--error">
+					<label class="pgly-wps--label">
+						Extended Checkbox
+					</label>
+					<div class="pgly-wps--checkbox" data-name="checkbox-name" data-selected="false">
+						<div class="pgly-wps--icon"></div>
+						<div class="pgly-wps--placeholder">My checkbox</div>
+					</div>
+					<span class="pgly-wps--message">
+						Error message
+					</span>
+					<p class="pgly-wps--description">
+						It includes description.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Explorers</h2>
+		<div class="pgly-wps--explorer">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-primary">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-accent">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-info">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-success">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-warning">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-danger">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-primary pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-accent pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-info pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-success pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-warning pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-danger pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Compact Explorers</h2>
+		<div class="pgly-wps--explorer pgly-wps-is-compact">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-primary">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-accent">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-info">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-success">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-warning">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-danger">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-primary pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-accent pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-info pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-success pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-warning pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+		<div class="pgly-wps--explorer pgly-wps-is-compact pgly-wps-is-danger pgly-wps-is-light">
+			<div class="pgly-wps--tooltip">
+				<svg class="pgly-wps--info" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" xml:space="preserve"
+					xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="m13.839 17.525c-6e-3 2e-3 -0.559 0.186-1.039 0.186-0.265 0-0.372-0.055-0.406-0.079-0.168-0.117-0.48-0.336 0.054-1.4l1-1.994c0.593-1.184 0.681-2.329 0.245-3.225-0.356-0.733-1.039-1.236-1.92-1.416-0.317-0.065-0.639-0.097-0.958-0.097-1.849 0-3.094 1.08-3.146 1.126-0.179 0.158-0.221 0.42-0.102 0.626 0.12 0.206 0.367 0.3 0.595 0.222 5e-3 -2e-3 0.559-0.187 1.039-0.187 0.263 0 0.369 0.055 0.402 0.078 0.169 0.118 0.482 0.34-0.051 1.402l-1 1.995c-0.594 1.185-0.681 2.33-0.245 3.225 0.356 0.733 1.038 1.236 1.921 1.416 0.314 0.063 0.636 0.097 0.954 0.097 1.85 0 3.096-1.08 3.148-1.126 0.179-0.157 0.221-0.42 0.102-0.626-0.12-0.205-0.369-0.297-0.593-0.223z" />
+					<circle cx="13" cy="6.001" r="2.5" />
+				</svg>
+				<div class="pgly-wps--data">
+					Data to info button
+				</div>
+			</div>
+			<strong>Explorer Label</strong>
+			<span>Explorer Value</span>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Grid</h2>
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--1">
+				<div class="pgly-wps--card">
+					<p>C1</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--6">
+				<div class="pgly-wps--card">
+					<p>C6</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--6">
+				<div class="pgly-wps--card">
+					<p>C6</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--4">
+				<div class="pgly-wps--card">
+					<p>C4</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--4">
+				<div class="pgly-wps--card">
+					<p>C4</p>
+				</div>
+			</div>
+			<div class="pgly-wps--column pgly-wps-col--4">
+				<div class="pgly-wps--card">
+					<p>C4</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--12">
+				<div class="pgly-wps--card">
+					<p>C12</p>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Card with Sections</h2>
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact">
+				<div class="pgly-wps--card pgly-wps-is-white pgly-wps-is-compact">
+					<div class="inside left">
+						This is the left content
+					</div>
+					<div class="pgly-wps--action-bar inside right">
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary">Edit</button>
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Remove</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column pgly-wps-col--12 pgly-wps-is-compact">
+				<div class="pgly-wps--card pgly-wps-is-white pgly-wps-is-compact">
+					<div class="inside left">
+						This is the left content
+					</div>
+					<div class="pgly-wps--action-bar inside right">
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary">Edit</button>
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Remove</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="pgly-wps--title pgly-wps-is-3">Extended Components</h2>
+
+		<h2 class="pgly-wps--title pgly-wps-is-6">Media Selector</h2>
+		<div class="pgly-wps--row">
+			<div class="pgly-wps--column">
+				<div class="pgly-wps--media-wrapper" id="single-media-selector">
+					<div>
+						<input name="name" type="hidden">
+						<img />
+						<span class="pgly-wps--placeholder">This is the placeholder to upload</span>
+					</div>
+					<div class="pgly-wps--action-bar">
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+							Select
+						</button>
+						<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+							Clean Selection
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h1 class="pgly-wps--title">Form Inputs</h1>
+		<form id="main-form">
+			<script lang="javascript">
+				document.addEventListener( 'DOMContentLoaded', () => {
+					const requiredRule = ( v ) => {
+						if ( !v ) throw new Error( 'The field is required...' );
+					}
+
+					const form = new pglyWps.PglyAsyncFormEngine(
+						'main-form', {
+						rules: {
+							'regular-text': [requiredRule],
+							'basic-select': [requiredRule],
+							'basic-select-async': [requiredRule],
+							'regular-textarea': [requiredRule],
+							'required-checkbox': [requiredRule],
+							'extended-select': [requiredRule],
+							'finder': [requiredRule],
+							'single-media': [requiredRule]
+						}
+					} );
+
+					form.auto();
+
+					form.get( 'basic-select-async' ).asynchronous( () => {
+						return new Promise( ( res ) => {
+							setTimeout( () => res( [{
+								label: 'One',
+								value: 'one',
+								selected: false
+							}, {
+								label: 'Two',
+								value: 'two',
+								selected: false
+							}, {
+								label: 'Three',
+								value: 'three',
+								selected: false
+							}] ), 2000 );
+						} )
+					} );
+
+					form.get( 'extended-select-sync' ).synchronous( [{
+						label: 'One',
+						value: 'one',
+						selected: true
+					}, {
+						label: 'Two',
+						value: 'two',
+						selected: false
+					}, {
+						label: 'Three',
+						value: 'three',
+						selected: false
+					}] );
+
+					form.get( 'extended-select-async' ).asynchronous( () => {
+						return new Promise( ( res ) => {
+							setTimeout( () => res( [{
+								label: 'One',
+								value: 'one',
+								selected: false
+							}, {
+								label: 'Two',
+								value: 'two',
+								selected: false
+							}, {
+								label: 'Three',
+								value: 'three',
+								selected: false
+							}] ), 2000 );
+						} )
+					} );
+
+					form.get( 'finder' ).options( {
+						load: async ( v ) => {
+							const data = [
+								{
+									value: 1,
+									label: "hfink0@i2i.jp",
+								},
+								{
+									value: 2,
+									label: "aguillem1@photobucket.com",
+								},
+								{
+									value: 3,
+									label: "fgoodbody2@goo.ne.jp",
+								},
+								{
+									value: 4,
+									label: "icavee3@ucoz.com",
+								},
+								{
+									value: 5,
+									label: "vdibben4@guardian.co.uk",
+								},
+								{
+									value: 6,
+									label: "fburren5@china.com.cn",
+								},
+								{
+									value: 7,
+									label: "sklempke6@ted.com",
+								},
+								{
+									value: 8,
+									label: "sallicock7@princeton.edu",
+								},
+								{
+									value: 9,
+									label: "smorecomb8@tripod.com",
+								},
+								{
+									value: 10,
+									label: "lpitkin9@google.it",
+								},
+								{
+									value: 11,
+									label: "jbulbrooka@simplemachines.org",
+								},
+								{
+									value: 12,
+									label: "jpymb@examiner.com",
+								},
+								{
+									value: 13,
+									label: "kclimerc@jugem.jp",
+								},
+								{
+									value: 14,
+									label: "akendled@hud.gov",
+								},
+								{
+									value: 15,
+									label: "gshewrye@mediafire.com",
+								},
+								{
+									value: 16,
+									label: "hmeaddowcroftf@dedecms.com",
+								},
+								{
+									value: 17,
+									label: "ebrissetg@shutterfly.com",
+								},
+								{
+									value: 18,
+									label: "dtroyh@dion.ne.jp"
+								},
+								{
+									value: 19,
+									label: "djodrellei@narod.ru"
+								},
+								{
+									value: 20,
+									label: "dtasselerj@marketwatch.com"
+								}
+							];
+
+							return await new Promise( res => {
+								setTimeout( () => {
+									res( data.filter( ( i ) => i.label.includes( v ) ) );
+								}, 2000 );
+							} );
+						},
+						labels: {
+							select: 'Select'
+						}
+					} );
+
+					form.get( 'single-media' ).on( 'select', ( { component } ) => {
+						const data = [{
+							"value": 1,
+							"src": "http://dummyimage.com/412x100.png/ff4444/ffffff"
+						}, {
+							"value": 2,
+							"src": "http://dummyimage.com/430x100.png/ff4444/ffffff"
+						}, {
+							"value": 3,
+							"src": "http://dummyimage.com/479x100.png/ff4444/ffffff"
+						}, {
+							"value": 4,
+							"src": "http://dummyimage.com/540x100.png/cc0000/ffffff"
+						}, {
+							"value": 5,
+							"src": "http://dummyimage.com/342x100.png/cc0000/ffffff"
+						}, {
+							"value": 6,
+							"src": "http://dummyimage.com/399x100.png/5fa2dd/ffffff"
+						}, {
+							"value": 7,
+							"src": "http://dummyimage.com/599x100.png/cc0000/ffffff"
+						}, {
+							"value": 8,
+							"src": "http://dummyimage.com/415x100.png/ff4444/ffffff"
+						}, {
+							"value": 9,
+							"src": "http://dummyimage.com/455x100.png/ff4444/ffffff"
+						}, {
+							"value": 10,
+							"src": "http://dummyimage.com/550x100.png/dddddd/000000"
+						}];
+
+						const item = data[Math.floor( Math.random() * data.length )];
+						component.select( item );
+					} );
+
+					form.get( 'multiple-media' ).on( 'select', ( { component } ) => {
+						const data = [{
+							"value": 1,
+							"src": "http://dummyimage.com/412x100.png/ff4444/ffffff"
+						}, {
+							"value": 2,
+							"src": "http://dummyimage.com/430x100.png/ff4444/ffffff"
+						}, {
+							"value": 3,
+							"src": "http://dummyimage.com/479x100.png/ff4444/ffffff"
+						}, {
+							"value": 4,
+							"src": "http://dummyimage.com/540x100.png/cc0000/ffffff"
+						}, {
+							"value": 5,
+							"src": "http://dummyimage.com/342x100.png/cc0000/ffffff"
+						}, {
+							"value": 6,
+							"src": "http://dummyimage.com/399x100.png/5fa2dd/ffffff"
+						}, {
+							"value": 7,
+							"src": "http://dummyimage.com/599x100.png/cc0000/ffffff"
+						}, {
+							"value": 8,
+							"src": "http://dummyimage.com/415x100.png/ff4444/ffffff"
+						}, {
+							"value": 9,
+							"src": "http://dummyimage.com/455x100.png/ff4444/ffffff"
+						}, {
+							"value": 10,
+							"src": "http://dummyimage.com/550x100.png/dddddd/000000"
+						}];
+
+						const item = data[Math.floor( Math.random() * data.length )];
+						component.select( item );
+					} );
+
+					form.get( 'form-group' ).options( {
+						view: {
+							'first-name': 'First Name',
+							'last-name': 'Last Name',
+						},
+						rules: {
+							'regular-text': [requiredRule],
+							'regular-textarea': [requiredRule],
+							'required-checkbox': [requiredRule],
+							'extended-select': [requiredRule],
+							'finder': [requiredRule],
+							'single-media': [requiredRule]
+						}
+					} )
+
+					form.get( 'form-group' ).synchronous( [{
+						"first-name": { label: undefined, value: "Damian" },
+						"last-name": { label: undefined, value: "Revett" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Hilario" },
+						"last-name": { label: undefined, value: "Vogele" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Adoree" },
+						"last-name": { label: undefined, value: "Belden" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Noble" },
+						"last-name": { label: undefined, value: "Glasper" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Farand" },
+						"last-name": { label: undefined, value: "Ducker" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Ansley" },
+						"last-name": { label: undefined, value: "Bowry" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Denna" },
+						"last-name": { label: undefined, value: "Daout" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Sacha" },
+						"last-name": { label: undefined, value: "Fuzzard" },
+						"required-checkbox": { label: undefined, value: false },
+					}, {
+						"first-name": { label: undefined, value: "Carolin" },
+						"last-name": { label: undefined, value: "Hellwich" },
+						"required-checkbox": { label: undefined, value: true },
+					}, {
+						"first-name": { label: undefined, value: "Lauralee" },
+						"last-name": { label: undefined, value: "Pulham" },
+						"required-checkbox": { label: undefined, value: true },
+					}]
+					);
+				} )
+			</script>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--text" data-name="regular-text">
+						<label class="pgly-wps--label">
+							Regular Input
+						</label>
+						<div class="pgly-wps--tagged">
+							<input placeholder="Type here your value..." type="text" value="">
+							<span class="pgly-wps--tag">Tag for help</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--select" data-name="basic-select">
+						<label class="pgly-wps--label">
+							Regular Select as Synchronous
+						</label>
+						<div>
+							<select>
+								<option class="placeholder" value="">Select your value...</option>
+								<option value="1">Value 1</option>
+								<option value="2">Value 2</option>
+								<option value="3">Value 3</option>
+							</select>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--select" data-name="basic-select-async">
+						<label class="pgly-wps--label">
+							Regular Select as Asynchronous
+						</label>
+						<div>
+							<select>
+								<option class="placeholder" value="">Select your value...</option>
+							</select>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--text" data-name="regular-default-text">
+						<label class="pgly-wps--label">
+							Regular Input
+						</label>
+						<input placeholder="Type here your value..." type="text" value="With default value">
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--textarea" data-name="regular-textarea"
+						data-def="">
+						<label class="pgly-wps--label">
+							Regular Textarea
+						</label>
+						<div>
+							<textarea></textarea>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--textarea" data-name="regular-default-textarea"
+						data-def="">
+						<label class="pgly-wps--label">
+							Regular Textarea
+						</label>
+						<div>
+							<textarea>With default value</textarea>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--checkbox" data-name="optional-checkbox">
+						<label class="pgly-wps--label">
+							Optional Checkbox
+						</label>
+						<div class="pgly-wps--checkbox" data-value="true">
+							<div class="pgly-wps--icon"></div>
+							<div class="pgly-wps--placeholder">My checkbox</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--checkbox" data-name="required-checkbox"
+						data-def="false">
+						<label class="pgly-wps--label">
+							Required Checkbox
+						</label>
+						<div class="pgly-wps--checkbox">
+							<div class="pgly-wps--icon"></div>
+							<div class="pgly-wps--placeholder">My checkbox</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--eselect" data-name="extended-select-sync">
+						<label class="pgly-wps--label">
+							Extended Select Field as Synchronous
+						</label>
+						<div class="pgly-wps--select">
+							<div class="selected empty">
+								<span>Select one option...</span>
+								<svg class="pgly-wps--arrow" height="48" viewBox="0 0 48 48" width="48"
+									xmlns="http://www.w3.org/2000/svg">
+									<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
+									<path d="M0-.75h48v48h-48z" fill="none"></path>
+								</svg>
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+							</div>
+							<div class="items hidden">
+								<div class="placeholder clickable">Select one option...</div>
+								<div class="container"></div>
+							</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--eselect" data-name="extended-select-async">
+						<label class="pgly-wps--label">
+							Extended Select Field as Asynchronous
+						</label>
+						<div class="pgly-wps--select">
+							<div class="selected empty">
+								<span>Select one option...</span>
+								<svg class="pgly-wps--arrow" height="48" viewBox="0 0 48 48" width="48"
+									xmlns="http://www.w3.org/2000/svg">
+									<path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"></path>
+									<path d="M0-.75h48v48h-48z" fill="none"></path>
+								</svg>
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+							</div>
+							<div class="items hidden">
+								<div class="placeholder">Select one option...</div>
+								<div class="container"></div>
+							</div>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div id="extended-finder-and-selector">
+						<div class="pgly-wps--field pgly-form--input pgly-form--finder" data-name="finder">
+							<label class="pgly-wps--label">
+								Find for something
+							</label>
+							<div class="pgly-wps--input flex-wrapper">
+								<input class="focus" placeholder="Type here your value..." type="text">
+								<button class="pgly-wps--button pgly-async--behaviour pgly-wps-is-primary">
+									Search
+									<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+										<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+									</svg>
+								</button>
+							</div>
+							<div class="pgly-wps--selected pgly-wps--card pgly-wps-is-white pgly-wps-is-compact"
+								style="display: none;">
+								<div class="pgly-wps--label inside left"></div>
+								<div class="pgly-wps--action-bar inside right">
+									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Unselect</button>
+								</div>
+							</div>
+							<span class="pgly-wps--message"></span>
+							<p class="pgly-wps--description">
+								It includes description.
+							</p>
+							<div class="pgly-wps--loader">
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+								<div class="pgly-wps--list">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div id="extended-finder-and-selector">
+						<div class="pgly-wps--field pgly-form--input pgly-form--finder" data-name="finder-default">
+							<label class="pgly-wps--label">
+								Find for something
+							</label>
+							<div class="pgly-wps--input flex-wrapper">
+								<input class="focus" placeholder="Type here your value..." type="text">
+								<button class="pgly-wps--button pgly-async--behaviour pgly-wps-is-primary">
+									Search
+									<svg class="pgly-wps--spinner pgly-wps-is-white" viewBox="0 0 50 50">
+										<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+									</svg>
+								</button>
+							</div>
+							<div class="pgly-wps--selected pgly-wps--card pgly-wps-is-white pgly-wps-is-compact"
+								style="display: none;" data-value="18" data-label="unknown@email.com">
+								<div class="pgly-wps--label inside left"></div>
+								<div class="pgly-wps--action-bar inside right">
+									<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger">Unselect</button>
+								</div>
+							</div>
+							<span class="pgly-wps--message"></span>
+							<p class="pgly-wps--description">
+								It includes description.
+							</p>
+							<div class="pgly-wps--loader">
+								<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+									<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+								</svg>
+								<div class="pgly-wps--list">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-wps--media-wrapper pgly-form--input pgly-form--single-media"
+						data-name="single-media">
+						<label class="pgly-wps--label">
+							Banner
+						</label>
+						<div class="container">
+							<img />
+							<span class="pgly-wps--placeholder">Press "select" to random image</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+						<div class="pgly-wps--action-bar">
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+								Select
+							</button>
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+								Clean Selection
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-wps--media-wrapper pgly-form--input pgly-form--single-media"
+						data-name="single-media-default">
+						<label class="pgly-wps--label">
+							Banner
+						</label>
+						<div class="container">
+							<img data-value="4" data-src="http://dummyimage.com/540x100.png/cc0000/ffffff" />
+							<span class="pgly-wps--placeholder">Press "select" to random image</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+						<div class="pgly-wps--action-bar">
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+								Select
+							</button>
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+								Clean Selection
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-wps--media-wrapper  pgly-form--input pgly-form--multiple-media"
+						data-name="multiple-media">
+						<label class="pgly-wps--label">
+							Gallery
+						</label>
+						<div class="pgly-wps--images">
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+						<div class="pgly-wps--action-bar">
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+								Add more
+							</button>
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+								Clean all
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-wps--media-wrapper  pgly-form--input pgly-form--multiple-media"
+						data-name="multiple-media-default">
+						<label class="pgly-wps--label">
+							Gallery
+						</label>
+						<div class="pgly-wps--images" data-values="1,10,12"
+							data-srcs="http://dummyimage.com/412x100.png/ff4444/ffffff,http://dummyimage.com/479x100.png/ff4444/ffffff,http://dummyimage.com/540x100.png/cc0000/ffffff">
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+						<div class="pgly-wps--action-bar">
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-primary pgly-wps--select">
+								Add more
+							</button>
+							<button class="pgly-wps--button pgly-wps-is-compact pgly-wps-is-danger pgly-wps--clean">
+								Clean all
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--group pgly-form--input pgly-form--group" data-name="form-group">
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column pgly-wps-col--6">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="first-name">
+									<label class="pgly-wps--label">
+										First Name
+									</label>
+									<input placeholder="Type here your first name" type="text">
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+							<div class="pgly-wps--column pgly-wps-col--6">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="last-name">
+									<label class="pgly-wps--label">
+										Last Name
+									</label>
+									<input placeholder="Type here your last name" type="text">
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column">
+								<div class="pgly-wps--field pgly-gform--input pgly-gform--checkbox"
+									data-name="required-checkbox" data-def="false">
+									<label class="pgly-wps--label">
+										Required Checkbox
+									</label>
+									<div class="pgly-wps--checkbox">
+										<div class="pgly-wps--icon"></div>
+										<div class="pgly-wps--placeholder">My checkbox</div>
+									</div>
+									<span class="pgly-wps--message"></span>
+									<p class="pgly-wps--description">
+										It includes description.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column">
+								<button class="pgly-wps--button pgly-wps-is-primary pgly-gform--submit">Save data</button>
+							</div>
+						</div>
+						<div class="pgly-wps--row">
+							<div class="pgly-wps--column pgly-wps--items">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<button class="pgly-wps--button pgly-wps-is-primary pgly-form--submit">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

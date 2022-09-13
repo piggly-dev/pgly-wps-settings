@@ -1,0 +1,24 @@
+.pgly-wps--settings {
+	.pgly-wps--loader {
+		margin-top: 24px;
+
+		.pgly-wps--list {
+			display: block;
+		}
+
+		.pgly-wps--spinner {
+			margin: 24px auto;
+			display: none;
+		}
+
+		&.pgly-loading--state {
+			.pgly-wps--spinner {
+				display: table;
+			}
+
+			.pgly-wps--list {
+				display: none;
+			}
+		}
+	}
+}

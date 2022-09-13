@@ -4,71 +4,69 @@ $max-columns: 12;
 $min-grid-size: 768px;
 $column-padding: 8px;
 
-.pgly-wps--settings
-{
-	.pgly-wps--row
-	{
+.pgly-wps--settings {
+	.pgly-wps--row {
 		display: flex;
 		flex-wrap: wrap;
-		
+
 		// Transitions
 
-		&.pgly-wps-has-action
-		{
+		&.pgly-wps-has-action {
 			align-items: center;
 			margin-bottom: 12px;
-			background-color: #FFF;
-			border-radius: 8px; 
+			background-color: #fff;
+			border-radius: 8px;
 			padding: 0 12px;
-			transition: background-color .5s;
-		
-			&.pgly-wps-slide-move
-			{ background-color: $grey-light; }
+			transition: background-color 0.5s;
 
-			&:last-child
-			{ margin-bottom: 0; }
+			&.pgly-wps-slide-move {
+				background-color: $grey-light;
+			}
 
-			&.active
-			{ background-color: $grey-light; }
+			&:last-child {
+				margin-bottom: 0;
+			}
 
-			&.disabled
-			{
+			&.active {
+				background-color: $grey-light;
+			}
+
+			&.disabled {
 				color: $grey-light;
 				background-color: transparent;
 				box-shadow: unset;
 			}
 		}
 
-		.pgly-wps--column 
-		{
+		.pgly-wps--column {
 			flex-grow: 1;
 			flex-shrink: 1;
 			flex-basis: 1;
 			padding: $column-padding;
-		
+
+			&.pgly-wps-is-compact {
+				padding: 4px;
+			}
+
 			// &:first-child
 			// { padding-left: 0; }
-		
+
 			// &:last-child
 			// { padding-right: 0; }
 
-			@for $i from 1 through $max-columns 
-			{
-				&.pgly-wps-col--#{$i}
-				{ max-width: calc(100% / #{$max-columns} * #{$i}); }
+			@for $i from 1 through $max-columns {
+				&.pgly-wps-col--#{$i} {
+					max-width: calc(100% / #{$max-columns} * #{$i});
+				}
 			}
 		}
 	}
 }
 
-@media screen and (max-width: $min-grid-size) 
-{
-	.pgly-wps--settings
-	{
-		.pgly-wps--row
-		{
-			.pgly-wps--column
-			{
+@media screen and (max-width: $min-grid-size) {
+	.pgly-wps--settings {
+		.pgly-wps--row {
+			.pgly-wps--column {
 				min-width: 100%;
 				width: 100%;
 				padding: math.div($column-padding, 2) !important;

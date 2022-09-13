@@ -1,14 +1,10 @@
-export interface IPglyToastElement {
-    message: string;
-    timer?: number;
-    type?: string;
-    light?: boolean;
-    container?: string;
+export declare type TPglyToastOptions = {
+    timer: number;
+    type: string;
+    light: boolean;
+};
+export default class PglyToast {
+    protected _container: HTMLDivElement;
+    constructor(el: string | HTMLDivElement);
+    launch(message: string, options: Partial<TPglyToastOptions>): void;
 }
-export interface IPglyToast {
-    container: HTMLElement | null;
-    _init(options: IPglyToastElement): void;
-    _new(options: IPglyToastElement): void;
-}
-declare function PglyToast(this: IPglyToast, options: IPglyToastElement): void;
-export default PglyToast;
