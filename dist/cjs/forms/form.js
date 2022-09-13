@@ -14,6 +14,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -99,7 +110,6 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
                 var comp = new group_1.PglyGroupFormComponent(el);
                 comp.auto();
                 _this._inputs.push(comp);
-                return;
             }
         });
     };
@@ -152,31 +162,31 @@ var PglyAsyncFormEngine = /** @class */ (function (_super) {
     }
     PglyAsyncFormEngine.prototype.submit = function (data) {
         var _this = this;
-        console.table(data.inputs);
+        var _data = __assign({}, data);
         if (this._loading) {
             return;
         }
-        if (data.errors.length !== 0) {
-            this.emit('error', { data: data.errors });
+        if (_data.errors.length !== 0) {
+            this.emit('error', { data: _data.errors });
             return;
         }
         this.loadState(true);
-        data.inputs.xSecurity = this._options.x_security;
-        this.emit('prepared', data);
+        _data.inputs.xSecurity = this._options.x_security;
+        this.emit('prepared', _data);
         var _a = this._wrapper, _b = _a.method, method = _b === void 0 ? 'POST' : _b, action = _a.action;
         var request = method.toUpperCase() === 'POST'
-            ? axios_1.default.post(action, this._formatter(data.inputs))
-            : axios_1.default.get(action, this._formatter(data.inputs));
+            ? axios_1.default.post(action, this._formatter(_data.inputs))
+            : axios_1.default.get(action, this._formatter(_data.inputs));
         request
             .then(function (res) {
-            _this.emit('requestSuccess', { data: data.inputs, response: res.data });
+            _this.emit('requestSuccess', { data: _data.inputs, response: res.data });
         })
             .catch(function (err) {
-            _this.emit('requestError', { data: data.inputs, error: err });
+            _this.emit('requestError', { data: _data.inputs, error: err });
         })
             .finally(function () {
             _this.loadState(false);
-            _this.emit('requestEnd', { data: data.inputs });
+            _this.emit('requestEnd', { data: _data.inputs });
         });
     };
     return PglyAsyncFormEngine;

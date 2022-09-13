@@ -89,14 +89,16 @@ var PglyMultipleMediaComponent = /** @class */ (function (_super) {
             if (el.classList.contains('pgly-wps--remove')) {
                 var _a = el.dataset.value, value = _a === void 0 ? '' : _a;
                 _this.emit('remove', { component: _this, value: value });
-                return _this.remove(value);
+                _this.remove(value);
+                return;
             }
             if (el.classList.contains('pgly-wps--select')) {
-                return _this.emit('select', { component: _this });
+                _this.emit('select', { component: _this });
+                return;
             }
             if (el.classList.contains('pgly-wps--clean')) {
                 _this.emit('clean', { component: _this });
-                return _this.clean();
+                _this.clean();
             }
         });
     };
@@ -127,9 +129,7 @@ var PglyMultipleMediaComponent = /** @class */ (function (_super) {
             var selected = frame
                 .state()
                 .get('selection')
-                .map(function (i) {
-                return i.toJSON();
-            });
+                .map(function (i) { return i.toJSON(); });
             while (component._images.firstChild) {
                 component._images.removeChild(component._images.firstChild);
             }
