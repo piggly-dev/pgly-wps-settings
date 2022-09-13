@@ -11,10 +11,12 @@ export type TInputError = {
 
 export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 	protected _wrapper: HTMLDivElement;
+
 	protected _field: PglyField<T>;
+
 	protected _error: PglyFieldError;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super();
 
 		this._wrapper = DOMManipulation.getElement<HTMLDivElement>(el);
@@ -34,15 +36,15 @@ export default abstract class PglyBaseComponent<T = any> extends EventHandler {
 
 	public abstract emptyValue(): void;
 
-	public error(): PglyFieldError {
+	public error (): PglyFieldError {
 		return this._error;
 	}
 
-	public field(): PglyField<T> {
+	public field (): PglyField<T> {
 		return this._field;
 	}
 
-	public validate(rules: Array<RuleValidator>): void {
+	public validate (rules: Array<RuleValidator>): void {
 		ValidatorEngine.apply<T>(
 			rules,
 			this._field.get(),

@@ -4,7 +4,7 @@ import PglyBaseComponent from './base';
 export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 	protected _checkbox: HTMLDivElement;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 		this._checkbox = DOMManipulation.findElement(this._wrapper, '.pgly-wps--checkbox');
 
@@ -12,16 +12,16 @@ export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 		this._default();
 	}
 
-	public emptyValue(): void {
+	public emptyValue (): void {
 		this.field().set(false);
 	}
 
-	protected _select(v: boolean) {
+	protected _select (v: boolean) {
 		this._checkbox.classList.remove('pgly-checked--state');
 		if (v) this._checkbox.classList.add('pgly-checked--state');
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('change', ({ value }) => {
 			this._select(value);
 		});
@@ -31,7 +31,7 @@ export default class PglyCheckboxComponent extends PglyBaseComponent<boolean> {
 		});
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		this.field().set(this._checkbox.dataset.value === 'true');
 	}
 }

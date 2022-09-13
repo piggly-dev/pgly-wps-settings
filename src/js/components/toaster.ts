@@ -9,11 +9,11 @@ export type TPglyToastOptions = {
 export default class PglyToast {
 	protected _container: HTMLDivElement;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		this._container = DOMManipulation.getElement(el);
 	}
 
-	public launch(message: string, options: Partial<TPglyToastOptions>) {
+	public launch (message: string, options: Partial<TPglyToastOptions>) {
 		const op = {
 			timer: 2000,
 			type: 'regular',

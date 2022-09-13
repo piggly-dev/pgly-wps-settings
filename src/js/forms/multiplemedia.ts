@@ -15,9 +15,10 @@ export type TMultipleMediaOptions = {
 
 export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<string>> {
 	protected _images: HTMLDivElement;
+
 	protected _options: TMultipleMediaOptions;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 
 		this._images = DOMManipulation.findElement(this._wrapper, '.pgly-wps--images');
@@ -34,16 +35,16 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		this._default();
 	}
 
-	public options(options: Partial<TMultipleMediaOptions>) {
+	public options (options: Partial<TMultipleMediaOptions>) {
 		this._options = { ...this._options, ...options };
 	}
 
-	public select(data: TMultipleMediaItem) {
+	public select (data: TMultipleMediaItem) {
 		this.field().get().push(data.value);
 		this._render(data);
 	}
 
-	public remove(id: string) {
+	public remove (id: string) {
 		const img = document.getElementById(`${this.field().name()}-img-${id}`);
 
 		if (!img) return;
@@ -56,7 +57,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		);
 	}
 
-	public clean() {
+	public clean () {
 		this.field().set([]);
 
 		while (this._images.firstChild) {
@@ -64,11 +65,11 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		}
 	}
 
-	public emptyValue() {
+	public emptyValue () {
 		this.clean();
 	}
 
-	protected _render(data: TMultipleMediaItem) {
+	protected _render (data: TMultipleMediaItem) {
 		const wrapper = document.createElement('div');
 		wrapper.id = `${this.field().name()}-img-${data.value}`;
 		wrapper.className = 'pgly-wps--image';
@@ -83,7 +84,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		this._images.appendChild(wrapper);
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this._wrapper.addEventListener('click', e => {
 			const el = e.target as HTMLElement | null;
 
@@ -94,21 +95,23 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 			if (el.classList.contains('pgly-wps--remove')) {
 				const { value = '' } = el.dataset;
 				this.emit('remove', { component: this, value });
-				return this.remove(value);
+				this.remove(value);
+				return;
 			}
 
 			if (el.classList.contains('pgly-wps--select')) {
-				return this.emit('select', { component: this });
+				this.emit('select', { component: this });
+				return;
 			}
 
 			if (el.classList.contains('pgly-wps--clean')) {
 				this.emit('clean', { component: this });
-				return this.clean();
+				this.clean();
 			}
 		});
 	}
 
-	public static wpFrame({ component }: { component: PglyMultipleMediaComponent }) {
+	public static wpFrame ({ component }: { component: PglyMultipleMediaComponent }) {
 		const frame = (wp.media.frames.metaImageFrame = wp.media({
 			title: component._options.labels.title,
 			library: {
@@ -137,9 +140,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 			const selected = frame
 				.state()
 				.get('selection')
-				.map((i: any) => {
-					return i.toJSON();
-				});
+				.map((i: any) => i.toJSON());
 
 			while (component._images.firstChild) {
 				component._images.removeChild(component._images.firstChild);
@@ -155,7 +156,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 		frame.open();
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		if (!this._images.dataset.values || !this._images.dataset.srcs) return;
 
 		const values = this._images.dataset.values.split(',');

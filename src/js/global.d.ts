@@ -1,5 +1,5 @@
 declare global {
-	var wp: any;
+	const wp: any;
 }
 
 export {};
