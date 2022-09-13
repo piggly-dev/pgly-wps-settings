@@ -15,9 +15,10 @@ export type TSingleMediaOptions = {
 
 export default class PglySingleMediaComponent extends PglyBaseComponent<string> {
 	protected _image: HTMLImageElement;
+
 	protected _options: TSingleMediaOptions;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 
 		this._options = {
@@ -33,23 +34,23 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 		this._default();
 	}
 
-	public options(options: Partial<TSingleMediaOptions>) {
+	public options (options: Partial<TSingleMediaOptions>) {
 		this._options = { ...this._options, ...options };
 	}
 
-	public select(data: TSingleMediaItem) {
+	public select (data: TSingleMediaItem) {
 		this.field().set(data.value, data.src);
 	}
 
-	public clean() {
+	public clean () {
 		this.field().set('', '');
 	}
 
-	public emptyValue() {
+	public emptyValue () {
 		this.clean();
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('change', () => {
 			this._image.src = this.field().label() ?? '';
 		});
@@ -62,23 +63,24 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 			e.preventDefault();
 
 			if (el.classList.contains('pgly-wps--select')) {
-				return this.emit('select', { component: this });
+				this.emit('select', { component: this });
+				return;
 			}
 
 			if (el.classList.contains('pgly-wps--clean')) {
 				this.emit('clean', { component: this });
-				return this.clean();
+				this.clean();
 			}
 		});
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		if (!this._image.dataset.value) return;
 
 		this.field().set(this._image.dataset.value, this._image.dataset.src);
 	}
 
-	public static wpFrame({ component }: { component: PglySingleMediaComponent }) {
+	public static wpFrame ({ component }: { component: PglySingleMediaComponent }) {
 		const frame = (wp.media.frames.metaImageFrame = wp.media({
 			title: component._options.labels.title,
 			library: {

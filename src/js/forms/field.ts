@@ -2,25 +2,28 @@ import PglyBaseComponent from './base';
 
 export default class PglyField<T = any> {
 	protected _parent: PglyBaseComponent;
+
 	protected _value: T;
+
 	protected _name: string;
+
 	protected _label?: string;
 
-	constructor(parent: PglyBaseComponent, name: string, def: T) {
+	constructor (parent: PglyBaseComponent, name: string, def: T) {
 		this._parent = parent;
 		this._value = def;
 		this._name = name;
 	}
 
-	public name(): string {
+	public name (): string {
 		return this._name;
 	}
 
-	public label(): string | undefined {
+	public label (): string | undefined {
 		return this._label;
 	}
 
-	public set(value: T, label?: string) {
+	public set (value: T, label?: string) {
 		this._value = value;
 		this._label = label;
 
@@ -31,7 +34,7 @@ export default class PglyField<T = any> {
 		});
 	}
 
-	public get(): T {
+	public get (): T {
 		return this._value;
 	}
 }

@@ -9,12 +9,12 @@ export type TPglyNotificationOptions = {
 export default class PglyNotification {
 	protected _container: HTMLDivElement;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		this._container = DOMManipulation.getElement(el);
 		this._bind();
 	}
 
-	public launch(message: string, options: Partial<TPglyNotificationOptions>) {
+	public launch (message: string, options: Partial<TPglyNotificationOptions>) {
 		const op = {
 			timer: 2000,
 			type: 'regular',
@@ -51,12 +51,12 @@ export default class PglyNotification {
 		});
 	}
 
-	public _bind() {
+	protected _bind () {
 		document
 			.querySelectorAll('.pgly-wps--notification .pgly-wps--delete')
 			.forEach(el => {
 				const notification = el.parentNode as HTMLElement;
-				const timer = parseInt(notification.dataset.timer ?? '0');
+				const timer = parseInt(notification.dataset.timer ?? '0', 10);
 				let removed = false;
 
 				if (timer > 0) {

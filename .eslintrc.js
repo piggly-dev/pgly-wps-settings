@@ -6,7 +6,7 @@ module.exports = {
 	extends: [
 		'eslint:recommended',
 		'airbnb-base',
-		'@typescript-eslint',
+		'plugin:@typescript-eslint/recommended',
 		'prettier',
 	],
 	parser: '@typescript-eslint/parser',
@@ -28,7 +28,6 @@ module.exports = {
 				ignoreStrings: true,
 			},
 		],
-		'max-statements': ['error', 24],
 		quotes: [
 			'error',
 			'single',
@@ -49,10 +48,9 @@ module.exports = {
 		],
 		// allow debugger during development
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-		'no-debugger':
-			process.env.NODE_ENV === 'production' ? 'error' : 'off',
+		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+		'no-underscore-dangle': 'off',
 		'no-return-assign': 'off',
-		'no-unused-vars': 'error',
 		'no-empty': 'error',
 		'array-bracket-spacing': ['error', 'never'],
 		'object-curly-spacing': ['error', 'always'],
@@ -78,6 +76,17 @@ module.exports = {
 		'no-void': 'off',
 		'no-case-declarations': 'off',
 		'no-var': 'error',
-		'prettier/prettier': 'error',
+		'no-plusplus': 'off',
+		'no-bitwise': 'off',
+		'import/extensions': 'off',
+		'import/no-unresolved': 'off',
+		'no-unused-vars': 'off',
+		'class-methods-use-this': 'off',
+		'no-multi-assign': 'off',
+		eqeqeq: 'off',
+		'max-classes-per-file': 'off',
+		'max-statements': ['error', 40],
+		'@typescript-eslint/no-explicit-any': 'off',
+		'@typescript-eslint/no-unused-vars': 'off',
 	},
 };
