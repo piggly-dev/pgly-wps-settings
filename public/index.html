@@ -1247,6 +1247,8 @@
 						'main-form', {
 						rules: {
 							'regular-text': [requiredRule],
+							'basic-select': [requiredRule],
+							'basic-select-async': [requiredRule],
 							'regular-textarea': [requiredRule],
 							'required-checkbox': [requiredRule],
 							'extended-select': [requiredRule],
@@ -1256,6 +1258,24 @@
 					} );
 
 					form.auto();
+
+					form.get( 'basic-select-async' ).asynchronous( () => {
+						return new Promise( ( res ) => {
+							setTimeout( () => res( [{
+								label: 'One',
+								value: 'one',
+								selected: false
+							}, {
+								label: 'Two',
+								value: 'two',
+								selected: false
+							}, {
+								label: 'Three',
+								value: 'three',
+								selected: false
+							}] ), 2000 );
+						} )
+					} );
 
 					form.get( 'extended-select-sync' ).synchronous( [{
 						label: 'One',
@@ -1527,6 +1547,45 @@
 						<div class="pgly-wps--tagged">
 							<input placeholder="Type here your value..." type="text" value="">
 							<span class="pgly-wps--tag">Tag for help</span>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--select" data-name="basic-select">
+						<label class="pgly-wps--label">
+							Regular Select as Synchronous
+						</label>
+						<div>
+							<select>
+								<option class="placeholder" value="">Select your value...</option>
+								<option value="1">Value 1</option>
+								<option value="2">Value 2</option>
+								<option value="3">Value 3</option>
+							</select>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--select" data-name="basic-select-async">
+						<label class="pgly-wps--label">
+							Regular Select as Asynchronous
+						</label>
+						<div>
+							<select>
+								<option class="placeholder" value="">Select your value...</option>
+							</select>
 						</div>
 						<span class="pgly-wps--message"></span>
 						<p class="pgly-wps--description">

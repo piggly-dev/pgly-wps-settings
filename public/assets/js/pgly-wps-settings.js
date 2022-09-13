@@ -1207,6 +1207,108 @@
       return UUID;
     }();
 
+    var PglyBasicSelectComponent =
+    /** @class */
+    function (_super) {
+      __extends(PglyBasicSelectComponent, _super);
+
+      function PglyBasicSelectComponent(el) {
+        var _this = _super.call(this, el) || this;
+
+        _this._changeEvent = false;
+        _this._input = DOMManipulation.findElement(_this._wrapper, 'select');
+        _this._loader = new PglyLoadable(_this);
+
+        _this._bind();
+
+        _this._default();
+
+        return _this;
+      }
+
+      PglyBasicSelectComponent.prototype.loader = function () {
+        return this._loader;
+      };
+
+      PglyBasicSelectComponent.prototype.asynchronous = function (callback) {
+        return __awaiter(this, void 0, void 0, function () {
+          var _a;
+
+          return __generator(this, function (_b) {
+            switch (_b.label) {
+              case 0:
+                this.loader().prepare();
+                _a = this._render;
+                return [4
+                /*yield*/
+                , callback()];
+
+              case 1:
+                _a.apply(this, [_b.sent()]);
+
+                this.loader().done();
+                return [2
+                /*return*/
+                ];
+            }
+          });
+        });
+      };
+
+      PglyBasicSelectComponent.prototype.emptyValue = function () {
+        this.field().set('');
+      };
+
+      PglyBasicSelectComponent.prototype._render = function (items) {
+        var _this = this;
+
+        var placeholder = DOMManipulation.findElement(this._input, '.placeholder');
+
+        while (this._input.firstChild) {
+          this._input.removeChild(this._input.firstChild);
+        }
+
+        if (placeholder) this._input.appendChild(placeholder);
+        items.forEach(function (item) {
+          var op = document.createElement('option');
+          op.value = item.value;
+          op.textContent = item.label;
+          if (item.selected) op.selected = true;
+
+          _this._input.appendChild(op);
+        });
+      };
+
+      PglyBasicSelectComponent.prototype._bind = function () {
+        var _this = this;
+
+        this.on('beforeLoad', function () {
+          _this._input.disabled = true;
+        });
+        this.on('afterLoad', function () {
+          _this._input.disabled = false;
+        });
+        this.on('change', function () {
+          if (_this._changeEvent) return;
+          _this._input.value = _this.field().get();
+        });
+
+        this._input.addEventListener('change', function (e) {
+          _this._changeEvent = true;
+
+          _this._field.set(e.target.value);
+
+          _this._changeEvent = false;
+        });
+      };
+
+      PglyBasicSelectComponent.prototype._default = function () {
+        this.field().set(this._input.value);
+      };
+
+      return PglyBasicSelectComponent;
+    }(PglyBaseComponent);
+
     var PglyGroupFormItems =
     /** @class */
     function () {
@@ -1390,31 +1492,38 @@
             return;
           }
 
-          if (el.classList.contains(prefix + "--eselect")) {
-            var component = new PglySelectComponent(el);
+          if (el.classList.contains(prefix + "--select")) {
+            var component = new PglyBasicSelectComponent(el);
             var name_4 = component.field().name();
             _this._inputs[name_4] = component;
             return;
           }
 
-          if (el.classList.contains(prefix + "--finder")) {
-            var component = new PglyFinderComponent(el);
+          if (el.classList.contains(prefix + "--eselect")) {
+            var component = new PglySelectComponent(el);
             var name_5 = component.field().name();
             _this._inputs[name_5] = component;
             return;
           }
 
-          if (el.classList.contains(prefix + "--single-media")) {
-            var component = new PglySingleMediaComponent(el);
+          if (el.classList.contains(prefix + "--finder")) {
+            var component = new PglyFinderComponent(el);
             var name_6 = component.field().name();
             _this._inputs[name_6] = component;
             return;
           }
 
-          if (el.classList.contains(prefix + "--multiple-media")) {
-            var component = new PglyMultipleMediaComponent(el);
+          if (el.classList.contains(prefix + "--single-media")) {
+            var component = new PglySingleMediaComponent(el);
             var name_7 = component.field().name();
             _this._inputs[name_7] = component;
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--multiple-media")) {
+            var component = new PglyMultipleMediaComponent(el);
+            var name_8 = component.field().name();
+            _this._inputs[name_8] = component;
             return;
           }
         });
@@ -1654,10 +1763,18 @@
         _this._inputs = (_a = options.inputs) !== null && _a !== void 0 ? _a : [];
         _this._options = options;
 
+        _this._formatter = function (data) {
+          return qsStringify(data);
+        };
+
         _this._bind();
 
         return _this;
       }
+
+      PglyBaseFormEngine.prototype.formatter = function (func) {
+        this._formatter = func;
+      };
 
       PglyBaseFormEngine.prototype.add = function (input) {
         this._inputs.push(input);
@@ -1695,6 +1812,12 @@
 
           if (el.classList.contains(prefix + "--checkbox")) {
             _this._inputs.push(new PglyCheckboxComponent(el));
+
+            return;
+          }
+
+          if (el.classList.contains(prefix + "--select")) {
+            _this._inputs.push(new PglyBasicSelectComponent(el));
 
             return;
           }
@@ -1825,20 +1948,25 @@
         this.loadState(true);
         data.inputs.xSecurity = this._options.x_security;
         this.emit('prepared', data);
-        axios__default["default"].post(this._wrapper.action, qsStringify(data.inputs)).then(function (res) {
-          _this.emit('submitted', {
+        var _a = this._wrapper,
+            _b = _a.method,
+            method = _b === void 0 ? 'POST' : _b,
+            action = _a.action;
+        var request = method.toUpperCase() === 'POST' ? axios__default["default"].post(action, this._formatter(data.inputs)) : axios__default["default"].get(action, this._formatter(data.inputs));
+        request.then(function (res) {
+          _this.emit('requestSuccess', {
             data: data.inputs,
             response: res.data
           });
         }).catch(function (err) {
-          _this.emit('unsubmitted', {
+          _this.emit('requestError', {
             data: data.inputs,
             error: err
           });
         }).finally(function () {
           _this.loadState(false);
 
-          _this.emit('finished', {
+          _this.emit('requestEnd', {
             data: data.inputs
           });
         });
