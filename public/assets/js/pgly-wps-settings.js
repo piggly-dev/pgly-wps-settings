@@ -2095,6 +2095,7 @@
     }();
 
     exports.PglyAsyncFormEngine = PglyAsyncFormEngine;
+    exports.PglyBasicSelectComponent = PglyBasicSelectComponent;
     exports.PglyCheckboxComponent = PglyCheckboxComponent;
     exports.PglyFinderComponent = PglyFinderComponent;
     exports.PglyGroupFormComponent = PglyGroupFormComponent;
