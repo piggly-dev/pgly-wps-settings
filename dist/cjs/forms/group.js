@@ -77,6 +77,7 @@ var finder_1 = __importDefault(require("./finder"));
 var select_1 = __importDefault(require("./select"));
 var uuid_1 = __importDefault(require("@/helpers/uuid"));
 var loadable_1 = __importDefault(require("./loadable"));
+var basicselect_1 = __importDefault(require("./basicselect"));
 var PglyGroupFormItems = /** @class */ (function () {
     function PglyGroupFormItems(parent) {
         this._items = [];
@@ -197,28 +198,34 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
                 _this._inputs[name_3] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--eselect")) {
-                var component = new select_1.default(el);
+            if (el.classList.contains(prefix + "--select")) {
+                var component = new basicselect_1.default(el);
                 var name_4 = component.field().name();
                 _this._inputs[name_4] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--finder")) {
-                var component = new finder_1.default(el);
+            if (el.classList.contains(prefix + "--eselect")) {
+                var component = new select_1.default(el);
                 var name_5 = component.field().name();
                 _this._inputs[name_5] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--single-media")) {
-                var component = new singlemedia_1.default(el);
+            if (el.classList.contains(prefix + "--finder")) {
+                var component = new finder_1.default(el);
                 var name_6 = component.field().name();
                 _this._inputs[name_6] = component;
                 return;
             }
-            if (el.classList.contains(prefix + "--multiple-media")) {
-                var component = new multiplemedia_1.default(el);
+            if (el.classList.contains(prefix + "--single-media")) {
+                var component = new singlemedia_1.default(el);
                 var name_7 = component.field().name();
                 _this._inputs[name_7] = component;
+                return;
+            }
+            if (el.classList.contains(prefix + "--multiple-media")) {
+                var component = new multiplemedia_1.default(el);
+                var name_8 = component.field().name();
+                _this._inputs[name_8] = component;
                 return;
             }
         });
