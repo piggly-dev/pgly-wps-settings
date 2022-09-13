@@ -129,3 +129,6 @@ dw_php_codehinting.config
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+# Folders
+/public/assets
