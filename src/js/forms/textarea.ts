@@ -2,10 +2,11 @@ import DOMManipulation from '@/behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 
 export default class PglyTextAreaComponent extends PglyBaseComponent<string> {
-	protected _keyEvent: boolean = false;
+	protected _keyEvent = false;
+
 	protected _input: HTMLInputElement;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 
 		this._input = DOMManipulation.findElement(this._wrapper, 'textarea');
@@ -14,11 +15,11 @@ export default class PglyTextAreaComponent extends PglyBaseComponent<string> {
 		this._default();
 	}
 
-	public emptyValue(): void {
+	public emptyValue (): void {
 		this.field().set('');
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('change', () => {
 			if (this._keyEvent) return;
 			this._input.value = this.field().get();
@@ -31,7 +32,7 @@ export default class PglyTextAreaComponent extends PglyBaseComponent<string> {
 		});
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		this.field().set(this._input.value);
 	}
 }

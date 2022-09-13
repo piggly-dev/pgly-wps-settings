@@ -37,13 +37,18 @@ export type TFormBody<T = any> = (data: Record<string, any>) => T;
 
 export abstract class PglyBaseFormEngine extends EventHandler {
 	protected _wrapper: HTMLFormElement;
+
 	protected _inputs: Array<PglyBaseComponent>;
+
 	protected _button: HTMLButtonElement;
+
 	protected _options: TFormOptions;
-	protected _loading: boolean = false;
+
+	protected _loading = false;
+
 	protected _formatter: TFormBody;
 
-	constructor(el: string | HTMLFormElement, options: Partial<TFormOptions> = {}) {
+	constructor (el: string | HTMLFormElement, options: Partial<TFormOptions> = {}) {
 		super();
 
 		this._wrapper = DOMManipulation.getElement(el);
@@ -59,23 +64,23 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		this._bind();
 	}
 
-	public formatter(func: TFormBody) {
+	public formatter (func: TFormBody) {
 		this._formatter = func;
 	}
 
-	public add(input: PglyBaseComponent) {
+	public add (input: PglyBaseComponent) {
 		this._inputs.push(input);
 	}
 
-	public get(name: string): TOrUndefined<PglyBaseComponent> {
+	public get (name: string): TOrUndefined<PglyBaseComponent> {
 		return this._inputs.find(i => i.field().name() === name);
 	}
 
-	public remove(name: string) {
+	public remove (name: string) {
 		this._inputs = this._inputs.filter(i => i.field().name() !== name);
 	}
 
-	public auto() {
+	public auto () {
 		const prefix = `pgly-form`;
 
 		this._wrapper.querySelectorAll<HTMLDivElement>(`.${prefix}--input`).forEach(el => {
@@ -123,12 +128,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 				const comp = new PglyGroupFormComponent(el);
 				comp.auto();
 				this._inputs.push(comp);
-				return;
 			}
 		});
 	}
 
-	public prepare(rules: Record<string, Array<RuleValidator>> = {}): TFormPreparedData {
+	public prepare (rules: Record<string, Array<RuleValidator>> = {}): TFormPreparedData {
 		const inputs: Record<string, any> = {};
 		const errors: Array<TFormError> = [];
 
@@ -151,18 +155,18 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		return { inputs, errors };
 	}
 
-	public isLoading(): boolean {
+	public isLoading (): boolean {
 		return this._loading;
 	}
 
 	protected abstract submit(data: TFormPreparedData): void;
 
-	protected loadState(loading: boolean) {
+	protected loadState (loading: boolean) {
 		this._loading = loading;
 		this._button.classList.toggle('pgly-loading--state');
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this._wrapper.addEventListener('submit', e => {
 			e.preventDefault();
 			this.submit(this.prepare(this._options.rules ?? {}));
@@ -176,39 +180,40 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 }
 
 export class PglyAsyncFormEngine extends PglyBaseFormEngine {
-	protected submit(data: TFormPreparedData) {
-		console.table(data.inputs);
+	protected submit (data: TFormPreparedData) {
+		const _data = { ...data };
+
 		if (this._loading) {
 			return;
 		}
 
-		if (data.errors.length !== 0) {
-			this.emit('error', { data: data.errors });
+		if (_data.errors.length !== 0) {
+			this.emit('error', { data: _data.errors });
 			return;
 		}
 
 		this.loadState(true);
 
-		data.inputs.xSecurity = this._options.x_security;
-		this.emit('prepared', data);
+		_data.inputs.xSecurity = this._options.x_security;
+		this.emit('prepared', _data);
 
 		const { method = 'POST', action } = this._wrapper;
 
-		let request =
+		const request =
 			method.toUpperCase() === 'POST'
-				? axios.post(action, this._formatter(data.inputs))
-				: axios.get(action, this._formatter(data.inputs));
+				? axios.post(action, this._formatter(_data.inputs))
+				: axios.get(action, this._formatter(_data.inputs));
 
 		request
 			.then(res => {
-				this.emit('requestSuccess', { data: data.inputs, response: res.data });
+				this.emit('requestSuccess', { data: _data.inputs, response: res.data });
 			})
 			.catch(err => {
-				this.emit('requestError', { data: data.inputs, error: err });
+				this.emit('requestError', { data: _data.inputs, error: err });
 			})
 			.finally(() => {
 				this.loadState(false);
-				this.emit('requestEnd', { data: data.inputs });
+				this.emit('requestEnd', { data: _data.inputs });
 			});
 	}
 }

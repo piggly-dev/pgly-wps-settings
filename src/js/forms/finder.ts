@@ -34,7 +34,9 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 	};
 
 	protected currIndex?: number;
+
 	protected _response: Array<TFinderItem>;
+
 	protected _loader: PglyLoadable;
 
 	protected _options: Partial<TFinderOptions> = {
@@ -44,7 +46,7 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		},
 	};
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 		this._search = {
 			wrapper: DOMManipulation.findElement(
@@ -84,19 +86,19 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		this._default();
 	}
 
-	public options(options: Partial<TFinderOptions>) {
+	public options (options: Partial<TFinderOptions>) {
 		this._options = { ...this._options, ...options };
 	}
 
-	public loader(): PglyLoadable {
+	public loader (): PglyLoadable {
 		return this._loader;
 	}
 
-	public emptyValue() {
+	public emptyValue () {
 		this.field().set('', '');
 	}
 
-	protected _select() {
+	protected _select () {
 		const hasValue = this.field().get() !== '';
 
 		this._selected.label.textContent = this.field().label() as string;
@@ -110,13 +112,13 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		this._selected.wrapper.style.display = hasValue ? 'flex' : 'none';
 	}
 
-	protected _flush() {
+	protected _flush () {
 		while (this._items.list.firstChild) {
 			this._items.list.removeChild(this._items.list.firstChild);
 		}
 	}
 
-	protected async load(): Promise<void> {
+	protected async load (): Promise<void> {
 		if (
 			this._search.input.value.length === 0 ||
 			this.loader().isLoading() ||
@@ -131,7 +133,8 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		try {
 			response = await this._options.load(this._search.input.value);
 		} catch (err) {
-			return this.loader().done();
+			this.loader().done();
+			return;
 		}
 
 		this._flush();
@@ -140,10 +143,10 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 			this._items.list.appendChild(this._render(item));
 		});
 
-		return this.loader().done();
+		this.loader().done();
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('change', () => {
 			this._select();
 		});
@@ -176,12 +179,12 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 
 			if (target.classList.contains('pgly-wps--button')) {
 				const { label = '', value = '' } = target.dataset;
-				return this.field().set(value, label);
+				this.field().set(value, label);
 			}
 		});
 	}
 
-	protected _render(item: TFinderItem) {
+	protected _render (item: TFinderItem) {
 		const row = document.createElement('div');
 		row.className = 'pgly-wps--row';
 
@@ -213,7 +216,7 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 		return row;
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		if (!this._selected.wrapper.dataset.value) return;
 
 		this.field().set(

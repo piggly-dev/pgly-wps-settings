@@ -4,11 +4,13 @@ import PglyLoadable from './loadable';
 import { TSelectItem } from './select';
 
 export default class PglyBasicSelectComponent extends PglyBaseComponent<string> {
-	protected _changeEvent: boolean = false;
+	protected _changeEvent = false;
+
 	protected _loader: PglyLoadable;
+
 	protected _input: HTMLSelectElement;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 
 		this._input = DOMManipulation.findElement(this._wrapper, 'select');
@@ -18,21 +20,21 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		this._default();
 	}
 
-	public loader(): PglyLoadable {
+	public loader (): PglyLoadable {
 		return this._loader;
 	}
 
-	public async asynchronous(callback: () => Promise<Array<TSelectItem>>) {
+	public async asynchronous (callback: () => Promise<Array<TSelectItem>>) {
 		this.loader().prepare();
 		this._render(await callback());
 		this.loader().done();
 	}
 
-	public emptyValue(): void {
+	public emptyValue (): void {
 		this.field().set('');
 	}
 
-	protected _render(items: Array<TSelectItem>): void {
+	protected _render (items: Array<TSelectItem>): void {
 		const placeholder = DOMManipulation.findElement(this._input, '.placeholder');
 
 		while (this._input.firstChild) {
@@ -52,7 +54,7 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		});
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('beforeLoad', () => {
 			this._input.disabled = true;
 		});
@@ -73,7 +75,7 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		});
 	}
 
-	protected _default(): void {
+	protected _default (): void {
 		this.field().set(this._input.value);
 	}
 }

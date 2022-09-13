@@ -42,30 +42,31 @@ export type TGroupFormOptions = {
 
 export class PglyGroupFormItems {
 	protected _parent: PglyBaseComponent;
+
 	protected _items: Array<TGroupFormItem> = [];
 
-	constructor(parent: PglyBaseComponent) {
+	constructor (parent: PglyBaseComponent) {
 		this._parent = parent;
 	}
 
-	public count(): number {
+	public count (): number {
 		return this._items.length;
 	}
 
-	public add(item: TGroupFormItem) {
+	public add (item: TGroupFormItem) {
 		this._items.push(item);
 		this._parent.emit('added', { item });
 	}
 
-	public get(uid: string): TOrUndefined<TGroupFormItem> {
+	public get (uid: string): TOrUndefined<TGroupFormItem> {
 		return this._items.find(i => i.uid === uid);
 	}
 
-	public all(): Array<Record<string, any>> {
+	public all (): Array<Record<string, any>> {
 		return this._items.map(item => {
 			const inputs = { ...item.inputs };
 
-			Object.keys(inputs).map(key => {
+			Object.keys(inputs).forEach(key => {
 				inputs[key] = inputs[key].value;
 			});
 
@@ -73,13 +74,13 @@ export class PglyGroupFormItems {
 		});
 	}
 
-	public update(item: TGroupFormItem) {
-		const index = this._items.findIndex(i => i.uid === i.uid);
+	public update (item: TGroupFormItem) {
+		const index = this._items.findIndex(i => i.uid === item.uid);
 		this._items[index] = { ...this._items[index], ...item };
 		this._parent.emit('updated', { item });
 	}
 
-	public remove(uid: string) {
+	public remove (uid: string) {
 		this._items = this._items.filter(i => i.uid !== uid);
 		this._parent.emit('removed', { uid });
 	}
@@ -87,8 +88,11 @@ export class PglyGroupFormItems {
 
 export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormInputs>> {
 	protected _inputs: Record<string, PglyBaseComponent>;
+
 	protected _loader: PglyLoadable;
+
 	protected _items: PglyGroupFormItems;
+
 	protected _options: TGroupFormOptions;
 
 	protected _comps: {
@@ -97,9 +101,10 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 	};
 
 	protected _editing: boolean;
+
 	protected _current?: string;
 
-	constructor(el: string | HTMLDivElement) {
+	constructor (el: string | HTMLDivElement) {
 		super(el);
 
 		this._inputs = {};
@@ -124,40 +129,40 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this._bind();
 	}
 
-	public options(options: Partial<TGroupFormOptions>) {
+	public options (options: Partial<TGroupFormOptions>) {
 		this._options = { ...this._options, ...options };
 	}
 
-	public loader(): PglyLoadable {
+	public loader (): PglyLoadable {
 		return this._loader;
 	}
 
-	public add(input: PglyBaseComponent) {
+	public add (input: PglyBaseComponent) {
 		this._inputs[input.field().name()] = input;
 	}
 
-	public synchronous(items: Array<TGroupFormInputs>) {
+	public synchronous (items: Array<TGroupFormInputs>) {
 		this.loader().prepare();
 		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
 		this.loader().done();
 	}
 
-	public async asynchronous(callback: () => Promise<Array<TGroupFormInputs>>) {
+	public async asynchronous (callback: () => Promise<Array<TGroupFormInputs>>) {
 		this.loader().prepare();
 		const items = await callback();
 		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
 		this.loader().done();
 	}
 
-	public get(name: string): TOrUndefined<PglyBaseComponent> {
+	public get (name: string): TOrUndefined<PglyBaseComponent> {
 		return this._inputs[name];
 	}
 
-	public remove(name: string) {
+	public remove (name: string) {
 		delete this._inputs[name];
 	}
 
-	public auto() {
+	public auto () {
 		const prefix = `pgly-gform`;
 
 		this._wrapper.querySelectorAll<HTMLDivElement>(`.${prefix}--input`).forEach(el => {
@@ -214,12 +219,11 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 				const component = new PglyMultipleMediaComponent(el);
 				const name = component.field().name();
 				this._inputs[name] = component;
-				return;
 			}
 		});
 	}
 
-	public prepare(
+	public prepare (
 		rules: Record<string, Array<RuleValidator>> = {}
 	): TGroupFormPreparedData {
 		const inputs: Record<string, { label?: string; value: any }> = {};
@@ -249,9 +253,11 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		return { inputs, errors };
 	}
 
-	public emptyValue(): void {}
+	public emptyValue (): void {
+		throw new Error('Not implemented');
+	}
 
-	protected _submit(data: TGroupFormPreparedData) {
+	protected _submit (data: TGroupFormPreparedData) {
 		if (!this._editing) {
 			this._items.add({ uid: UUID.generate(), inputs: data.inputs });
 		} else if (this._current) {
@@ -270,13 +276,13 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this._flushInputs();
 	}
 
-	protected _flushInputs() {
+	protected _flushInputs () {
 		Object.keys(this._inputs).forEach(k => {
 			this._inputs[k].emptyValue();
 		});
 	}
 
-	protected _updateInputs(uid: string) {
+	protected _updateInputs (uid: string) {
 		const item = this._items.get(uid)?.inputs;
 		if (!item) return;
 
@@ -295,7 +301,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		if (card) card.classList.add('pgly-wps-is-warning');
 	}
 
-	protected _addCard(item: TGroupFormItem) {
+	protected _addCard (item: TGroupFormItem) {
 		const card = document.createElement('div');
 		card.className = 'pgly-wps--card pgly-wps-is-white pgly-wps-is-compact';
 		card.dataset.uid = item.uid;
@@ -345,7 +351,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this._comps.items.appendChild(card);
 	}
 
-	protected _updateCard(item: TGroupFormItem) {
+	protected _updateCard (item: TGroupFormItem) {
 		const card = DOMManipulation.findElement(
 			this._comps.items,
 			`.pgly-wps--card[data-uid="${item.uid}"]`
@@ -380,7 +386,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		});
 	}
 
-	protected _removeCard(uid: string) {
+	protected _removeCard (uid: string) {
 		const card = DOMManipulation.findElement(
 			this._comps.items,
 			`.pgly-wps--card[data-uid="${uid}"]`
@@ -389,7 +395,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		if (card) this._comps.items.removeChild(card);
 	}
 
-	protected _bind() {
+	protected _bind () {
 		this.on('submit', () => this._submit(this.prepare(this._options.rules ?? {})));
 
 		this.on('added', ({ item }) => {
@@ -420,12 +426,13 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 				this._editing = true;
 				this._current = target.dataset.uid;
 
-				return this._updateInputs(this._current);
+				this._updateInputs(this._current);
+				return;
 			}
 
 			if (target.classList.contains('pgly-wps--remove')) {
 				if (this._editing) return;
-				return this._items.remove(target.dataset.uid);
+				this._items.remove(target.dataset.uid);
 			}
 		});
 
@@ -435,7 +442,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		});
 	}
 
-	protected _default() {
+	protected _default () {
 		this.field().set([]);
 	}
 }
