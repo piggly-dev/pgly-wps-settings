@@ -683,7 +683,8 @@
           if (target.classList.contains('item') || target.classList.contains('clickable')) {
             var value = (_a = target.dataset.value) !== null && _a !== void 0 ? _a : '';
             var label = (_b = target.textContent) !== null && _b !== void 0 ? _b : '';
-            return _this.field().set(value, label);
+
+            _this.field().set(value, label);
           }
         });
       };
@@ -798,9 +799,10 @@
 
               case 3:
                 _a.sent();
+                this.loader().done();
                 return [2
                 /*return*/
-                , this.loader().done()];
+                ];
 
               case 4:
                 this._flush();
@@ -808,9 +810,10 @@
                 response.forEach(function (item) {
                   _this._items.list.appendChild(_this._render(item));
                 });
+                this.loader().done();
                 return [2
                 /*return*/
-                , this.loader().done()];
+                ];
             }
           });
         });
@@ -855,7 +858,8 @@
                 label = _b === void 0 ? '' : _b,
                 _c = _a.value,
                 value = _c === void 0 ? '' : _c;
-            return _this.field().set(value, label);
+
+            _this.field().set(value, label);
           }
         });
       };
@@ -949,9 +953,11 @@
           e.preventDefault();
 
           if (el.classList.contains('pgly-wps--select')) {
-            return _this.emit('select', {
+            _this.emit('select', {
               component: _this
             });
+
+            return;
           }
 
           if (el.classList.contains('pgly-wps--clean')) {
@@ -959,7 +965,7 @@
               component: _this
             });
 
-            return _this.clean();
+            _this.clean();
           }
         });
       };
@@ -1094,13 +1100,17 @@
               value: value
             });
 
-            return _this.remove(value);
+            _this.remove(value);
+
+            return;
           }
 
           if (el.classList.contains('pgly-wps--select')) {
-            return _this.emit('select', {
+            _this.emit('select', {
               component: _this
             });
+
+            return;
           }
 
           if (el.classList.contains('pgly-wps--clean')) {
@@ -1108,7 +1118,7 @@
               component: _this
             });
 
-            return _this.clean();
+            _this.clean();
           }
         });
       };
@@ -1198,7 +1208,7 @@
         var d1 = Math.random() * 0xffffffff | 0;
         var d2 = Math.random() * 0xffffffff | 0;
         var d3 = Math.random() * 0xffffffff | 0;
-        return UUID.lut[d0 & 0xff] + UUID.lut[d0 >> 8 & 0xff] + UUID.lut[d0 >> 16 & 0xff] + UUID.lut[d0 >> 24 & 0xff] + '-' + UUID.lut[d1 & 0xff] + UUID.lut[d1 >> 8 & 0xff] + '-' + UUID.lut[d1 >> 16 & 0x0f | 0x40] + UUID.lut[d1 >> 24 & 0xff] + '-' + UUID.lut[d2 & 0x3f | 0x80] + UUID.lut[d2 >> 8 & 0xff] + '-' + UUID.lut[d2 >> 16 & 0xff] + UUID.lut[d2 >> 24 & 0xff] + UUID.lut[d3 & 0xff] + UUID.lut[d3 >> 8 & 0xff] + UUID.lut[d3 >> 16 & 0xff] + UUID.lut[d3 >> 24 & 0xff];
+        return UUID.lut[d0 & 0xff] + UUID.lut[d0 >> 8 & 0xff] + UUID.lut[d0 >> 16 & 0xff] + UUID.lut[d0 >> 24 & 0xff] + "-" + UUID.lut[d1 & 0xff] + UUID.lut[d1 >> 8 & 0xff] + "-" + UUID.lut[d1 >> 16 & 0x0f | 0x40] + UUID.lut[d1 >> 24 & 0xff] + "-" + UUID.lut[d2 & 0x3f | 0x80] + UUID.lut[d2 >> 8 & 0xff] + "-" + UUID.lut[d2 >> 16 & 0xff] + UUID.lut[d2 >> 24 & 0xff] + UUID.lut[d3 & 0xff] + UUID.lut[d3 >> 8 & 0xff] + UUID.lut[d3 >> 16 & 0xff] + UUID.lut[d3 >> 24 & 0xff];
       };
 
       UUID.lut = [];
@@ -1337,7 +1347,7 @@
         return this._items.map(function (item) {
           var inputs = __assign({}, item.inputs);
 
-          Object.keys(inputs).map(function (key) {
+          Object.keys(inputs).forEach(function (key) {
             inputs[key] = inputs[key].value;
           });
           return inputs;
@@ -1346,7 +1356,7 @@
 
       PglyGroupFormItems.prototype.update = function (item) {
         var index = this._items.findIndex(function (i) {
-          return i.uid === i.uid;
+          return i.uid === item.uid;
         });
 
         this._items[index] = __assign(__assign({}, this._items[index]), item);
@@ -1522,7 +1532,6 @@
             var component = new PglyMultipleMediaComponent(el);
             var name_8 = component.field().name();
             _this._inputs[name_8] = component;
-            return;
           }
         });
       };
@@ -1562,7 +1571,9 @@
         };
       };
 
-      PglyGroupFormComponent.prototype.emptyValue = function () {};
+      PglyGroupFormComponent.prototype.emptyValue = function () {
+        throw new Error('Not implemented');
+      };
 
       PglyGroupFormComponent.prototype._submit = function (data) {
         if (!this._editing) {
@@ -1718,12 +1729,16 @@
             if (_this._editing) return;
             _this._editing = true;
             _this._current = target.dataset.uid;
-            return _this._updateInputs(_this._current);
+
+            _this._updateInputs(_this._current);
+
+            return;
           }
 
           if (target.classList.contains('pgly-wps--remove')) {
             if (_this._editing) return;
-            return _this._items.remove(target.dataset.uid);
+
+            _this._items.remove(target.dataset.uid);
           }
         });
 
@@ -1849,8 +1864,6 @@
             comp.auto();
 
             _this._inputs.push(comp);
-
-            return;
           }
         });
       };
@@ -1930,42 +1943,42 @@
       PglyAsyncFormEngine.prototype.submit = function (data) {
         var _this = this;
 
-        console.table(data.inputs);
+        var _data = __assign({}, data);
 
         if (this._loading) {
           return;
         }
 
-        if (data.errors.length !== 0) {
+        if (_data.errors.length !== 0) {
           this.emit('error', {
-            data: data.errors
+            data: _data.errors
           });
           return;
         }
 
         this.loadState(true);
-        data.inputs.xSecurity = this._options.x_security;
-        this.emit('prepared', data);
+        _data.inputs.xSecurity = this._options.x_security;
+        this.emit('prepared', _data);
         var _a = this._wrapper,
             _b = _a.method,
             method = _b === void 0 ? 'POST' : _b,
             action = _a.action;
-        var request = method.toUpperCase() === 'POST' ? axios__default["default"].post(action, this._formatter(data.inputs)) : axios__default["default"].get(action, this._formatter(data.inputs));
+        var request = method.toUpperCase() === 'POST' ? axios__default["default"].post(action, this._formatter(_data.inputs)) : axios__default["default"].get(action, this._formatter(_data.inputs));
         request.then(function (res) {
           _this.emit('requestSuccess', {
-            data: data.inputs,
+            data: _data.inputs,
             response: res.data
           });
         }).catch(function (err) {
           _this.emit('requestError', {
-            data: data.inputs,
+            data: _data.inputs,
             error: err
           });
         }).finally(function () {
           _this.loadState(false);
 
           _this.emit('requestEnd', {
-            data: data.inputs
+            data: _data.inputs
           });
         });
       };
@@ -2023,7 +2036,7 @@
           var _a;
 
           var notification = el.parentNode;
-          var timer = parseInt((_a = notification.dataset.timer) !== null && _a !== void 0 ? _a : '0');
+          var timer = parseInt((_a = notification.dataset.timer) !== null && _a !== void 0 ? _a : '0', 10);
           var removed = false;
 
           if (timer > 0) {

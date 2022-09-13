@@ -199,7 +199,7 @@ var PglySelectComponent = /** @class */ (function (_super) {
                 target.classList.contains('clickable')) {
                 var value = (_a = target.dataset.value) !== null && _a !== void 0 ? _a : '';
                 var label = (_b = target.textContent) !== null && _b !== void 0 ? _b : '';
-                return _this.field().set(value, label);
+                _this.field().set(value, label);
             }
         });
     };

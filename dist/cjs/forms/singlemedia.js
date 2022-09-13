@@ -70,11 +70,12 @@ var PglySingleMediaComponent = /** @class */ (function (_super) {
                 return;
             e.preventDefault();
             if (el.classList.contains('pgly-wps--select')) {
-                return _this.emit('select', { component: _this });
+                _this.emit('select', { component: _this });
+                return;
             }
             if (el.classList.contains('pgly-wps--clean')) {
                 _this.emit('clean', { component: _this });
-                return _this.clean();
+                _this.clean();
             }
         });
     };
