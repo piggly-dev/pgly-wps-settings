@@ -46,7 +46,7 @@ var PglyNotification = /** @class */ (function () {
             .forEach(function (el) {
             var _a;
             var notification = el.parentNode;
-            var timer = parseInt((_a = notification.dataset.timer) !== null && _a !== void 0 ? _a : '0');
+            var timer = parseInt((_a = notification.dataset.timer) !== null && _a !== void 0 ? _a : '0', 10);
             var removed = false;
             if (timer > 0) {
                 setTimeout(function () {

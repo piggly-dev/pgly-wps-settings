@@ -7,5 +7,5 @@ export default class PglyNotification {
     protected _container: HTMLDivElement;
     constructor(el: string | HTMLDivElement);
     launch(message: string, options: Partial<TPglyNotificationOptions>): void;
-    _bind(): void;
+    protected _bind(): void;
 }

@@ -96,14 +96,14 @@ var PglyGroupFormItems = /** @class */ (function () {
     PglyGroupFormItems.prototype.all = function () {
         return this._items.map(function (item) {
             var inputs = __assign({}, item.inputs);
-            Object.keys(inputs).map(function (key) {
+            Object.keys(inputs).forEach(function (key) {
                 inputs[key] = inputs[key].value;
             });
             return inputs;
         });
     };
     PglyGroupFormItems.prototype.update = function (item) {
-        var index = this._items.findIndex(function (i) { return i.uid === i.uid; });
+        var index = this._items.findIndex(function (i) { return i.uid === item.uid; });
         this._items[index] = __assign(__assign({}, this._items[index]), item);
         this._parent.emit('updated', { item: item });
     };
@@ -226,7 +226,6 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
                 var component = new multiplemedia_1.default(el);
                 var name_8 = component.field().name();
                 _this._inputs[name_8] = component;
-                return;
             }
         });
     };
@@ -254,7 +253,9 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
         });
         return { inputs: inputs, errors: errors };
     };
-    PglyGroupFormComponent.prototype.emptyValue = function () { };
+    PglyGroupFormComponent.prototype.emptyValue = function () {
+        throw new Error('Not implemented');
+    };
     PglyGroupFormComponent.prototype._submit = function (data) {
         if (!this._editing) {
             this._items.add({ uid: uuid_1.default.generate(), inputs: data.inputs });
@@ -387,12 +388,13 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
                     return;
                 _this._editing = true;
                 _this._current = target.dataset.uid;
-                return _this._updateInputs(_this._current);
+                _this._updateInputs(_this._current);
+                return;
             }
             if (target.classList.contains('pgly-wps--remove')) {
                 if (_this._editing)
                     return;
-                return _this._items.remove(target.dataset.uid);
+                _this._items.remove(target.dataset.uid);
             }
         });
         this._comps.button.addEventListener('click', function (e) {

@@ -139,13 +139,15 @@ var PglyFinderComponent = /** @class */ (function (_super) {
                         return [3 /*break*/, 4];
                     case 3:
                         err_1 = _a.sent();
-                        return [2 /*return*/, this.loader().done()];
+                        this.loader().done();
+                        return [2 /*return*/];
                     case 4:
                         this._flush();
                         response.forEach(function (item) {
                             _this._items.list.appendChild(_this._render(item));
                         });
-                        return [2 /*return*/, this.loader().done()];
+                        this.loader().done();
+                        return [2 /*return*/];
                 }
             });
         });
@@ -177,7 +179,7 @@ var PglyFinderComponent = /** @class */ (function (_super) {
             e.preventDefault();
             if (target.classList.contains('pgly-wps--button')) {
                 var _a = target.dataset, _b = _a.label, label = _b === void 0 ? '' : _b, _c = _a.value, value = _c === void 0 ? '' : _c;
-                return _this.field().set(value, label);
+                _this.field().set(value, label);
             }
         });
     };
