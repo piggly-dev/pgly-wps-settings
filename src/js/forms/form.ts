@@ -14,6 +14,7 @@ import PglyFinderComponent from './finder';
 import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import { PglyGroupFormComponent } from './group';
+import PglyBasicSelectComponent from './basicselect';
 
 export type TFormError = {
 	name: string;
@@ -90,6 +91,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--checkbox`)) {
 				this._inputs.push(new PglyCheckboxComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--select`)) {
+				this._inputs.push(new PglyBasicSelectComponent(el));
 				return;
 			}
 
