@@ -1,4 +1,4 @@
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 import PglyLoadable from './loadable';
 
