@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 var PglyCheckboxComponent = /** @class */ (function (_super) {
     __extends(PglyCheckboxComponent, _super);

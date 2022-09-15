@@ -1,4 +1,4 @@
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 var PglyFieldError = /** @class */ (function () {
     function PglyFieldError(parent, wrapper) {
         this._state = false;

@@ -66,7 +66,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PglyGroupFormComponent = exports.PglyGroupFormItems = void 0;
-var dommanipulation_1 = __importDefault(require("@/behaviours/dommanipulation"));
+var dommanipulation_1 = __importDefault(require("../behaviours/dommanipulation"));
 var base_1 = __importDefault(require("./base"));
 var checkbox_1 = __importDefault(require("./checkbox"));
 var input_1 = __importDefault(require("./input"));
@@ -75,7 +75,7 @@ var singlemedia_1 = __importDefault(require("./singlemedia"));
 var multiplemedia_1 = __importDefault(require("./multiplemedia"));
 var finder_1 = __importDefault(require("./finder"));
 var select_1 = __importDefault(require("./select"));
-var uuid_1 = __importDefault(require("@/helpers/uuid"));
+var uuid_1 = __importDefault(require("../helpers/uuid"));
 var loadable_1 = __importDefault(require("./loadable"));
 var basicselect_1 = __importDefault(require("./basicselect"));
 var PglyGroupFormItems = /** @class */ (function () {

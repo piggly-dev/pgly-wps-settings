@@ -1,6 +1,6 @@
-import DOMManipulation from '@/behaviours/dommanipulation';
-import EventHandler from '@/events/handler';
-import ValidatorEngine, { RuleValidator } from '@/validator/engine';
+import DOMManipulation from '../behaviours/dommanipulation';
+import EventHandler from '../events/handler';
+import ValidatorEngine, { RuleValidator } from '../validator/engine';
 import PglyFieldError from './error';
 import PglyField from './field';
 

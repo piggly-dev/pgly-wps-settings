@@ -18,9 +18,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dommanipulation_1 = __importDefault(require("@/behaviours/dommanipulation"));
-var handler_1 = __importDefault(require("@/events/handler"));
-var engine_1 = __importDefault(require("@/validator/engine"));
+var dommanipulation_1 = __importDefault(require("../behaviours/dommanipulation"));
+var handler_1 = __importDefault(require("../events/handler"));
+var engine_1 = __importDefault(require("../validator/engine"));
 var error_1 = __importDefault(require("./error"));
 var field_1 = __importDefault(require("./field"));
 var PglyBaseComponent = /** @class */ (function (_super) {

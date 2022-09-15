@@ -9,7 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 var PglyNotification = /** @class */ (function () {
     function PglyNotification(el) {
         this._container = DOMManipulation.getElement(el);

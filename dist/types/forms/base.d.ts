@@ -1,5 +1,5 @@
-import EventHandler from '@/events/handler';
-import { RuleValidator } from '@/validator/engine';
+import EventHandler from '../events/handler';
+import { RuleValidator } from '../validator/engine';
 import PglyFieldError from './error';
 import PglyField from './field';
 export declare type TInputError = {
