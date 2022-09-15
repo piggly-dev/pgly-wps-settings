@@ -29,7 +29,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dommanipulation_1 = __importDefault(require("@/behaviours/dommanipulation"));
+var dommanipulation_1 = __importDefault(require("../behaviours/dommanipulation"));
 var base_1 = __importDefault(require("./base"));
 var PglySingleMediaComponent = /** @class */ (function (_super) {
     __extends(PglySingleMediaComponent, _super);

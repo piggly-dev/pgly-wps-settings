@@ -60,7 +60,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 import PglyLoadable from './loadable';
 var PglySelectComponent = /** @class */ (function (_super) {

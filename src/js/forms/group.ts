@@ -1,15 +1,15 @@
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 import PglyCheckboxComponent from './checkbox';
 import PglyInputComponent from './input';
 import PglyTextAreaComponent from './textarea';
-import { TOrUndefined } from '@/types';
+import { TOrUndefined } from '../types';
 import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import PglyFinderComponent from './finder';
 import PglySelectComponent from './select';
-import { RuleValidator } from '@/validator/engine';
-import UUID from '@/helpers/uuid';
+import { RuleValidator } from '../validator/engine';
+import UUID from '../helpers/uuid';
 import PglyLoadable from './loadable';
 import PglyBasicSelectComponent from './basicselect';
 

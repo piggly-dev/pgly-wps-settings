@@ -13,9 +13,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import DOMManipulation from '@/behaviours/dommanipulation';
-import EventHandler from '@/events/handler';
-import ValidatorEngine from '@/validator/engine';
+import DOMManipulation from '../behaviours/dommanipulation';
+import EventHandler from '../events/handler';
+import ValidatorEngine from '../validator/engine';
 import PglyFieldError from './error';
 import PglyField from './field';
 var PglyBaseComponent = /** @class */ (function (_super) {

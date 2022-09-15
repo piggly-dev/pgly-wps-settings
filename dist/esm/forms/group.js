@@ -60,7 +60,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 import PglyCheckboxComponent from './checkbox';
 import PglyInputComponent from './input';
@@ -69,7 +69,7 @@ import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import PglyFinderComponent from './finder';
 import PglySelectComponent from './select';
-import UUID from '@/helpers/uuid';
+import UUID from '../helpers/uuid';
 import PglyLoadable from './loadable';
 import PglyBasicSelectComponent from './basicselect';
 var PglyGroupFormItems = /** @class */ (function () {

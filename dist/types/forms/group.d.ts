@@ -1,6 +1,6 @@
 import PglyBaseComponent from './base';
-import { TOrUndefined } from '@/types';
-import { RuleValidator } from '@/validator/engine';
+import { TOrUndefined } from '../types';
+import { RuleValidator } from '../validator/engine';
 import PglyLoadable from './loadable';
 export declare type TGroupFormInputs = Record<string, {
     label?: string;
