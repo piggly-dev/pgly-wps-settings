@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dommanipulation_1 = __importDefault(require("@/behaviours/dommanipulation"));
+var dommanipulation_1 = __importDefault(require("../behaviours/dommanipulation"));
 var PglyToast = /** @class */ (function () {
     function PglyToast(el) {
         this._container = dommanipulation_1.default.getElement(el);

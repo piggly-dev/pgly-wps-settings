@@ -1,7 +1,7 @@
 import PglyBaseComponent from './base';
-import EventHandler from '@/events/handler';
-import { RuleValidator } from '@/validator/engine';
-import { TOrUndefined } from '@/types';
+import EventHandler from '../events/handler';
+import { RuleValidator } from '../validator/engine';
+import { TOrUndefined } from '../types';
 export declare type TFormError = {
     name: string;
     value: any;

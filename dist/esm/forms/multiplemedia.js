@@ -24,7 +24,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import DOMManipulation from '@/behaviours/dommanipulation';
+import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
 var PglyMultipleMediaComponent = /** @class */ (function (_super) {
     __extends(PglyMultipleMediaComponent, _super);
