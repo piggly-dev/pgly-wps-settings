@@ -1772,7 +1772,6 @@
 
         _this._loading = false;
         _this._wrapper = DOMManipulation.getElement(el);
-        _this._button = DOMManipulation.findElement(_this._wrapper, 'button.pgly-form--submit');
         _this._inputs = (_a = options.inputs) !== null && _a !== void 0 ? _a : [];
         _this._options = options;
 
@@ -1784,6 +1783,14 @@
 
         return _this;
       }
+
+      PglyBaseFormEngine.prototype.formEl = function () {
+        return this._wrapper;
+      };
+
+      PglyBaseFormEngine.prototype.dataset = function () {
+        return this._wrapper.dataset;
+      };
 
       PglyBaseFormEngine.prototype.formatter = function (func) {
         this._formatter = func;
@@ -1905,7 +1912,9 @@
       PglyBaseFormEngine.prototype.loadState = function (loading) {
         this._loading = loading;
 
-        this._button.classList.toggle('pgly-loading--state');
+        this._wrapper.querySelectorAll('.pgly-form--submit').forEach(function (el) {
+          return el.classList.toggle('pgly-loading--state');
+        });
       };
 
       PglyBaseFormEngine.prototype._bind = function () {
@@ -1919,12 +1928,16 @@
           _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
         });
 
-        this._button.addEventListener('click', function (e) {
+        this._wrapper.addEventListener('click', function (e) {
           var _a;
 
           e.preventDefault();
+          var target = e.target;
+          if (!target) return;
 
-          _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+          if (target.classList.contains('pgly-form--submit')) {
+            _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+          }
         });
       };
 

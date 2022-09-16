@@ -45,13 +45,18 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this._loading = false;
         _this._wrapper = DOMManipulation.getElement(el);
-        _this._button = DOMManipulation.findElement(_this._wrapper, 'button.pgly-form--submit');
         _this._inputs = (_a = options.inputs) !== null && _a !== void 0 ? _a : [];
         _this._options = options;
         _this._formatter = function (data) { return stringify(data); };
         _this._bind();
         return _this;
     }
+    PglyBaseFormEngine.prototype.formEl = function () {
+        return this._wrapper;
+    };
+    PglyBaseFormEngine.prototype.dataset = function () {
+        return this._wrapper.dataset;
+    };
     PglyBaseFormEngine.prototype.formatter = function (func) {
         this._formatter = func;
     };
@@ -131,7 +136,9 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
     };
     PglyBaseFormEngine.prototype.loadState = function (loading) {
         this._loading = loading;
-        this._button.classList.toggle('pgly-loading--state');
+        this._wrapper
+            .querySelectorAll('.pgly-form--submit')
+            .forEach(function (el) { return el.classList.toggle('pgly-loading--state'); });
     };
     PglyBaseFormEngine.prototype._bind = function () {
         var _this = this;
@@ -140,10 +147,15 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
             e.preventDefault();
             _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
         });
-        this._button.addEventListener('click', function (e) {
+        this._wrapper.addEventListener('click', function (e) {
             var _a;
             e.preventDefault();
-            _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+            var target = e.target;
+            if (!target)
+                return;
+            if (target.classList.contains('pgly-form--submit')) {
+                _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+            }
         });
     };
     return PglyBaseFormEngine;
