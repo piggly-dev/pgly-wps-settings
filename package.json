@@ -1,6 +1,6 @@
 {
 	"name": "@piggly/pgly-wps-settings",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "A CSS/JS webkit to Wordpress Plugin Settings",
 	"main": "dist/umd/pgly-wps-settings.js",
 	"browser": "dist/umd/pgly-wps-settings.js",
@@ -26,11 +26,9 @@
 		"css:watch": "rimraf ./public/assets/css && sass --watch --style expanded src/scss/global.scss public/assets/css/pgly-wps-settings.css",
 		"lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix src/js",
 		"format": "prettier --write \"src/js/**/*.ts\"",
-		"build": "npm run css:deploy && npm run js:deploy",
-		"publish": "npm publish --access public",
+		"build": "npm run format && npm run lint && npm run css:deploy && npm run js:deploy",
 		"prepare": "npm run build",
-		"prepublishOnly": "npm run format && npm run lint",
-		"preversion": "npm run format && npm run lint",
+		"preversion": "npm run build",
 		"version": "npm run format"
 	},
 	"repository": {
