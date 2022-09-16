@@ -40,8 +40,6 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 	protected _inputs: Array<PglyBaseComponent>;
 
-	protected _button: HTMLButtonElement;
-
 	protected _options: TFormOptions;
 
 	protected _loading = false;
@@ -52,16 +50,20 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		super();
 
 		this._wrapper = DOMManipulation.getElement(el);
-		this._button = DOMManipulation.findElement(
-			this._wrapper,
-			'button.pgly-form--submit'
-		);
 
 		this._inputs = options.inputs ?? [];
 		this._options = options;
 		this._formatter = data => stringify(data);
 
 		this._bind();
+	}
+
+	public formEl (): HTMLFormElement {
+		return this._wrapper;
+	}
+
+	public dataset (): Record<string, any> {
+		return this._wrapper.dataset;
 	}
 
 	public formatter (func: TFormBody) {
@@ -163,7 +165,9 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 	protected loadState (loading: boolean) {
 		this._loading = loading;
-		this._button.classList.toggle('pgly-loading--state');
+		this._wrapper
+			.querySelectorAll('.pgly-form--submit')
+			.forEach(el => el.classList.toggle('pgly-loading--state'));
 	}
 
 	protected _bind () {
@@ -172,9 +176,15 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 			this.submit(this.prepare(this._options.rules ?? {}));
 		});
 
-		this._button.addEventListener('click', e => {
+		this._wrapper.addEventListener('click', e => {
 			e.preventDefault();
-			this.submit(this.prepare(this._options.rules ?? {}));
+			const target = e.target as HTMLElement;
+
+			if (!target) return;
+
+			if (target.classList.contains('pgly-form--submit')) {
+				this.submit(this.prepare(this._options.rules ?? {}));
+			}
 		});
 	}
 }
