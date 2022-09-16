@@ -44,6 +44,8 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 	protected _loading = false;
 
+	protected _currentButtonClass = '.pgly-form--submit';
+
 	protected _formatter: TFormBody;
 
 	constructor (el: string | HTMLFormElement, options: Partial<TFormOptions> = {}) {
@@ -56,6 +58,14 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		this._formatter = data => stringify(data);
 
 		this._bind();
+	}
+
+	public changeSubmitButtonClass (querySelector: string) {
+		this._currentButtonClass = querySelector;
+	}
+
+	public restoreSubmitButtonClass () {
+		this._currentButtonClass = '.pgly-form--submit';
 	}
 
 	public formEl (): HTMLFormElement {
@@ -161,19 +171,22 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		return this._loading;
 	}
 
-	protected abstract submit(data: TFormPreparedData): void;
+	protected abstract submit(method: string, action: string, data: TFormPreparedData): void;
 
 	protected loadState (loading: boolean) {
 		this._loading = loading;
 		this._wrapper
-			.querySelectorAll('.pgly-form--submit')
+			.querySelectorAll(this._currentButtonClass)
 			.forEach(el => el.classList.toggle('pgly-loading--state'));
 	}
 
 	protected _bind () {
+		const { method = 'POST', action } = this._wrapper;
+
 		this._wrapper.addEventListener('submit', e => {
 			e.preventDefault();
-			this.submit(this.prepare(this._options.rules ?? {}));
+			this.submit(method, action, this.prepare(this._options.rules ?? {}));
+			this.restoreSubmitButtonClass();
 		});
 
 		this._wrapper.addEventListener('click', e => {
@@ -183,14 +196,15 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 			if (!target) return;
 
 			if (target.classList.contains('pgly-form--submit')) {
-				this.submit(this.prepare(this._options.rules ?? {}));
+				this.submit(method, action, this.prepare(this._options.rules ?? {}));
+				this.restoreSubmitButtonClass();
 			}
 		});
 	}
 }
 
 export class PglyAsyncFormEngine extends PglyBaseFormEngine {
-	protected submit (data: TFormPreparedData) {
+	protected submit (method: string, action: string, data: TFormPreparedData) {
 		const _data = { ...data };
 
 		if (this._loading) {
@@ -206,8 +220,6 @@ export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 
 		_data.inputs.xSecurity = this._options.x_security;
 		this.emit('prepared', _data);
-
-		const { method = 'POST', action } = this._wrapper;
 
 		const request =
 			method.toUpperCase() === 'POST'
