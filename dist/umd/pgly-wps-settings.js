@@ -1771,6 +1771,7 @@
         var _this = _super.call(this) || this;
 
         _this._loading = false;
+        _this._currentButtonClass = '.pgly-form--submit';
         _this._wrapper = DOMManipulation.getElement(el);
         _this._inputs = (_a = options.inputs) !== null && _a !== void 0 ? _a : [];
         _this._options = options;
@@ -1783,6 +1784,14 @@
 
         return _this;
       }
+
+      PglyBaseFormEngine.prototype.changeSubmitButtonClass = function (querySelector) {
+        this._currentButtonClass = querySelector;
+      };
+
+      PglyBaseFormEngine.prototype.restoreSubmitButtonClass = function () {
+        this._currentButtonClass = '.pgly-form--submit';
+      };
 
       PglyBaseFormEngine.prototype.formEl = function () {
         return this._wrapper;
@@ -1912,7 +1921,7 @@
       PglyBaseFormEngine.prototype.loadState = function (loading) {
         this._loading = loading;
 
-        this._wrapper.querySelectorAll('.pgly-form--submit').forEach(function (el) {
+        this._wrapper.querySelectorAll(this._currentButtonClass).forEach(function (el) {
           return el.classList.toggle('pgly-loading--state');
         });
       };
@@ -1920,12 +1929,19 @@
       PglyBaseFormEngine.prototype._bind = function () {
         var _this = this;
 
+        var _a = this._wrapper,
+            _b = _a.method,
+            method = _b === void 0 ? 'POST' : _b,
+            action = _a.action;
+
         this._wrapper.addEventListener('submit', function (e) {
           var _a;
 
           e.preventDefault();
 
-          _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+          _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+
+          _this.restoreSubmitButtonClass();
         });
 
         this._wrapper.addEventListener('click', function (e) {
@@ -1936,7 +1952,9 @@
           if (!target) return;
 
           if (target.classList.contains('pgly-form--submit')) {
-            _this.submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+            _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+
+            _this.restoreSubmitButtonClass();
           }
         });
       };
@@ -1953,7 +1971,7 @@
         return _super !== null && _super.apply(this, arguments) || this;
       }
 
-      PglyAsyncFormEngine.prototype.submit = function (data) {
+      PglyAsyncFormEngine.prototype.submit = function (method, action, data) {
         var _this = this;
 
         var _data = __assign({}, data);
@@ -1972,10 +1990,6 @@
         this.loadState(true);
         _data.inputs.xSecurity = this._options.x_security;
         this.emit('prepared', _data);
-        var _a = this._wrapper,
-            _b = _a.method,
-            method = _b === void 0 ? 'POST' : _b,
-            action = _a.action;
         var request = method.toUpperCase() === 'POST' ? axios__default["default"].post(action, this._formatter(_data.inputs)) : axios__default["default"].get(action, this._formatter(_data.inputs));
         request.then(function (res) {
           _this.emit('requestSuccess', {

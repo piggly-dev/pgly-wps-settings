@@ -22,8 +22,11 @@ export declare abstract class PglyBaseFormEngine extends EventHandler {
     protected _inputs: Array<PglyBaseComponent>;
     protected _options: TFormOptions;
     protected _loading: boolean;
+    protected _currentButtonClass: string;
     protected _formatter: TFormBody;
     constructor(el: string | HTMLFormElement, options?: Partial<TFormOptions>);
+    changeSubmitButtonClass(querySelector: string): void;
+    restoreSubmitButtonClass(): void;
     formEl(): HTMLFormElement;
     dataset(): Record<string, any>;
     formatter(func: TFormBody): void;
@@ -33,10 +36,10 @@ export declare abstract class PglyBaseFormEngine extends EventHandler {
     auto(): void;
     prepare(rules?: Record<string, Array<RuleValidator>>): TFormPreparedData;
     isLoading(): boolean;
-    protected abstract submit(data: TFormPreparedData): void;
+    protected abstract submit(method: string, action: string, data: TFormPreparedData): void;
     protected loadState(loading: boolean): void;
     protected _bind(): void;
 }
 export declare class PglyAsyncFormEngine extends PglyBaseFormEngine {
-    protected submit(data: TFormPreparedData): void;
+    protected submit(method: string, action: string, data: TFormPreparedData): void;
 }
