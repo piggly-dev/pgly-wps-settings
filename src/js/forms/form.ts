@@ -171,7 +171,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		return this._loading;
 	}
 
-	protected abstract submit(method: string, action: string, data: TFormPreparedData): void;
+	protected abstract submit(
+		method: string,
+		action: string,
+		data: TFormPreparedData
+	): void;
 
 	protected loadState (loading: boolean) {
 		this._loading = loading;
