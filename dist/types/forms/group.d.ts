@@ -44,7 +44,6 @@ export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGro
     protected _items: PglyGroupFormItems;
     protected _options: TGroupFormOptions;
     protected _comps: {
-        button: HTMLButtonElement;
         items: HTMLDivElement;
     };
     protected _editing: boolean;
@@ -61,11 +60,12 @@ export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGro
     prepare(rules?: Record<string, Array<RuleValidator>>): TGroupFormPreparedData;
     emptyValue(): void;
     protected _submit(data: TGroupFormPreparedData): void;
+    protected _cancel(): void;
     protected _flushInputs(): void;
     protected _updateInputs(uid: string): void;
     protected _addCard(item: TGroupFormItem): void;
     protected _updateCard(item: TGroupFormItem): void;
-    protected _removeCard(uid: string): void;
+    protected _removeCard(item: TGroupFormItem): void;
     protected _bind(): void;
     protected _default(): void;
 }

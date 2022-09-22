@@ -1494,7 +1494,7 @@
 						}
 					} )
 
-					form.get( 'form-group' ).synchronous( [{
+					const groupData = [{
 						"first-name": { label: undefined, value: "Damian" },
 						"last-name": { label: undefined, value: "Revett" },
 						"required-checkbox": { label: undefined, value: true },
@@ -1534,13 +1534,21 @@
 						"first-name": { label: undefined, value: "Lauralee" },
 						"last-name": { label: undefined, value: "Pulham" },
 						"required-checkbox": { label: undefined, value: true },
-					}]
-					);
+					}];
+
+					form.get( 'form-group' ).asynchronous( async () => {
+						return new Promise( ( res ) => {
+							setTimeout( () => res( groupData ), 3000 );
+						} )
+					} );
 				} )
 			</script>
 			<div class="pgly-wps--row">
 				<div class="pgly-wps--column">
 					<div class="pgly-wps--field pgly-form--input pgly-form--text" data-name="regular-text">
+						<div class="pgly-wps--badges">
+							<span class="pgly-wps--badge pgly-wps-is-danger">Obrigatório</span>
+						</div>
 						<label class="pgly-wps--label">
 							Regular Input
 						</label>
@@ -1917,57 +1925,63 @@
 			<div class="pgly-wps--row">
 				<div class="pgly-wps--column">
 					<div class="pgly-wps--group pgly-form--input pgly-form--group" data-name="form-group">
-						<div class="pgly-wps--row">
-							<div class="pgly-wps--column pgly-wps-col--6">
-								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="first-name">
-									<label class="pgly-wps--label">
-										First Name
-									</label>
-									<input placeholder="Type here your first name" type="text">
-									<span class="pgly-wps--message"></span>
-									<p class="pgly-wps--description">
-										It includes description.
-									</p>
-								</div>
-							</div>
-							<div class="pgly-wps--column pgly-wps-col--6">
-								<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="last-name">
-									<label class="pgly-wps--label">
-										Last Name
-									</label>
-									<input placeholder="Type here your last name" type="text">
-									<span class="pgly-wps--message"></span>
-									<p class="pgly-wps--description">
-										It includes description.
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="pgly-wps--row">
-							<div class="pgly-wps--column">
-								<div class="pgly-wps--field pgly-gform--input pgly-gform--checkbox"
-									data-name="required-checkbox" data-def="false">
-									<label class="pgly-wps--label">
-										Required Checkbox
-									</label>
-									<div class="pgly-wps--checkbox">
-										<div class="pgly-wps--icon"></div>
-										<div class="pgly-wps--placeholder">My checkbox</div>
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<div class="container">
+							<div class="pgly-wps--row">
+								<div class="pgly-wps--column pgly-wps-col--6">
+									<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="first-name">
+										<label class="pgly-wps--label">
+											First Name
+										</label>
+										<input placeholder="Type here your first name" type="text">
+										<span class="pgly-wps--message"></span>
+										<p class="pgly-wps--description">
+											It includes description.
+										</p>
 									</div>
-									<span class="pgly-wps--message"></span>
-									<p class="pgly-wps--description">
-										It includes description.
-									</p>
+								</div>
+								<div class="pgly-wps--column pgly-wps-col--6">
+									<div class="pgly-wps--field pgly-gform--input pgly-gform--text" data-name="last-name">
+										<label class="pgly-wps--label">
+											Last Name
+										</label>
+										<input placeholder="Type here your last name" type="text">
+										<span class="pgly-wps--message"></span>
+										<p class="pgly-wps--description">
+											It includes description.
+										</p>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="pgly-wps--row">
-							<div class="pgly-wps--column">
-								<button class="pgly-wps--button pgly-wps-is-primary pgly-gform--submit">Save data</button>
+							<div class="pgly-wps--row">
+								<div class="pgly-wps--column">
+									<div class="pgly-wps--field pgly-gform--input pgly-gform--checkbox"
+										data-name="required-checkbox" data-def="false">
+										<label class="pgly-wps--label">
+											Required Checkbox
+										</label>
+										<div class="pgly-wps--checkbox">
+											<div class="pgly-wps--icon"></div>
+											<div class="pgly-wps--placeholder">My checkbox</div>
+										</div>
+										<span class="pgly-wps--message"></span>
+										<p class="pgly-wps--description">
+											It includes description.
+										</p>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="pgly-wps--row">
-							<div class="pgly-wps--column pgly-wps--items">
+							<div class="pgly-wps--row">
+								<div class="pgly-wps--column">
+									<button class="pgly-wps--button pgly-wps-is-primary pgly-gform--submit">Save data</button>
+									<button class="pgly-wps--button pgly-wps-is-secondary pgly-gform--cancel">Cancel</button>
+								</div>
+							</div>
+							<div class="pgly-wps--row">
+								<div class="pgly-wps--column pgly-wps--items">
+								</div>
 							</div>
 						</div>
 					</div>

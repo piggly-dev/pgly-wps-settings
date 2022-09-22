@@ -487,19 +487,29 @@
         this._parent = parent;
       }
 
-      PglyLoadable.prototype.prepare = function () {
+      PglyLoadable.prototype.prepare = function (payload) {
+        if (payload === void 0) {
+          payload = undefined;
+        }
+
         this._parent.emit('beforeLoad', {
-          loading: false
+          loading: false,
+          payload: payload
         });
 
         this._loading = true;
       };
 
-      PglyLoadable.prototype.done = function () {
+      PglyLoadable.prototype.done = function (payload) {
+        if (payload === void 0) {
+          payload = undefined;
+        }
+
         this._loading = false;
 
         this._parent.emit('afterLoad', {
-          loading: false
+          loading: false,
+          payload: payload
         });
       };
 
@@ -1359,20 +1369,27 @@
           return i.uid === item.uid;
         });
 
-        this._items[index] = __assign(__assign({}, this._items[index]), item);
+        var newItem = __assign(__assign({}, this._items[index]), item);
+
+        this._items[index] = newItem;
 
         this._parent.emit('updated', {
-          item: item
+          newItem: newItem
         });
       };
 
       PglyGroupFormItems.prototype.remove = function (uid) {
+        var item = this._items.find(function (i) {
+          return i.uid === uid;
+        });
+
+        if (!item) return;
         this._items = this._items.filter(function (i) {
           return i.uid !== uid;
         });
 
         this._parent.emit('removed', {
-          uid: uid
+          item: item
         });
       };
 
@@ -1393,7 +1410,6 @@
         _this._editing = false;
         _this._current = undefined;
         _this._comps = {
-          button: DOMManipulation.findElement(_this._wrapper, 'button.pgly-gform--submit'),
           items: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--items')
         };
         _this._options = {
@@ -1424,14 +1440,18 @@
       PglyGroupFormComponent.prototype.synchronous = function (items) {
         var _this = this;
 
-        this.loader().prepare();
+        this.loader().prepare({
+          action: 'items'
+        });
         items.forEach(function (item) {
           return _this._items.add({
             uid: UUID.generate(),
             inputs: item
           });
         });
-        this.loader().done();
+        this.loader().done({
+          action: 'items'
+        });
       };
 
       PglyGroupFormComponent.prototype.asynchronous = function (callback) {
@@ -1443,7 +1463,9 @@
           return __generator(this, function (_a) {
             switch (_a.label) {
               case 0:
-                this.loader().prepare();
+                this.loader().prepare({
+                  action: 'items'
+                });
                 return [4
                 /*yield*/
                 , callback()];
@@ -1456,7 +1478,9 @@
                     inputs: item
                   });
                 });
-                this.loader().done();
+                this.loader().done({
+                  action: 'items'
+                });
                 return [2
                 /*return*/
                 ];
@@ -1576,6 +1600,8 @@
       };
 
       PglyGroupFormComponent.prototype._submit = function (data) {
+        if (this._loader.isLoading()) return;
+
         if (!this._editing) {
           this._items.add({
             uid: UUID.generate(),
@@ -1587,6 +1613,18 @@
             inputs: data.inputs
           });
 
+          var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
+          if (card) card.classList.remove('pgly-wps-is-warning');
+        }
+
+        this._editing = false;
+        this._current = undefined;
+
+        this._flushInputs();
+      };
+
+      PglyGroupFormComponent.prototype._cancel = function () {
+        if (this._current) {
           var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
           if (card) card.classList.remove('pgly-wps-is-warning');
         }
@@ -1685,18 +1723,27 @@
         });
       };
 
-      PglyGroupFormComponent.prototype._removeCard = function (uid) {
-        var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + uid + "\"]");
+      PglyGroupFormComponent.prototype._removeCard = function (item) {
+        var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + item.uid + "\"]");
         if (card) this._comps.items.removeChild(card);
       };
 
       PglyGroupFormComponent.prototype._bind = function () {
         var _this = this;
 
+        this.on('beforeLoad', function () {
+          _this._wrapper.classList.add('pgly-loading--state');
+        });
+        this.on('afterLoad', function () {
+          _this._wrapper.classList.remove('pgly-loading--state');
+        });
         this.on('submit', function () {
           var _a;
 
           return _this._submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+        });
+        this.on('cancel', function () {
+          return _this._cancel();
         });
         this.on('added', function (_a) {
           var item = _a.item;
@@ -1713,16 +1760,16 @@
           _this._updateCard(item);
         });
         this.on('removed', function (_a) {
-          var uid = _a.uid;
+          var item = _a.item;
 
           _this.field().set(_this._items.all());
 
-          _this._removeCard(uid);
+          _this._removeCard(item);
         });
 
         this._comps.items.addEventListener('click', function (e) {
           var target = e.target;
-          if (!target.dataset.uid) return;
+          if (!target.dataset.uid || _this._loader.isLoading()) return;
           e.preventDefault();
 
           if (target.classList.contains('pgly-wps--edit')) {
@@ -1742,10 +1789,15 @@
           }
         });
 
-        this._comps.button.addEventListener('click', function (e) {
+        DOMManipulation.findElement(this._wrapper, 'button.pgly-gform--submit').addEventListener('click', function (e) {
           e.preventDefault();
 
           _this.emit('submit', {});
+        });
+        DOMManipulation.findElement(this._wrapper, 'button.pgly-gform--cancel').addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this.emit('cancel', {});
         });
       };
 
@@ -1929,10 +1981,10 @@
       PglyBaseFormEngine.prototype._bind = function () {
         var _this = this;
 
-        var _a = this._wrapper,
-            _b = _a.method,
-            method = _b === void 0 ? 'POST' : _b,
-            action = _a.action;
+        var _a, _b, _c, _d;
+
+        var action = (_b = (_a = this._wrapper.action) !== null && _a !== void 0 ? _a : this._wrapper.dataset.action) !== null && _b !== void 0 ? _b : '/';
+        var method = (_d = (_c = this._wrapper.method) !== null && _c !== void 0 ? _c : this._wrapper.dataset.method) !== null && _d !== void 0 ? _d : 'POST';
 
         this._wrapper.addEventListener('submit', function (e) {
           var _a;
@@ -1940,8 +1992,6 @@
           e.preventDefault();
 
           _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-
-          _this.restoreSubmitButtonClass();
         });
 
         this._wrapper.addEventListener('click', function (e) {
@@ -1953,8 +2003,6 @@
 
           if (target.classList.contains('pgly-form--submit')) {
             _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-
-            _this.restoreSubmitButtonClass();
           }
         });
       };
@@ -2007,6 +2055,8 @@
           _this.emit('requestEnd', {
             data: _data.inputs
           });
+
+          _this.restoreSubmitButtonClass();
         });
       };
 
