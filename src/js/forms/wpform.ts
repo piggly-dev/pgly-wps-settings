@@ -1,8 +1,11 @@
+import axios from 'axios';
 import { RuleValidator } from '../validator/engine';
 import { PglyAsyncFormEngine, TFormBody } from './form';
 import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import PglyToast from '../components/toaster';
+import { PglyGroupFormComponent, TGroupFormInputs, TGroupFormItem } from './group';
+import PglyFinderComponent, { TFinderItem } from './finder';
 
 export const wpSingleMediaFrame = PglySingleMediaComponent.wpFrame;
 export const wpMultipleMediaFrame = PglyMultipleMediaComponent.wpFrame;
@@ -18,7 +21,7 @@ export class WPForm {
 
 	protected _group = false;
 
-	protected _actions: Record<string, string> = {};
+	public actions: Record<string, string> = {};
 
 	constructor (
 		formId: string,
@@ -43,10 +46,6 @@ export class WPForm {
 		return this._form;
 	}
 
-	public actions (): Record<string, string> {
-		return this._actions;
-	}
-
 	public isOnPost () {
 		this._postForm =
 			document.querySelector<HTMLFormElement>('form[name="post"]') ?? undefined;
@@ -68,6 +67,192 @@ export class WPForm {
 				this._postForm?.submit();
 			});
 		}
+	}
+
+	public inOnMetabox (
+		inputName: string,
+		loadUrl: string,
+		editUrl: string,
+		xSecurity: string,
+		view: Record<string, string>,
+		rules: Record<string, Array<RuleValidator>>
+	) {
+		const group = this._form.get(inputName) as PglyGroupFormComponent;
+
+		group.options({
+			view,
+			labels: {
+				edit: 'Editar',
+				remove: 'Remover',
+			},
+			rules,
+		});
+
+		group.asynchronous(async (): Promise<Array<TGroupFormInputs>> => {
+			try {
+				const { data } = await axios.post(loadUrl, {
+					id: this._form.dataset().postId,
+					x_security: xSecurity,
+				});
+
+				if (!data.success) {
+					this._onError({ error: data.data });
+					return [];
+				}
+
+				return data.data as Array<TGroupFormInputs>;
+			} catch (err) {
+				this._onError({ error: err });
+				return [];
+			}
+		});
+
+		const action =
+			(
+				url: string,
+				data: any,
+				onSuccess: (item: TGroupFormItem, id: string) => void,
+				onError: (item: TGroupFormItem) => void
+			) =>
+			({ item, origin }: { item: TGroupFormItem; origin: string }) => {
+				if (origin === 'load') {
+					return;
+				}
+
+				console.log(item);
+
+				group.loader().prepare();
+
+				new Promise((res, rej) => {
+					const inputs: Record<string, any> = {};
+
+					Object.keys(item.inputs).forEach(key => {
+						inputs[key] = item.inputs[key].value;
+					});
+
+					axios
+						.post(url, {
+							id: this._form.dataset().postId,
+							x_security: xSecurity,
+							...data,
+							...inputs,
+						})
+						.then(response => {
+							res(response.data);
+						})
+						.catch(err => {
+							rej(err);
+						});
+				})
+					.then((_data: any) => {
+						if (!_data.success) {
+							this._onError({ error: _data });
+							onError(item);
+							return;
+						}
+
+						this._onSuccess({ response: _data });
+						onSuccess(item, data.data.id ?? undefined);
+					})
+					.catch(err => {
+						this._onError({ error: err });
+						onError(item);
+					})
+					.finally(() => group.loader().done());
+			};
+
+		group.on('loadError', ({ err }) => {
+			this._onError({ error: err });
+		});
+
+		group.on(
+			'added',
+			action(
+				editUrl,
+				{ action: 'add' },
+				(item, id) => {
+					group.items().updateId(item.uid, parseInt(id, 10));
+				},
+				item => {
+					group.items().remove(item.uid);
+				}
+			)
+		);
+
+		group.on(
+			'updated',
+			action(
+				editUrl,
+				{ action: 'update' },
+				() => null,
+				() => null
+			)
+		);
+
+		group.on(
+			'removed',
+			action(
+				editUrl,
+				{ action: 'remove' },
+				() => null,
+				() => null
+			)
+		);
+
+		group.on('error', this._error.bind(this));
+	}
+
+	public enableAction (action: string, callback: (wpForm: WPForm) => void) {
+		this.form()
+			.formEl()
+			.addEventListener('click', e => {
+				if (!e.target) return;
+				const target = e.target as HTMLElement;
+				if (target.classList.contains(`pgly-form--${action}`)) {
+					e.preventDefault();
+					callback(this);
+				}
+			});
+
+		const urlParams = new URLSearchParams(window.location.search);
+		const _action = urlParams.get('action');
+
+		if (action === _action) {
+			callback(this);
+		}
+	}
+
+	public getUrl (base: string, action: string): string {
+		return `${base}?action=${action}`;
+	}
+
+	public applyToFinder (field: PglyFinderComponent, url: string, xSecurity: string) {
+		field.options({
+			load: async query => {
+				try {
+					const { data } = await axios.post(url, {
+						query,
+						x_security: xSecurity,
+					});
+
+					if (data.data.length === 0) {
+						this._toaster.launch('Nenhum resultado encontrado...', {
+							type: 'danger',
+							timer: 2000,
+						});
+					}
+
+					return data.data as Array<TFinderItem>;
+				} catch (err) {
+					this._onError(err);
+					return [];
+				}
+			},
+			labels: {
+				select: 'Selecionar',
+				unselect: 'Remover',
+			},
+		});
 	}
 
 	protected _loadForm (
