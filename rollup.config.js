@@ -6,7 +6,7 @@ import json from '@rollup/plugin-json';
 import uglify from '@lopatnov/rollup-plugin-uglify';
 
 const extensions = ['.js', '.ts'];
-const version = '024';
+const version = '025';
 
 module.exports = [
 	{
@@ -14,7 +14,7 @@ module.exports = [
 		external: ['axios'],
 		output: {
 			file: `dist/umd/pgly-wps-settings.js`,
-			name: 'pglyWps024',
+			name: 'pglyWps' + version,
 			format: 'umd',
 			globals: {
 				axios: 'axios',
@@ -38,7 +38,7 @@ module.exports = [
 		external: ['axios'],
 		output: {
 			file: `dist/umd/pgly-wps-settings.min.js`,
-			name: 'pglyWps024',
+			name: 'pglyWps' + version,
 			format: 'umd',
 			globals: {
 				axios: 'axios',
