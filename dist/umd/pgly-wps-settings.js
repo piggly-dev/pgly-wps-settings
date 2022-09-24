@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps025 = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps026 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -2198,7 +2198,7 @@
 
         this._rules = {};
         this._group = false;
-        this._actions = {};
+        this.actions = {};
 
         var defFormatter = function defFormatter(data) {
           return _this._applyData(data);
@@ -2216,10 +2216,6 @@
 
       WPForm.prototype.form = function () {
         return this._form;
-      };
-
-      WPForm.prototype.actions = function () {
-        return this._actions;
       };
 
       WPForm.prototype.isOnPost = function () {
@@ -2244,6 +2240,237 @@
             (_a = _this._postForm) === null || _a === void 0 ? void 0 : _a.submit();
           });
         }
+      };
+
+      WPForm.prototype.inOnMetabox = function (inputName, loadUrl, editUrl, xSecurity, view, rules) {
+        var _this = this;
+
+        var group = this._form.get(inputName);
+
+        group.options({
+          view: view,
+          labels: {
+            edit: 'Editar',
+            remove: 'Remover'
+          },
+          rules: rules
+        });
+        group.asynchronous(function () {
+          return __awaiter(_this, void 0, void 0, function () {
+            var data, err_1;
+            return __generator(this, function (_a) {
+              switch (_a.label) {
+                case 0:
+                  _a.trys.push([0, 2,, 3]);
+
+                  return [4
+                  /*yield*/
+                  , axios__default["default"].post(loadUrl, {
+                    id: this._form.dataset().postId,
+                    x_security: xSecurity
+                  })];
+
+                case 1:
+                  data = _a.sent().data;
+
+                  if (!data.success) {
+                    this._onError({
+                      error: data.data
+                    });
+
+                    return [2
+                    /*return*/
+                    , []];
+                  }
+
+                  return [2
+                  /*return*/
+                  , data.data];
+
+                case 2:
+                  err_1 = _a.sent();
+
+                  this._onError({
+                    error: err_1
+                  });
+
+                  return [2
+                  /*return*/
+                  , []];
+
+                case 3:
+                  return [2
+                  /*return*/
+                  ];
+              }
+            });
+          });
+        });
+
+        var action = function action(url, data, onSuccess, onError) {
+          return function (_a) {
+            var item = _a.item,
+                origin = _a.origin;
+
+            if (origin === 'load') {
+              return;
+            }
+
+            console.log(item);
+            group.loader().prepare();
+            new Promise(function (res, rej) {
+              var inputs = {};
+              Object.keys(item.inputs).forEach(function (key) {
+                inputs[key] = item.inputs[key].value;
+              });
+              axios__default["default"].post(url, __assign(__assign({
+                id: _this._form.dataset().postId,
+                x_security: xSecurity
+              }, data), inputs)).then(function (response) {
+                res(response.data);
+              }).catch(function (err) {
+                rej(err);
+              });
+            }).then(function (_data) {
+              var _a;
+
+              if (!_data.success) {
+                _this._onError({
+                  error: _data
+                });
+
+                onError(item);
+                return;
+              }
+
+              _this._onSuccess({
+                response: _data
+              });
+
+              onSuccess(item, (_a = data.data.id) !== null && _a !== void 0 ? _a : undefined);
+            }).catch(function (err) {
+              _this._onError({
+                error: err
+              });
+
+              onError(item);
+            }).finally(function () {
+              return group.loader().done();
+            });
+          };
+        };
+
+        group.on('loadError', function (_a) {
+          var err = _a.err;
+
+          _this._onError({
+            error: err
+          });
+        });
+        group.on('added', action(editUrl, {
+          action: 'add'
+        }, function (item, id) {
+          group.items().updateId(item.uid, parseInt(id, 10));
+        }, function (item) {
+          group.items().remove(item.uid);
+        }));
+        group.on('updated', action(editUrl, {
+          action: 'update'
+        }, function () {
+          return null;
+        }, function () {
+          return null;
+        }));
+        group.on('removed', action(editUrl, {
+          action: 'remove'
+        }, function () {
+          return null;
+        }, function () {
+          return null;
+        }));
+        group.on('error', this._error.bind(this));
+      };
+
+      WPForm.prototype.enableAction = function (action, callback) {
+        var _this = this;
+
+        this.form().formEl().addEventListener('click', function (e) {
+          if (!e.target) return;
+          var target = e.target;
+
+          if (target.classList.contains("pgly-form--" + action)) {
+            e.preventDefault();
+            callback(_this);
+          }
+        });
+        var urlParams = new URLSearchParams(window.location.search);
+
+        var _action = urlParams.get('action');
+
+        if (action === _action) {
+          callback(this);
+        }
+      };
+
+      WPForm.prototype.getUrl = function (base, action) {
+        return base + "?action=" + action;
+      };
+
+      WPForm.prototype.applyToFinder = function (field, url, xSecurity) {
+        var _this = this;
+
+        field.options({
+          load: function load(query) {
+            return __awaiter(_this, void 0, void 0, function () {
+              var data, err_2;
+              return __generator(this, function (_a) {
+                switch (_a.label) {
+                  case 0:
+                    _a.trys.push([0, 2,, 3]);
+
+                    return [4
+                    /*yield*/
+                    , axios__default["default"].post(url, {
+                      query: query,
+                      x_security: xSecurity
+                    })];
+
+                  case 1:
+                    data = _a.sent().data;
+
+                    if (data.data.length === 0) {
+                      this._toaster.launch('Nenhum resultado encontrado...', {
+                        type: 'danger',
+                        timer: 2000
+                      });
+                    }
+
+                    return [2
+                    /*return*/
+                    , data.data];
+
+                  case 2:
+                    err_2 = _a.sent();
+
+                    this._onError(err_2);
+
+                    return [2
+                    /*return*/
+                    , []];
+
+                  case 3:
+                    return [2
+                    /*return*/
+                    ];
+                }
+              });
+            });
+          },
+          labels: {
+            select: 'Selecionar',
+            unselect: 'Remover'
+          }
+        });
       };
 
       WPForm.prototype._loadForm = function (id, formatter, rules) {

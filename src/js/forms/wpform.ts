@@ -90,13 +90,10 @@ export class WPForm {
 
 		group.asynchronous(async (): Promise<Array<TGroupFormInputs>> => {
 			try {
-				const { data } = await axios.post(
-					loadUrl,
-					{
-						id: this._form.dataset().postId,
-						x_security: xSecurity,
-					}
-				);
+				const { data } = await axios.post(loadUrl, {
+					id: this._form.dataset().postId,
+					x_security: xSecurity,
+				});
 
 				if (!data.success) {
 					this._onError({ error: data.data });
@@ -110,21 +107,23 @@ export class WPForm {
 			}
 		});
 
-		const action = (
-			url: string,
-			data: any,
-			onSuccess: (item: TGroupFormItem, id: string) => void,
-			onError: (item: TGroupFormItem) => void
-		) => ({ item, origin }: { item: TGroupFormItem; origin: string; }) => {
-			if (origin === 'load') {
-				return;
-			}
+		const action =
+			(
+				url: string,
+				data: any,
+				onSuccess: (item: TGroupFormItem, id: string) => void,
+				onError: (item: TGroupFormItem) => void
+			) =>
+			({ item, origin }: { item: TGroupFormItem; origin: string }) => {
+				if (origin === 'load') {
+					return;
+				}
 
-			console.log(item);
+				console.log(item);
 
-			group.loader().prepare();
+				group.loader().prepare();
 
-			new Promise((res, rej) => {
+				new Promise((res, rej) => {
 					const inputs: Record<string, any> = {};
 
 					Object.keys(item.inputs).forEach(key => {
@@ -145,22 +144,22 @@ export class WPForm {
 							rej(err);
 						});
 				})
-				.then((_data: any) => {
-					if (!_data.success) {
-						this._onError({ error: _data });
-						onError(item);
-						return;
-					}
+					.then((_data: any) => {
+						if (!_data.success) {
+							this._onError({ error: _data });
+							onError(item);
+							return;
+						}
 
-					this._onSuccess({ response: _data });
-					onSuccess(item, data.data.id ?? undefined);
-				})
-				.catch(err => {
-					this._onError({ error: err });
-					onError(item);
-				})
-				.finally(() => group.loader().done());
-		};
+						this._onSuccess({ response: _data });
+						onSuccess(item, data.data.id ?? undefined);
+					})
+					.catch(err => {
+						this._onError({ error: err });
+						onError(item);
+					})
+					.finally(() => group.loader().done());
+			};
 
 		group.on('loadError', ({ err }) => {
 			this._onError({ error: err });
@@ -204,8 +203,7 @@ export class WPForm {
 	}
 
 	public enableAction (action: string, callback: (wpForm: WPForm) => void) {
-		this
-			.form()
+		this.form()
 			.formEl()
 			.addEventListener('click', e => {
 				if (!e.target) return;
@@ -232,13 +230,10 @@ export class WPForm {
 		field.options({
 			load: async query => {
 				try {
-					const { data } = await axios.post(
-						url,
-						{
-							query,
-							x_security: xSecurity,
-						}
-					);
+					const { data } = await axios.post(url, {
+						query,
+						x_security: xSecurity,
+					});
 
 					if (data.data.length === 0) {
 						this._toaster.launch('Nenhum resultado encontrado...', {
