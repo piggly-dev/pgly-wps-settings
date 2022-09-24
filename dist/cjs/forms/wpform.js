@@ -40,6 +40,9 @@ var WPForm = /** @class */ (function () {
     WPForm.prototype.form = function () {
         return this._form;
     };
+    WPForm.prototype.actions = function () {
+        return this._actions;
+    };
     WPForm.prototype.isOnPost = function () {
         var _this = this;
         var _a;

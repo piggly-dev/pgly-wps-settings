@@ -43,7 +43,7 @@ export class WPForm {
 		return this._form;
 	}
 
-	public actions () : Record<string, string> {
+	public actions (): Record<string, string> {
 		return this._actions;
 	}
 
