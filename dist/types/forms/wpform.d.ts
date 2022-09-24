@@ -15,6 +15,7 @@ export declare class WPForm {
     constructor(formId: string, toasterId: string, rules: Record<string, Array<RuleValidator>>, formatter?: TFormBody, group?: boolean);
     toaster(): PglyToast;
     form(): PglyAsyncFormEngine;
+    actions(): Record<string, string>;
     isOnPost(): void;
     protected _loadForm(id: string, formatter: TFormBody, rules?: Record<string, Array<RuleValidator>>): PglyAsyncFormEngine;
     protected _applyData(data: Record<string, any>): Record<string, any>;

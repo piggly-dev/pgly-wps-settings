@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps024 = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps025 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -2216,6 +2216,10 @@
 
       WPForm.prototype.form = function () {
         return this._form;
+      };
+
+      WPForm.prototype.actions = function () {
+        return this._actions;
       };
 
       WPForm.prototype.isOnPost = function () {

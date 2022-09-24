@@ -43,6 +43,10 @@ export class WPForm {
 		return this._form;
 	}
 
+	public actions (): Record<string, string> {
+		return this._actions;
+	}
+
 	public isOnPost () {
 		this._postForm =
 			document.querySelector<HTMLFormElement>('form[name="post"]') ?? undefined;
