@@ -7,6 +7,52 @@
 		border: 1px rgba(#000, 0.24) dashed;
 		display: table;
 		width: 100%;
+
+		&.pgly-wps--error {
+			border-color: $danger;
+
+			.pgly-wps--message {
+				padding: 6px 8px;
+				display: inline-table;
+				font-size: 12px;
+				color: $white;
+				background-color: $danger;
+				margin: 6px 0;
+				border-radius: $radius-small;
+			}
+		}
+	}
+
+	.pgly-form--group {
+		.container {
+			opacity: 1;
+			translate: opacity 400ms;
+		}
+
+		.pgly-wps--spinner {
+			display: none;
+		}
+
+		&.pgly-loading--state {
+			.pgly-wps--spinner {
+				position: absolute;
+				display: block;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+
+			.container {
+				opacity: 0.12;
+				&::before {
+					content: "";
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					z-index: 2;
+				}
+			}
+		}
 	}
 
 	.pgly-wps--field {

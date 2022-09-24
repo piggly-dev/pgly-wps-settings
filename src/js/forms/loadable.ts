@@ -9,14 +9,14 @@ export default class PglyLoadable {
 		this._parent = parent;
 	}
 
-	public prepare () {
-		this._parent.emit('beforeLoad', { loading: false });
+	public prepare (payload: any = undefined) {
+		this._parent.emit('beforeLoad', { loading: false, payload });
 		this._loading = true;
 	}
 
-	public done () {
+	public done (payload: any = undefined) {
 		this._loading = false;
-		this._parent.emit('afterLoad', { loading: false });
+		this._parent.emit('afterLoad', { loading: false, payload });
 	}
 
 	public isLoading (): boolean {

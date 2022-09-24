@@ -5,13 +5,15 @@ var PglyLoadable = /** @class */ (function () {
         this._loading = false;
         this._parent = parent;
     }
-    PglyLoadable.prototype.prepare = function () {
-        this._parent.emit('beforeLoad', { loading: false });
+    PglyLoadable.prototype.prepare = function (payload) {
+        if (payload === void 0) { payload = undefined; }
+        this._parent.emit('beforeLoad', { loading: false, payload: payload });
         this._loading = true;
     };
-    PglyLoadable.prototype.done = function () {
+    PglyLoadable.prototype.done = function (payload) {
+        if (payload === void 0) { payload = undefined; }
         this._loading = false;
-        this._parent.emit('afterLoad', { loading: false });
+        this._parent.emit('afterLoad', { loading: false, payload: payload });
     };
     PglyLoadable.prototype.isLoading = function () {
         return this._loading;
