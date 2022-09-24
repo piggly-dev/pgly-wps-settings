@@ -53,9 +53,9 @@ export class PglyGroupFormItems {
 		return this._items.length;
 	}
 
-	public add (item: TGroupFormItem) {
+	public add (item: TGroupFormItem, eventOrigin = 'add') {
 		this._items.push(item);
-		this._parent.emit('added', { item });
+		this._parent.emit('added', { item, origin: eventOrigin });
 	}
 
 	public get (uid: string): TOrUndefined<TGroupFormItem> {
@@ -74,21 +74,33 @@ export class PglyGroupFormItems {
 		});
 	}
 
-	public update (item: TGroupFormItem) {
-		const index = this._items.findIndex(i => i.uid === item.uid);
-		const newItem = { ...this._items[index], ...item };
+	public updateId (uid: string, id: number, eventOrigin = 'updateId') {
+		const item = this._items.find(i => i.uid === uid);
 
-		this._items[index] = newItem;
-		this._parent.emit('updated', { newItem });
+		if (!item) return;
+		item.inputs.id = { value: id };
+		this._parent.emit('updatedId', { item, origin: eventOrigin });
 	}
 
-	public remove (uid: string) {
+	public update (item: TGroupFormItem, eventOrigin = 'update') {
+		const index = this._items.findIndex(i => i.uid === item.uid);
+
+		if (index < 0) return;
+
+		Object.keys(item.inputs).forEach(key => {
+			this._items[index].inputs[key] = item.inputs[key];
+		});
+
+		this._parent.emit('updated', { item: this._items[index], origin: eventOrigin });
+	}
+
+	public remove (uid: string, eventOrigin = 'remove') {
 		const item = this._items.find(i => i.uid === uid);
 
 		if (!item) return;
 
 		this._items = this._items.filter(i => i.uid !== uid);
-		this._parent.emit('removed', { item });
+		this._parent.emit('removed', { item, origin: eventOrigin });
 	}
 }
 
@@ -141,20 +153,34 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		return this._loader;
 	}
 
+	public items (): PglyGroupFormItems {
+		return this._items;
+	}
+
 	public add (input: PglyBaseComponent) {
 		this._inputs[input.field().name()] = input;
 	}
 
 	public synchronous (items: Array<TGroupFormInputs>) {
 		this.loader().prepare({ action: 'items' });
-		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
+		items.forEach(item =>
+			this._items.add({ uid: UUID.generate(), inputs: item }, 'load')
+		);
 		this.loader().done({ action: 'items' });
 	}
 
 	public async asynchronous (callback: () => Promise<Array<TGroupFormInputs>>) {
-		this.loader().prepare({ action: 'items' });
-		const items = await callback();
-		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
+		try {
+			this.loader().prepare({ action: 'items' });
+			const items = await callback();
+
+			items.forEach(item =>
+				this._items.add({ uid: UUID.generate(), inputs: item }, 'load')
+			);
+		} catch (err) {
+			this.emit('loadError', { error: err });
+		}
+
 		this.loader().done({ action: 'items' });
 	}
 
@@ -263,6 +289,11 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 
 	protected _submit (data: TGroupFormPreparedData) {
 		if (this._loader.isLoading()) return;
+
+		if (data.errors.length !== 0) {
+			this.emit('error', { data: data.errors });
+			return;
+		}
 
 		if (!this._editing) {
 			this._items.add({ uid: UUID.generate(), inputs: data.inputs });
@@ -435,6 +466,11 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		});
 
 		this.on('updated', ({ item }) => {
+			this.field().set(this._items.all());
+			this._updateCard(item);
+		});
+
+		this.on('updatedId', ({ item }) => {
 			this.field().set(this._items.all());
 			this._updateCard(item);
 		});

@@ -118,10 +118,10 @@ var PglyMultipleMediaComponent = /** @class */ (function (_super) {
             multiple: true,
         }));
         frame.on('open', function () {
-            component
+            var _a;
+            (_a = component
                 .field()
-                .get()
-                .forEach(function (id) {
+                .get()) === null || _a === void 0 ? void 0 : _a.forEach(function (id) {
                 // Select media in wordpress library
                 var selection = frame.state().get('selection');
                 var att = wp.media.attachment(id);

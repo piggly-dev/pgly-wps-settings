@@ -91,7 +91,7 @@ var PglySingleMediaComponent = /** @class */ (function (_super) {
         }));
         frame.on('open', function () {
             var value = component.field().get();
-            if (value.length <= 0)
+            if (!value || value.length <= 0)
                 return;
             // Select media in wordpress library
             var selection = frame.state().get('selection');

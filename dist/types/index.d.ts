@@ -8,6 +8,7 @@ import PglyBasicSelectComponent from './forms/basicselect';
 import PglySingleMediaComponent from './forms/singlemedia';
 import PglyMultipleMediaComponent from './forms/multiplemedia';
 import PglyTextAreaComponent from './forms/textarea';
+import { wpMultipleMediaFrame, wpSingleMediaFrame, WPForm } from './forms/wpform';
 import PglyNotification from './components/notification';
 import PglyToast from './components/toaster';
-export { PglyInputComponent, PglyCheckboxComponent, PglyFinderComponent, PglyTextAreaComponent, PglyBasicSelectComponent, PglySelectComponent, PglySingleMediaComponent, PglyMultipleMediaComponent, PglyGroupFormComponent, PglyAsyncFormEngine, PglyNotification, PglyToast, };
+export { PglyInputComponent, PglyCheckboxComponent, PglyFinderComponent, PglyTextAreaComponent, PglyBasicSelectComponent, PglySelectComponent, PglySingleMediaComponent, PglyMultipleMediaComponent, PglyGroupFormComponent, PglyAsyncFormEngine, PglyNotification, PglyToast, WPForm, wpSingleMediaFrame, wpMultipleMediaFrame, };

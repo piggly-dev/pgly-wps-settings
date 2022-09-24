@@ -93,7 +93,7 @@ export default class PglySingleMediaComponent extends PglyBaseComponent<string> 
 		frame.on('open', () => {
 			const value = component.field().get();
 
-			if (value.length <= 0) return;
+			if (!value || value.length <= 0) return;
 
 			// Select media in wordpress library
 			const selection = frame.state().get('selection');

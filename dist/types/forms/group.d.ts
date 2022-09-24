@@ -32,11 +32,12 @@ export declare class PglyGroupFormItems {
     protected _items: Array<TGroupFormItem>;
     constructor(parent: PglyBaseComponent);
     count(): number;
-    add(item: TGroupFormItem): void;
+    add(item: TGroupFormItem, eventOrigin?: string): void;
     get(uid: string): TOrUndefined<TGroupFormItem>;
     all(): Array<Record<string, any>>;
-    update(item: TGroupFormItem): void;
-    remove(uid: string): void;
+    updateId(uid: string, id: number, eventOrigin?: string): void;
+    update(item: TGroupFormItem, eventOrigin?: string): void;
+    remove(uid: string, eventOrigin?: string): void;
 }
 export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormInputs>> {
     protected _inputs: Record<string, PglyBaseComponent>;
@@ -51,6 +52,7 @@ export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGro
     constructor(el: string | HTMLDivElement);
     options(options: Partial<TGroupFormOptions>): void;
     loader(): PglyLoadable;
+    items(): PglyGroupFormItems;
     add(input: PglyBaseComponent): void;
     synchronous(items: Array<TGroupFormInputs>): void;
     asynchronous(callback: () => Promise<Array<TGroupFormInputs>>): Promise<void>;
