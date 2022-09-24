@@ -91,7 +91,7 @@ export class WPForm {
 		group.asynchronous(async (): Promise<Array<TGroupFormInputs>> => {
 			try {
 				const { data } = await axios.post(loadUrl, {
-					id: this._form.dataset().postId,
+					...this._form.dataset(),
 					x_security: xSecurity,
 				});
 
@@ -119,7 +119,9 @@ export class WPForm {
 					return;
 				}
 
-				console.log(item);
+				if (!item.inputs.id && (origin === 'remove' || origin === 'update')) {
+					return;
+				}
 
 				group.loader().prepare();
 
@@ -132,10 +134,10 @@ export class WPForm {
 
 					axios
 						.post(url, {
-							id: this._form.dataset().postId,
-							x_security: xSecurity,
-							...data,
+							...this._form.dataset(),
 							...inputs,
+							...data,
+							x_security: xSecurity,
 						})
 						.then(response => {
 							res(response.data);
@@ -152,7 +154,7 @@ export class WPForm {
 						}
 
 						this._onSuccess({ response: _data });
-						onSuccess(item, data.data.id ?? undefined);
+						onSuccess(item, _data.data.id ?? undefined);
 					})
 					.catch(err => {
 						this._onError({ error: err });
@@ -317,6 +319,7 @@ export class WPForm {
 	protected _onError ({ error }: any): void {
 		this._toaster.launch(
 			error?.response?.data?.data?.message ??
+				error?.data?.message ??
 				error.message ??
 				'Erro de execução do script',
 			{

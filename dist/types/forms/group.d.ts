@@ -50,6 +50,8 @@ export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGro
     protected _editing: boolean;
     protected _current?: string;
     constructor(el: string | HTMLDivElement);
+    groupEl(): HTMLDivElement;
+    dataset(): Record<string, any>;
     options(options: Partial<TGroupFormOptions>): void;
     loader(): PglyLoadable;
     items(): PglyGroupFormItems;

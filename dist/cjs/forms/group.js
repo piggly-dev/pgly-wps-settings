@@ -155,6 +155,12 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
         _this._bind();
         return _this;
     }
+    PglyGroupFormComponent.prototype.groupEl = function () {
+        return this._wrapper;
+    };
+    PglyGroupFormComponent.prototype.dataset = function () {
+        return this._wrapper.dataset;
+    };
     PglyGroupFormComponent.prototype.options = function (options) {
         this._options = __assign(__assign({}, this._options), options);
     };
@@ -348,6 +354,7 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
         var content = document.createElement('div');
         content.className = 'pgly-wps--content inside left';
         Object.keys(item.inputs).forEach(function (key) {
+            var _a;
             if (!_this._options.view[key])
                 return;
             var column = document.createElement('div');
@@ -355,7 +362,7 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
             var strong = document.createElement('strong');
             strong.textContent = _this._options.view[key];
             var span = document.createElement('span');
-            span.textContent = item.inputs[key].value.toString();
+            span.textContent = ((_a = item.inputs[key].label) !== null && _a !== void 0 ? _a : item.inputs[key].value).toString();
             column.appendChild(strong);
             column.appendChild(span);
             content.appendChild(column);
@@ -390,6 +397,7 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
             content.removeChild(content.firstChild);
         }
         Object.keys(item.inputs).forEach(function (key) {
+            var _a;
             if (!_this._options.view[key])
                 return;
             var column = document.createElement('div');
@@ -397,7 +405,7 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
             var strong = document.createElement('strong');
             strong.textContent = _this._options.view[key];
             var span = document.createElement('span');
-            span.textContent = item.inputs[key].value.toString();
+            span.textContent = ((_a = item.inputs[key].label) !== null && _a !== void 0 ? _a : item.inputs[key].value).toString();
             column.appendChild(strong);
             column.appendChild(span);
             content.appendChild(column);

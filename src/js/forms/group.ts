@@ -145,6 +145,14 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this._bind();
 	}
 
+	public groupEl (): HTMLDivElement {
+		return this._wrapper;
+	}
+
+	public dataset (): Record<string, any> {
+		return this._wrapper.dataset;
+	}
+
 	public options (options: Partial<TGroupFormOptions>) {
 		this._options = { ...this._options, ...options };
 	}
@@ -371,7 +379,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 			strong.textContent = this._options.view[key];
 
 			const span = document.createElement('span');
-			span.textContent = item.inputs[key].value.toString();
+			span.textContent = (item.inputs[key].label ?? item.inputs[key].value).toString();
 
 			column.appendChild(strong);
 			column.appendChild(span);
@@ -429,7 +437,7 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 			strong.textContent = this._options.view[key];
 
 			const span = document.createElement('span');
-			span.textContent = item.inputs[key].value.toString();
+			span.textContent = (item.inputs[key].label ?? item.inputs[key].value).toString();
 
 			column.appendChild(strong);
 			column.appendChild(span);

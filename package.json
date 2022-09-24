@@ -1,6 +1,6 @@
 {
 	"name": "@piggly/pgly-wps-settings",
-	"version": "0.2.6",
+	"version": "0.2.7",
 	"description": "A CSS/JS webkit to Wordpress Plugin Settings",
 	"main": "dist/umd/pgly-wps-settings.js",
 	"browser": "dist/umd/pgly-wps-settings.js",

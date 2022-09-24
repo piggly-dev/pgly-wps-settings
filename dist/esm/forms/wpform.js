@@ -105,10 +105,7 @@ var WPForm = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios.post(loadUrl, {
-                                id: this._form.dataset().postId,
-                                x_security: xSecurity,
-                            })];
+                        return [4 /*yield*/, axios.post(loadUrl, __assign(__assign({}, this._form.dataset()), { x_security: xSecurity }))];
                     case 1:
                         data = (_a.sent()).data;
                         if (!data.success) {
@@ -130,7 +127,9 @@ var WPForm = /** @class */ (function () {
                 if (origin === 'load') {
                     return;
                 }
-                console.log(item);
+                if (!item.inputs.id && (origin === 'remove' || origin === 'update')) {
+                    return;
+                }
                 group.loader().prepare();
                 new Promise(function (res, rej) {
                     var inputs = {};
@@ -138,7 +137,7 @@ var WPForm = /** @class */ (function () {
                         inputs[key] = item.inputs[key].value;
                     });
                     axios
-                        .post(url, __assign(__assign({ id: _this._form.dataset().postId, x_security: xSecurity }, data), inputs))
+                        .post(url, __assign(__assign(__assign(__assign({}, _this._form.dataset()), inputs), data), { x_security: xSecurity }))
                         .then(function (response) {
                         res(response.data);
                     })
@@ -154,7 +153,7 @@ var WPForm = /** @class */ (function () {
                         return;
                     }
                     _this._onSuccess({ response: _data });
-                    onSuccess(item, (_a = data.data.id) !== null && _a !== void 0 ? _a : undefined);
+                    onSuccess(item, (_a = _data.data.id) !== null && _a !== void 0 ? _a : undefined);
                 })
                     .catch(function (err) {
                     _this._onError({ error: err });
@@ -282,9 +281,9 @@ var WPForm = /** @class */ (function () {
             this._updateRecordId(response.data.id);
     };
     WPForm.prototype._onError = function (_a) {
-        var _b, _c, _d, _e, _f;
+        var _b, _c, _d, _e, _f, _g, _h;
         var error = _a.error;
-        this._toaster.launch((_f = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : error.message) !== null && _f !== void 0 ? _f : 'Erro de execução do script', {
+        this._toaster.launch((_h = (_g = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : (_f = error === null || error === void 0 ? void 0 : error.data) === null || _f === void 0 ? void 0 : _f.message) !== null && _g !== void 0 ? _g : error.message) !== null && _h !== void 0 ? _h : 'Erro de execução do script', {
             type: 'danger',
             timer: 5000,
         });

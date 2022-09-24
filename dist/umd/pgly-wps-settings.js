@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps026 = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps027 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -1465,6 +1465,14 @@
         return _this;
       }
 
+      PglyGroupFormComponent.prototype.groupEl = function () {
+        return this._wrapper;
+      };
+
+      PglyGroupFormComponent.prototype.dataset = function () {
+        return this._wrapper.dataset;
+      };
+
       PglyGroupFormComponent.prototype.options = function (options) {
         this._options = __assign(__assign({}, this._options), options);
       };
@@ -1735,13 +1743,15 @@
         var content = document.createElement('div');
         content.className = 'pgly-wps--content inside left';
         Object.keys(item.inputs).forEach(function (key) {
+          var _a;
+
           if (!_this._options.view[key]) return;
           var column = document.createElement('div');
           column.className = 'pgly-wps--item';
           var strong = document.createElement('strong');
           strong.textContent = _this._options.view[key];
           var span = document.createElement('span');
-          span.textContent = item.inputs[key].value.toString();
+          span.textContent = ((_a = item.inputs[key].label) !== null && _a !== void 0 ? _a : item.inputs[key].value).toString();
           column.appendChild(strong);
           column.appendChild(span);
           content.appendChild(column);
@@ -1777,13 +1787,15 @@
         }
 
         Object.keys(item.inputs).forEach(function (key) {
+          var _a;
+
           if (!_this._options.view[key]) return;
           var column = document.createElement('div');
           column.className = 'pgly-wps--item';
           var strong = document.createElement('strong');
           strong.textContent = _this._options.view[key];
           var span = document.createElement('span');
-          span.textContent = item.inputs[key].value.toString();
+          span.textContent = ((_a = item.inputs[key].label) !== null && _a !== void 0 ? _a : item.inputs[key].value).toString();
           column.appendChild(strong);
           column.appendChild(span);
           content.appendChild(column);
@@ -2265,10 +2277,9 @@
 
                   return [4
                   /*yield*/
-                  , axios__default["default"].post(loadUrl, {
-                    id: this._form.dataset().postId,
+                  , axios__default["default"].post(loadUrl, __assign(__assign({}, this._form.dataset()), {
                     x_security: xSecurity
-                  })];
+                  }))];
 
                 case 1:
                   data = _a.sent().data;
@@ -2316,17 +2327,19 @@
               return;
             }
 
-            console.log(item);
+            if (!item.inputs.id && (origin === 'remove' || origin === 'update')) {
+              return;
+            }
+
             group.loader().prepare();
             new Promise(function (res, rej) {
               var inputs = {};
               Object.keys(item.inputs).forEach(function (key) {
                 inputs[key] = item.inputs[key].value;
               });
-              axios__default["default"].post(url, __assign(__assign({
-                id: _this._form.dataset().postId,
+              axios__default["default"].post(url, __assign(__assign(__assign(__assign({}, _this._form.dataset()), inputs), data), {
                 x_security: xSecurity
-              }, data), inputs)).then(function (response) {
+              })).then(function (response) {
                 res(response.data);
               }).catch(function (err) {
                 rej(err);
@@ -2347,7 +2360,7 @@
                 response: _data
               });
 
-              onSuccess(item, (_a = data.data.id) !== null && _a !== void 0 ? _a : undefined);
+              onSuccess(item, (_a = _data.data.id) !== null && _a !== void 0 ? _a : undefined);
             }).catch(function (err) {
               _this._onError({
                 error: err
@@ -2525,11 +2538,11 @@
       };
 
       WPForm.prototype._onError = function (_a) {
-        var _b, _c, _d, _e, _f;
+        var _b, _c, _d, _e, _f, _g, _h;
 
         var error = _a.error;
 
-        this._toaster.launch((_f = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : error.message) !== null && _f !== void 0 ? _f : 'Erro de execução do script', {
+        this._toaster.launch((_h = (_g = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : (_f = error === null || error === void 0 ? void 0 : error.data) === null || _f === void 0 ? void 0 : _f.message) !== null && _g !== void 0 ? _g : error.message) !== null && _h !== void 0 ? _h : 'Erro de execução do script', {
           type: 'danger',
           timer: 5000
         });
