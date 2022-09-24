@@ -155,12 +155,13 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
     };
     PglyBaseFormEngine.prototype._bind = function () {
         var _this = this;
-        var _a = this._wrapper, _b = _a.method, method = _b === void 0 ? 'POST' : _b, action = _a.action;
+        var _a, _b, _c, _d;
+        var action = (_b = (_a = this._wrapper.action) !== null && _a !== void 0 ? _a : this._wrapper.dataset.action) !== null && _b !== void 0 ? _b : '/';
+        var method = (_d = (_c = this._wrapper.method) !== null && _c !== void 0 ? _c : this._wrapper.dataset.method) !== null && _d !== void 0 ? _d : 'POST';
         this._wrapper.addEventListener('submit', function (e) {
             var _a;
             e.preventDefault();
             _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-            _this.restoreSubmitButtonClass();
         });
         this._wrapper.addEventListener('click', function (e) {
             var _a;
@@ -170,7 +171,6 @@ var PglyBaseFormEngine = /** @class */ (function (_super) {
                 return;
             if (target.classList.contains('pgly-form--submit')) {
                 _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-                _this.restoreSubmitButtonClass();
             }
         });
     };
@@ -208,6 +208,7 @@ var PglyAsyncFormEngine = /** @class */ (function (_super) {
             .finally(function () {
             _this.loadState(false);
             _this.emit('requestEnd', { data: _data.inputs });
+            _this.restoreSubmitButtonClass();
         });
     };
     return PglyAsyncFormEngine;

@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps024 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -487,19 +487,29 @@
         this._parent = parent;
       }
 
-      PglyLoadable.prototype.prepare = function () {
+      PglyLoadable.prototype.prepare = function (payload) {
+        if (payload === void 0) {
+          payload = undefined;
+        }
+
         this._parent.emit('beforeLoad', {
-          loading: false
+          loading: false,
+          payload: payload
         });
 
         this._loading = true;
       };
 
-      PglyLoadable.prototype.done = function () {
+      PglyLoadable.prototype.done = function (payload) {
+        if (payload === void 0) {
+          payload = undefined;
+        }
+
         this._loading = false;
 
         this._parent.emit('afterLoad', {
-          loading: false
+          loading: false,
+          payload: payload
         });
       };
 
@@ -989,7 +999,7 @@
         });
         frame.on('open', function () {
           var value = component.field().get();
-          if (value.length <= 0) return; // Select media in wordpress library
+          if (!value || value.length <= 0) return; // Select media in wordpress library
 
           var selection = frame.state().get('selection');
           var att = wp.media.attachment(value);
@@ -1136,7 +1146,9 @@
           multiple: true
         });
         frame.on('open', function () {
-          component.field().get().forEach(function (id) {
+          var _a;
+
+          (_a = component.field().get()) === null || _a === void 0 ? void 0 : _a.forEach(function (id) {
             // Select media in wordpress library
             var selection = frame.state().get('selection');
             var att = wp.media.attachment(id);
@@ -1329,11 +1341,16 @@
         return this._items.length;
       };
 
-      PglyGroupFormItems.prototype.add = function (item) {
+      PglyGroupFormItems.prototype.add = function (item, eventOrigin) {
+        if (eventOrigin === void 0) {
+          eventOrigin = 'add';
+        }
+
         this._items.push(item);
 
         this._parent.emit('added', {
-          item: item
+          item: item,
+          origin: eventOrigin
         });
       };
 
@@ -1354,25 +1371,65 @@
         });
       };
 
-      PglyGroupFormItems.prototype.update = function (item) {
+      PglyGroupFormItems.prototype.updateId = function (uid, id, eventOrigin) {
+        if (eventOrigin === void 0) {
+          eventOrigin = 'updateId';
+        }
+
+        var item = this._items.find(function (i) {
+          return i.uid === uid;
+        });
+
+        if (!item) return;
+        item.inputs.id = {
+          value: id
+        };
+
+        this._parent.emit('updatedId', {
+          item: item,
+          origin: eventOrigin
+        });
+      };
+
+      PglyGroupFormItems.prototype.update = function (item, eventOrigin) {
+        var _this = this;
+
+        if (eventOrigin === void 0) {
+          eventOrigin = 'update';
+        }
+
         var index = this._items.findIndex(function (i) {
           return i.uid === item.uid;
         });
 
-        this._items[index] = __assign(__assign({}, this._items[index]), item);
+        if (index < 0) return;
+        Object.keys(item.inputs).forEach(function (key) {
+          _this._items[index].inputs[key] = item.inputs[key];
+        });
 
         this._parent.emit('updated', {
-          item: item
+          item: this._items[index],
+          origin: eventOrigin
         });
       };
 
-      PglyGroupFormItems.prototype.remove = function (uid) {
+      PglyGroupFormItems.prototype.remove = function (uid, eventOrigin) {
+        if (eventOrigin === void 0) {
+          eventOrigin = 'remove';
+        }
+
+        var item = this._items.find(function (i) {
+          return i.uid === uid;
+        });
+
+        if (!item) return;
         this._items = this._items.filter(function (i) {
           return i.uid !== uid;
         });
 
         this._parent.emit('removed', {
-          uid: uid
+          item: item,
+          origin: eventOrigin
         });
       };
 
@@ -1393,7 +1450,6 @@
         _this._editing = false;
         _this._current = undefined;
         _this._comps = {
-          button: DOMManipulation.findElement(_this._wrapper, 'button.pgly-gform--submit'),
           items: DOMManipulation.findElement(_this._wrapper, '.pgly-wps--items')
         };
         _this._options = {
@@ -1417,6 +1473,10 @@
         return this._loader;
       };
 
+      PglyGroupFormComponent.prototype.items = function () {
+        return this._items;
+      };
+
       PglyGroupFormComponent.prototype.add = function (input) {
         this._inputs[input.field().name()] = input;
       };
@@ -1424,26 +1484,34 @@
       PglyGroupFormComponent.prototype.synchronous = function (items) {
         var _this = this;
 
-        this.loader().prepare();
+        this.loader().prepare({
+          action: 'items'
+        });
         items.forEach(function (item) {
           return _this._items.add({
             uid: UUID.generate(),
             inputs: item
-          });
+          }, 'load');
         });
-        this.loader().done();
+        this.loader().done({
+          action: 'items'
+        });
       };
 
       PglyGroupFormComponent.prototype.asynchronous = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
-          var items;
+          var items, err_1;
 
           var _this = this;
 
           return __generator(this, function (_a) {
             switch (_a.label) {
               case 0:
-                this.loader().prepare();
+                _a.trys.push([0, 2,, 3]);
+
+                this.loader().prepare({
+                  action: 'items'
+                });
                 return [4
                 /*yield*/
                 , callback()];
@@ -1454,9 +1522,25 @@
                   return _this._items.add({
                     uid: UUID.generate(),
                     inputs: item
-                  });
+                  }, 'load');
                 });
-                this.loader().done();
+                return [3
+                /*break*/
+                , 3];
+
+              case 2:
+                err_1 = _a.sent();
+                this.emit('loadError', {
+                  error: err_1
+                });
+                return [3
+                /*break*/
+                , 3];
+
+              case 3:
+                this.loader().done({
+                  action: 'items'
+                });
                 return [2
                 /*return*/
                 ];
@@ -1576,6 +1660,15 @@
       };
 
       PglyGroupFormComponent.prototype._submit = function (data) {
+        if (this._loader.isLoading()) return;
+
+        if (data.errors.length !== 0) {
+          this.emit('error', {
+            data: data.errors
+          });
+          return;
+        }
+
         if (!this._editing) {
           this._items.add({
             uid: UUID.generate(),
@@ -1587,6 +1680,18 @@
             inputs: data.inputs
           });
 
+          var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
+          if (card) card.classList.remove('pgly-wps-is-warning');
+        }
+
+        this._editing = false;
+        this._current = undefined;
+
+        this._flushInputs();
+      };
+
+      PglyGroupFormComponent.prototype._cancel = function () {
+        if (this._current) {
           var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
           if (card) card.classList.remove('pgly-wps-is-warning');
         }
@@ -1685,18 +1790,27 @@
         });
       };
 
-      PglyGroupFormComponent.prototype._removeCard = function (uid) {
-        var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + uid + "\"]");
+      PglyGroupFormComponent.prototype._removeCard = function (item) {
+        var card = DOMManipulation.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + item.uid + "\"]");
         if (card) this._comps.items.removeChild(card);
       };
 
       PglyGroupFormComponent.prototype._bind = function () {
         var _this = this;
 
+        this.on('beforeLoad', function () {
+          _this._wrapper.classList.add('pgly-loading--state');
+        });
+        this.on('afterLoad', function () {
+          _this._wrapper.classList.remove('pgly-loading--state');
+        });
         this.on('submit', function () {
           var _a;
 
           return _this._submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
+        });
+        this.on('cancel', function () {
+          return _this._cancel();
         });
         this.on('added', function (_a) {
           var item = _a.item;
@@ -1712,17 +1826,24 @@
 
           _this._updateCard(item);
         });
-        this.on('removed', function (_a) {
-          var uid = _a.uid;
+        this.on('updatedId', function (_a) {
+          var item = _a.item;
 
           _this.field().set(_this._items.all());
 
-          _this._removeCard(uid);
+          _this._updateCard(item);
+        });
+        this.on('removed', function (_a) {
+          var item = _a.item;
+
+          _this.field().set(_this._items.all());
+
+          _this._removeCard(item);
         });
 
         this._comps.items.addEventListener('click', function (e) {
           var target = e.target;
-          if (!target.dataset.uid) return;
+          if (!target.dataset.uid || _this._loader.isLoading()) return;
           e.preventDefault();
 
           if (target.classList.contains('pgly-wps--edit')) {
@@ -1742,10 +1863,15 @@
           }
         });
 
-        this._comps.button.addEventListener('click', function (e) {
+        DOMManipulation.findElement(this._wrapper, 'button.pgly-gform--submit').addEventListener('click', function (e) {
           e.preventDefault();
 
           _this.emit('submit', {});
+        });
+        DOMManipulation.findElement(this._wrapper, 'button.pgly-gform--cancel').addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this.emit('cancel', {});
         });
       };
 
@@ -1929,10 +2055,10 @@
       PglyBaseFormEngine.prototype._bind = function () {
         var _this = this;
 
-        var _a = this._wrapper,
-            _b = _a.method,
-            method = _b === void 0 ? 'POST' : _b,
-            action = _a.action;
+        var _a, _b, _c, _d;
+
+        var action = (_b = (_a = this._wrapper.action) !== null && _a !== void 0 ? _a : this._wrapper.dataset.action) !== null && _b !== void 0 ? _b : '/';
+        var method = (_d = (_c = this._wrapper.method) !== null && _c !== void 0 ? _c : this._wrapper.dataset.method) !== null && _d !== void 0 ? _d : 'POST';
 
         this._wrapper.addEventListener('submit', function (e) {
           var _a;
@@ -1940,8 +2066,6 @@
           e.preventDefault();
 
           _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-
-          _this.restoreSubmitButtonClass();
         });
 
         this._wrapper.addEventListener('click', function (e) {
@@ -1953,8 +2077,6 @@
 
           if (target.classList.contains('pgly-form--submit')) {
             _this.submit(method, action, _this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {}));
-
-            _this.restoreSubmitButtonClass();
           }
         });
       };
@@ -2007,11 +2129,193 @@
           _this.emit('requestEnd', {
             data: _data.inputs
           });
+
+          _this.restoreSubmitButtonClass();
         });
       };
 
       return PglyAsyncFormEngine;
     }(PglyBaseFormEngine);
+
+    var PglyToast =
+    /** @class */
+    function () {
+      function PglyToast(el) {
+        this._container = DOMManipulation.getElement(el);
+      }
+
+      PglyToast.prototype.launch = function (message, options) {
+        var _this = this;
+
+        var op = __assign({
+          timer: 2000,
+          type: 'regular',
+          light: false
+        }, options);
+
+        var toast = document.createElement('div');
+        toast.classList.add('pgly-wps--toast', "pgly-wps-is-" + op.type);
+
+        if (op.light) {
+          toast.classList.add("pgly-wps-is-light");
+        }
+
+        var del = document.createElement('button');
+        del.classList.add('pgly-wps--delete');
+        var msg = document.createElement('div');
+        msg.textContent = message;
+        toast.appendChild(del);
+        toast.appendChild(msg);
+
+        this._container.appendChild(toast);
+
+        var removed = false;
+        setTimeout(function () {
+          if (!removed) _this._container.removeChild(toast);
+        }, op.timer);
+        del.addEventListener('click', function () {
+          _this._container.removeChild(toast);
+
+          removed = true;
+        });
+      };
+
+      return PglyToast;
+    }();
+
+    var wpSingleMediaFrame = PglySingleMediaComponent.wpFrame;
+    var wpMultipleMediaFrame = PglyMultipleMediaComponent.wpFrame;
+
+    var WPForm =
+    /** @class */
+    function () {
+      function WPForm(formId, toasterId, rules, formatter, group) {
+        var _this = this;
+
+        if (group === void 0) {
+          group = false;
+        }
+
+        this._rules = {};
+        this._group = false;
+        this._actions = {};
+
+        var defFormatter = function defFormatter(data) {
+          return _this._applyData(data);
+        };
+
+        this._toaster = new PglyToast(toasterId);
+        this._rules = rules;
+        this._form = this._loadForm(formId, formatter !== null && formatter !== void 0 ? formatter : defFormatter, rules);
+        this._group = group;
+      }
+
+      WPForm.prototype.toaster = function () {
+        return this._toaster;
+      };
+
+      WPForm.prototype.form = function () {
+        return this._form;
+      };
+
+      WPForm.prototype.isOnPost = function () {
+        var _this = this;
+
+        var _a;
+
+        this._postForm = (_a = document.querySelector('form[name="post"]')) !== null && _a !== void 0 ? _a : undefined;
+
+        if (this._postForm && !this._group) {
+          this._postForm.addEventListener('submit', function (e) {
+            var _a;
+
+            e.preventDefault();
+
+            if (_this._form) {
+              _this._form.submit('POST', _this._form.dataset().action, _this._form.prepare(_this._rules));
+
+              return;
+            }
+
+            (_a = _this._postForm) === null || _a === void 0 ? void 0 : _a.submit();
+          });
+        }
+      };
+
+      WPForm.prototype._loadForm = function (id, formatter, rules) {
+        var form = new PglyAsyncFormEngine(id, {
+          rules: rules !== null && rules !== void 0 ? rules : {}
+        });
+        form.formatter(formatter.bind(this));
+        form.on('error', this._error.bind(this));
+        form.on('requestSuccess', this._onSuccess.bind(this));
+        form.on('requestError', this._onError.bind(this));
+        form.auto();
+        return form;
+      };
+
+      WPForm.prototype._applyData = function (data) {
+        if (!this._form) return data;
+
+        var _data = __assign({}, data);
+
+        if (this._form.dataset().recordId) _data.id = this._form.dataset().recordId;
+        if (this._form.dataset().postId) _data.post_id = this._form.dataset().postId;
+        if (this._form.dataset().xSecurity) _data.x_security = this._form.dataset().xSecurity;
+        return _data;
+      };
+
+      WPForm.prototype._error = function () {
+        this._toaster.launch('Campos inválidos, verifique antes de continuar', {
+          type: 'danger',
+          timer: 5000
+        });
+      };
+
+      WPForm.prototype._onSuccess = function (_a) {
+        var response = _a.response;
+
+        if (!response.success) {
+          this._toaster.launch(response.data.message, {
+            type: 'danger',
+            timer: 5000
+          });
+
+          return;
+        }
+
+        this._toaster.launch(response.data.message, {
+          type: 'success',
+          timer: 5000
+        });
+
+        if (this._postForm) this._postForm.submit();
+        if (response.data.id) this._updateRecordId(response.data.id);
+      };
+
+      WPForm.prototype._onError = function (_a) {
+        var _b, _c, _d, _e, _f;
+
+        var error = _a.error;
+
+        this._toaster.launch((_f = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : error.message) !== null && _f !== void 0 ? _f : 'Erro de execução do script', {
+          type: 'danger',
+          timer: 5000
+        });
+      };
+
+      WPForm.prototype._getRecordId = function () {
+        if (!this._form) return undefined;
+        return this._form.dataset().recordId;
+      };
+
+      WPForm.prototype._updateRecordId = function (id) {
+        if (!id || !this._form) return;
+        this._form.formEl().dataset.recordId = id;
+      };
+
+      return WPForm;
+    }();
 
     var PglyNotification =
     /** @class */
@@ -2086,52 +2390,6 @@
       return PglyNotification;
     }();
 
-    var PglyToast =
-    /** @class */
-    function () {
-      function PglyToast(el) {
-        this._container = DOMManipulation.getElement(el);
-      }
-
-      PglyToast.prototype.launch = function (message, options) {
-        var _this = this;
-
-        var op = __assign({
-          timer: 2000,
-          type: 'regular',
-          light: false
-        }, options);
-
-        var toast = document.createElement('div');
-        toast.classList.add('pgly-wps--toast', "pgly-wps-is-" + op.type);
-
-        if (op.light) {
-          toast.classList.add("pgly-wps-is-light");
-        }
-
-        var del = document.createElement('button');
-        del.classList.add('pgly-wps--delete');
-        var msg = document.createElement('div');
-        msg.textContent = message;
-        toast.appendChild(del);
-        toast.appendChild(msg);
-
-        this._container.appendChild(toast);
-
-        var removed = false;
-        setTimeout(function () {
-          if (!removed) _this._container.removeChild(toast);
-        }, op.timer);
-        del.addEventListener('click', function () {
-          _this._container.removeChild(toast);
-
-          removed = true;
-        });
-      };
-
-      return PglyToast;
-    }();
-
     exports.PglyAsyncFormEngine = PglyAsyncFormEngine;
     exports.PglyBasicSelectComponent = PglyBasicSelectComponent;
     exports.PglyCheckboxComponent = PglyCheckboxComponent;
@@ -2144,6 +2402,9 @@
     exports.PglySingleMediaComponent = PglySingleMediaComponent;
     exports.PglyTextAreaComponent = PglyTextAreaComponent;
     exports.PglyToast = PglyToast;
+    exports.WPForm = WPForm;
+    exports.wpMultipleMediaFrame = wpMultipleMediaFrame;
+    exports.wpSingleMediaFrame = wpSingleMediaFrame;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

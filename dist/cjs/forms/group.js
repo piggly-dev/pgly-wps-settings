@@ -86,9 +86,10 @@ var PglyGroupFormItems = /** @class */ (function () {
     PglyGroupFormItems.prototype.count = function () {
         return this._items.length;
     };
-    PglyGroupFormItems.prototype.add = function (item) {
+    PglyGroupFormItems.prototype.add = function (item, eventOrigin) {
+        if (eventOrigin === void 0) { eventOrigin = 'add'; }
         this._items.push(item);
-        this._parent.emit('added', { item: item });
+        this._parent.emit('added', { item: item, origin: eventOrigin });
     };
     PglyGroupFormItems.prototype.get = function (uid) {
         return this._items.find(function (i) { return i.uid === uid; });
@@ -102,14 +103,32 @@ var PglyGroupFormItems = /** @class */ (function () {
             return inputs;
         });
     };
-    PglyGroupFormItems.prototype.update = function (item) {
-        var index = this._items.findIndex(function (i) { return i.uid === item.uid; });
-        this._items[index] = __assign(__assign({}, this._items[index]), item);
-        this._parent.emit('updated', { item: item });
+    PglyGroupFormItems.prototype.updateId = function (uid, id, eventOrigin) {
+        if (eventOrigin === void 0) { eventOrigin = 'updateId'; }
+        var item = this._items.find(function (i) { return i.uid === uid; });
+        if (!item)
+            return;
+        item.inputs.id = { value: id };
+        this._parent.emit('updatedId', { item: item, origin: eventOrigin });
     };
-    PglyGroupFormItems.prototype.remove = function (uid) {
+    PglyGroupFormItems.prototype.update = function (item, eventOrigin) {
+        var _this = this;
+        if (eventOrigin === void 0) { eventOrigin = 'update'; }
+        var index = this._items.findIndex(function (i) { return i.uid === item.uid; });
+        if (index < 0)
+            return;
+        Object.keys(item.inputs).forEach(function (key) {
+            _this._items[index].inputs[key] = item.inputs[key];
+        });
+        this._parent.emit('updated', { item: this._items[index], origin: eventOrigin });
+    };
+    PglyGroupFormItems.prototype.remove = function (uid, eventOrigin) {
+        if (eventOrigin === void 0) { eventOrigin = 'remove'; }
+        var item = this._items.find(function (i) { return i.uid === uid; });
+        if (!item)
+            return;
         this._items = this._items.filter(function (i) { return i.uid !== uid; });
-        this._parent.emit('removed', { uid: uid });
+        this._parent.emit('removed', { item: item, origin: eventOrigin });
     };
     return PglyGroupFormItems;
 }());
@@ -124,7 +143,6 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
         _this._editing = false;
         _this._current = undefined;
         _this._comps = {
-            button: dommanipulation_1.default.findElement(_this._wrapper, 'button.pgly-gform--submit'),
             items: dommanipulation_1.default.findElement(_this._wrapper, '.pgly-wps--items'),
         };
         _this._options = {
@@ -143,28 +161,42 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
     PglyGroupFormComponent.prototype.loader = function () {
         return this._loader;
     };
+    PglyGroupFormComponent.prototype.items = function () {
+        return this._items;
+    };
     PglyGroupFormComponent.prototype.add = function (input) {
         this._inputs[input.field().name()] = input;
     };
     PglyGroupFormComponent.prototype.synchronous = function (items) {
         var _this = this;
-        this.loader().prepare();
-        items.forEach(function (item) { return _this._items.add({ uid: uuid_1.default.generate(), inputs: item }); });
-        this.loader().done();
+        this.loader().prepare({ action: 'items' });
+        items.forEach(function (item) {
+            return _this._items.add({ uid: uuid_1.default.generate(), inputs: item }, 'load');
+        });
+        this.loader().done({ action: 'items' });
     };
     PglyGroupFormComponent.prototype.asynchronous = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
-            var items;
+            var items, err_1;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        this.loader().prepare();
+                        _a.trys.push([0, 2, , 3]);
+                        this.loader().prepare({ action: 'items' });
                         return [4 /*yield*/, callback()];
                     case 1:
                         items = _a.sent();
-                        items.forEach(function (item) { return _this._items.add({ uid: uuid_1.default.generate(), inputs: item }); });
-                        this.loader().done();
+                        items.forEach(function (item) {
+                            return _this._items.add({ uid: uuid_1.default.generate(), inputs: item }, 'load');
+                        });
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_1 = _a.sent();
+                        this.emit('loadError', { error: err_1 });
+                        return [3 /*break*/, 3];
+                    case 3:
+                        this.loader().done({ action: 'items' });
                         return [2 /*return*/];
                 }
             });
@@ -257,11 +289,27 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
         throw new Error('Not implemented');
     };
     PglyGroupFormComponent.prototype._submit = function (data) {
+        if (this._loader.isLoading())
+            return;
+        if (data.errors.length !== 0) {
+            this.emit('error', { data: data.errors });
+            return;
+        }
         if (!this._editing) {
             this._items.add({ uid: uuid_1.default.generate(), inputs: data.inputs });
         }
         else if (this._current) {
             this._items.update({ uid: this._current, inputs: data.inputs });
+            var card = dommanipulation_1.default.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
+            if (card)
+                card.classList.remove('pgly-wps-is-warning');
+        }
+        this._editing = false;
+        this._current = undefined;
+        this._flushInputs();
+    };
+    PglyGroupFormComponent.prototype._cancel = function () {
+        if (this._current) {
             var card = dommanipulation_1.default.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + this._current + "\"]");
             if (card)
                 card.classList.remove('pgly-wps-is-warning');
@@ -355,14 +403,21 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
             content.appendChild(column);
         });
     };
-    PglyGroupFormComponent.prototype._removeCard = function (uid) {
-        var card = dommanipulation_1.default.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + uid + "\"]");
+    PglyGroupFormComponent.prototype._removeCard = function (item) {
+        var card = dommanipulation_1.default.findElement(this._comps.items, ".pgly-wps--card[data-uid=\"" + item.uid + "\"]");
         if (card)
             this._comps.items.removeChild(card);
     };
     PglyGroupFormComponent.prototype._bind = function () {
         var _this = this;
+        this.on('beforeLoad', function () {
+            _this._wrapper.classList.add('pgly-loading--state');
+        });
+        this.on('afterLoad', function () {
+            _this._wrapper.classList.remove('pgly-loading--state');
+        });
         this.on('submit', function () { var _a; return _this._submit(_this.prepare((_a = _this._options.rules) !== null && _a !== void 0 ? _a : {})); });
+        this.on('cancel', function () { return _this._cancel(); });
         this.on('added', function (_a) {
             var item = _a.item;
             _this.field().set(_this._items.all());
@@ -373,14 +428,19 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
             _this.field().set(_this._items.all());
             _this._updateCard(item);
         });
-        this.on('removed', function (_a) {
-            var uid = _a.uid;
+        this.on('updatedId', function (_a) {
+            var item = _a.item;
             _this.field().set(_this._items.all());
-            _this._removeCard(uid);
+            _this._updateCard(item);
+        });
+        this.on('removed', function (_a) {
+            var item = _a.item;
+            _this.field().set(_this._items.all());
+            _this._removeCard(item);
         });
         this._comps.items.addEventListener('click', function (e) {
             var target = e.target;
-            if (!target.dataset.uid)
+            if (!target.dataset.uid || _this._loader.isLoading())
                 return;
             e.preventDefault();
             if (target.classList.contains('pgly-wps--edit')) {
@@ -397,9 +457,13 @@ var PglyGroupFormComponent = /** @class */ (function (_super) {
                 _this._items.remove(target.dataset.uid);
             }
         });
-        this._comps.button.addEventListener('click', function (e) {
+        dommanipulation_1.default.findElement(this._wrapper, 'button.pgly-gform--submit').addEventListener('click', function (e) {
             e.preventDefault();
             _this.emit('submit', {});
+        });
+        dommanipulation_1.default.findElement(this._wrapper, 'button.pgly-gform--cancel').addEventListener('click', function (e) {
+            e.preventDefault();
+            _this.emit('cancel', {});
         });
     };
     PglyGroupFormComponent.prototype._default = function () {

@@ -171,11 +171,7 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		return this._loading;
 	}
 
-	protected abstract submit(
-		method: string,
-		action: string,
-		data: TFormPreparedData
-	): void;
+	public abstract submit(method: string, action: string, data: TFormPreparedData): void;
 
 	protected loadState (loading: boolean) {
 		this._loading = loading;
@@ -185,12 +181,12 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 	}
 
 	protected _bind () {
-		const { method = 'POST', action } = this._wrapper;
+		const action = this._wrapper.action ?? this._wrapper.dataset.action ?? '/';
+		const method = this._wrapper.method ?? this._wrapper.dataset.method ?? 'POST';
 
 		this._wrapper.addEventListener('submit', e => {
 			e.preventDefault();
 			this.submit(method, action, this.prepare(this._options.rules ?? {}));
-			this.restoreSubmitButtonClass();
 		});
 
 		this._wrapper.addEventListener('click', e => {
@@ -201,14 +197,13 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (target.classList.contains('pgly-form--submit')) {
 				this.submit(method, action, this.prepare(this._options.rules ?? {}));
-				this.restoreSubmitButtonClass();
 			}
 		});
 	}
 }
 
 export class PglyAsyncFormEngine extends PglyBaseFormEngine {
-	protected submit (method: string, action: string, data: TFormPreparedData) {
+	public submit (method: string, action: string, data: TFormPreparedData) {
 		const _data = { ...data };
 
 		if (this._loading) {
@@ -240,6 +235,7 @@ export class PglyAsyncFormEngine extends PglyBaseFormEngine {
 			.finally(() => {
 				this.loadState(false);
 				this.emit('requestEnd', { data: _data.inputs });
+				this.restoreSubmitButtonClass();
 			});
 	}
 }

@@ -53,9 +53,9 @@ export class PglyGroupFormItems {
 		return this._items.length;
 	}
 
-	public add (item: TGroupFormItem) {
+	public add (item: TGroupFormItem, eventOrigin = 'add') {
 		this._items.push(item);
-		this._parent.emit('added', { item });
+		this._parent.emit('added', { item, origin: eventOrigin });
 	}
 
 	public get (uid: string): TOrUndefined<TGroupFormItem> {
@@ -74,15 +74,33 @@ export class PglyGroupFormItems {
 		});
 	}
 
-	public update (item: TGroupFormItem) {
-		const index = this._items.findIndex(i => i.uid === item.uid);
-		this._items[index] = { ...this._items[index], ...item };
-		this._parent.emit('updated', { item });
+	public updateId (uid: string, id: number, eventOrigin = 'updateId') {
+		const item = this._items.find(i => i.uid === uid);
+
+		if (!item) return;
+		item.inputs.id = { value: id };
+		this._parent.emit('updatedId', { item, origin: eventOrigin });
 	}
 
-	public remove (uid: string) {
+	public update (item: TGroupFormItem, eventOrigin = 'update') {
+		const index = this._items.findIndex(i => i.uid === item.uid);
+
+		if (index < 0) return;
+
+		Object.keys(item.inputs).forEach(key => {
+			this._items[index].inputs[key] = item.inputs[key];
+		});
+
+		this._parent.emit('updated', { item: this._items[index], origin: eventOrigin });
+	}
+
+	public remove (uid: string, eventOrigin = 'remove') {
+		const item = this._items.find(i => i.uid === uid);
+
+		if (!item) return;
+
 		this._items = this._items.filter(i => i.uid !== uid);
-		this._parent.emit('removed', { uid });
+		this._parent.emit('removed', { item, origin: eventOrigin });
 	}
 }
 
@@ -96,7 +114,6 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 	protected _options: TGroupFormOptions;
 
 	protected _comps: {
-		button: HTMLButtonElement;
 		items: HTMLDivElement;
 	};
 
@@ -114,7 +131,6 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this._current = undefined;
 
 		this._comps = {
-			button: DOMManipulation.findElement(this._wrapper, 'button.pgly-gform--submit'),
 			items: DOMManipulation.findElement(this._wrapper, '.pgly-wps--items'),
 		};
 
@@ -137,21 +153,35 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		return this._loader;
 	}
 
+	public items (): PglyGroupFormItems {
+		return this._items;
+	}
+
 	public add (input: PglyBaseComponent) {
 		this._inputs[input.field().name()] = input;
 	}
 
 	public synchronous (items: Array<TGroupFormInputs>) {
-		this.loader().prepare();
-		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
-		this.loader().done();
+		this.loader().prepare({ action: 'items' });
+		items.forEach(item =>
+			this._items.add({ uid: UUID.generate(), inputs: item }, 'load')
+		);
+		this.loader().done({ action: 'items' });
 	}
 
 	public async asynchronous (callback: () => Promise<Array<TGroupFormInputs>>) {
-		this.loader().prepare();
-		const items = await callback();
-		items.forEach(item => this._items.add({ uid: UUID.generate(), inputs: item }));
-		this.loader().done();
+		try {
+			this.loader().prepare({ action: 'items' });
+			const items = await callback();
+
+			items.forEach(item =>
+				this._items.add({ uid: UUID.generate(), inputs: item }, 'load')
+			);
+		} catch (err) {
+			this.emit('loadError', { error: err });
+		}
+
+		this.loader().done({ action: 'items' });
 	}
 
 	public get (name: string): TOrUndefined<PglyBaseComponent> {
@@ -258,11 +288,33 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 	}
 
 	protected _submit (data: TGroupFormPreparedData) {
+		if (this._loader.isLoading()) return;
+
+		if (data.errors.length !== 0) {
+			this.emit('error', { data: data.errors });
+			return;
+		}
+
 		if (!this._editing) {
 			this._items.add({ uid: UUID.generate(), inputs: data.inputs });
 		} else if (this._current) {
 			this._items.update({ uid: this._current, inputs: data.inputs });
 
+			const card = DOMManipulation.findElement(
+				this._comps.items,
+				`.pgly-wps--card[data-uid="${this._current}"]`
+			);
+
+			if (card) card.classList.remove('pgly-wps-is-warning');
+		}
+
+		this._editing = false;
+		this._current = undefined;
+		this._flushInputs();
+	}
+
+	protected _cancel () {
+		if (this._current) {
 			const card = DOMManipulation.findElement(
 				this._comps.items,
 				`.pgly-wps--card[data-uid="${this._current}"]`
@@ -386,17 +438,27 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		});
 	}
 
-	protected _removeCard (uid: string) {
+	protected _removeCard (item: TGroupFormItem) {
 		const card = DOMManipulation.findElement(
 			this._comps.items,
-			`.pgly-wps--card[data-uid="${uid}"]`
+			`.pgly-wps--card[data-uid="${item.uid}"]`
 		);
 
 		if (card) this._comps.items.removeChild(card);
 	}
 
 	protected _bind () {
+		this.on('beforeLoad', () => {
+			this._wrapper.classList.add('pgly-loading--state');
+		});
+
+		this.on('afterLoad', () => {
+			this._wrapper.classList.remove('pgly-loading--state');
+		});
+
 		this.on('submit', () => this._submit(this.prepare(this._options.rules ?? {})));
+
+		this.on('cancel', () => this._cancel());
 
 		this.on('added', ({ item }) => {
 			this.field().set(this._items.all());
@@ -408,15 +470,20 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 			this._updateCard(item);
 		});
 
-		this.on('removed', ({ uid }) => {
+		this.on('updatedId', ({ item }) => {
 			this.field().set(this._items.all());
-			this._removeCard(uid);
+			this._updateCard(item);
+		});
+
+		this.on('removed', ({ item }) => {
+			this.field().set(this._items.all());
+			this._removeCard(item);
 		});
 
 		this._comps.items.addEventListener('click', e => {
 			const target = e.target as HTMLElement;
 
-			if (!target.dataset.uid) return;
+			if (!target.dataset.uid || this._loader.isLoading()) return;
 
 			e.preventDefault();
 
@@ -436,9 +503,20 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 			}
 		});
 
-		this._comps.button.addEventListener('click', e => {
+		DOMManipulation.findElement(
+			this._wrapper,
+			'button.pgly-gform--submit'
+		).addEventListener('click', e => {
 			e.preventDefault();
 			this.emit('submit', {});
+		});
+
+		DOMManipulation.findElement(
+			this._wrapper,
+			'button.pgly-gform--cancel'
+		).addEventListener('click', e => {
+			e.preventDefault();
+			this.emit('cancel', {});
 		});
 	}
 

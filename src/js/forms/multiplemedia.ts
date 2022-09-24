@@ -125,7 +125,7 @@ export default class PglyMultipleMediaComponent extends PglyBaseComponent<Array<
 			component
 				.field()
 				.get()
-				.forEach((id: string) => {
+				?.forEach((id: string) => {
 					// Select media in wordpress library
 					const selection = frame.state().get('selection');
 					const att = wp.media.attachment(id);

@@ -36,10 +36,10 @@ export declare abstract class PglyBaseFormEngine extends EventHandler {
     auto(): void;
     prepare(rules?: Record<string, Array<RuleValidator>>): TFormPreparedData;
     isLoading(): boolean;
-    protected abstract submit(method: string, action: string, data: TFormPreparedData): void;
+    abstract submit(method: string, action: string, data: TFormPreparedData): void;
     protected loadState(loading: boolean): void;
     protected _bind(): void;
 }
 export declare class PglyAsyncFormEngine extends PglyBaseFormEngine {
-    protected submit(method: string, action: string, data: TFormPreparedData): void;
+    submit(method: string, action: string, data: TFormPreparedData): void;
 }
