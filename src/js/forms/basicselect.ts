@@ -24,6 +24,12 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		return this._loader;
 	}
 
+	public synchronous (items: Array<TSelectItem>) {
+		this.loader().prepare();
+		this._render(items);
+		this.loader().done();
+	}
+
 	public async asynchronous (callback: () => Promise<Array<TSelectItem>>) {
 		this.loader().prepare();
 		this._render(await callback());
@@ -32,6 +38,30 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 
 	public emptyValue (): void {
 		this.field().set('');
+	}
+
+	public cleanItems (): void {
+		this._render([]);
+	}
+
+	public reflect (
+		select: PglyBasicSelectComponent,
+		values: Record<string, Array<TSelectItem>>
+	) {
+		this.on('change', ({ value }: { value: any }) => {
+			select.emptyValue();
+
+			if (values[value]) {
+				select.field().set(values[value][0].value, values[value][0].label);
+
+				select.synchronous(values[value]);
+				this.emit('reflectedTo', {
+					origin: this,
+					destination: select,
+					values: values[value],
+				});
+			}
+		});
 	}
 
 	protected _render (items: Array<TSelectItem>): void {

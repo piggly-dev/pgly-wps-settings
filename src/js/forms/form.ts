@@ -84,8 +84,10 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 		this._inputs.push(input);
 	}
 
-	public get (name: string): TOrUndefined<PglyBaseComponent> {
-		return this._inputs.find(i => i.field().name() === name);
+	public get<T = PglyBaseComponent> (name: string): TOrUndefined<T> {
+		return this._inputs.find(
+			i => i.field().name() === name
+		) as unknown as TOrUndefined<T>;
 	}
 
 	public remove (name: string) {

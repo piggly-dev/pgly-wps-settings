@@ -58,7 +58,7 @@ export declare class PglyGroupFormComponent extends PglyBaseComponent<Array<TGro
     add(input: PglyBaseComponent): void;
     synchronous(items: Array<TGroupFormInputs>): void;
     asynchronous(callback: () => Promise<Array<TGroupFormInputs>>): Promise<void>;
-    get(name: string): TOrUndefined<PglyBaseComponent>;
+    get<T = PglyBaseComponent>(name: string): TOrUndefined<T>;
     remove(name: string): void;
     auto(): void;
     prepare(rules?: Record<string, Array<RuleValidator>>): TGroupFormPreparedData;

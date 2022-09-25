@@ -192,8 +192,8 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 		this.loader().done({ action: 'items' });
 	}
 
-	public get (name: string): TOrUndefined<PglyBaseComponent> {
-		return this._inputs[name];
+	public get<T = PglyBaseComponent> (name: string): TOrUndefined<T> {
+		return this._inputs[name] as unknown as TOrUndefined<T>;
 	}
 
 	public remove (name: string) {

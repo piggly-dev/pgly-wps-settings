@@ -51,20 +51,14 @@ export class WPForm {
 			document.querySelector<HTMLFormElement>('form[name="post"]') ?? undefined;
 
 		if (this._postForm && !this._group) {
-			this._postForm.addEventListener('submit', e => {
-				e.preventDefault();
-
+			this._postForm.addEventListener('submit', () => {
 				if (this._form) {
 					this._form.submit(
 						'POST',
 						this._form.dataset().action,
 						this._form.prepare(this._rules)
 					);
-
-					return;
 				}
-
-				this._postForm?.submit();
 			});
 		}
 	}

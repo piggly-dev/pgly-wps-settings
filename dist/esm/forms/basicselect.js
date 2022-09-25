@@ -66,6 +66,11 @@ var PglyBasicSelectComponent = /** @class */ (function (_super) {
     PglyBasicSelectComponent.prototype.loader = function () {
         return this._loader;
     };
+    PglyBasicSelectComponent.prototype.synchronous = function (items) {
+        this.loader().prepare();
+        this._render(items);
+        this.loader().done();
+    };
     PglyBasicSelectComponent.prototype.asynchronous = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
             var _a;
@@ -85,6 +90,25 @@ var PglyBasicSelectComponent = /** @class */ (function (_super) {
     };
     PglyBasicSelectComponent.prototype.emptyValue = function () {
         this.field().set('');
+    };
+    PglyBasicSelectComponent.prototype.cleanItems = function () {
+        this._render([]);
+    };
+    PglyBasicSelectComponent.prototype.reflect = function (select, values) {
+        var _this = this;
+        this.on('change', function (_a) {
+            var value = _a.value;
+            select.emptyValue();
+            if (values[value]) {
+                select.field().set(values[value][0].value, values[value][0].label);
+                select.synchronous(values[value]);
+                _this.emit('reflectedTo', {
+                    origin: _this,
+                    destination: select,
+                    values: values[value],
+                });
+            }
+        });
     };
     PglyBasicSelectComponent.prototype._render = function (items) {
         var _this = this;
