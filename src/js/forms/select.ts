@@ -76,6 +76,31 @@ export default class PglySelectComponent extends PglyBaseComponent {
 		this.field().set('', '');
 	}
 
+	public cleanItems (): void {
+		this.items = [];
+		this._render();
+	}
+
+	public reflect (
+		select: PglySelectComponent,
+		values: Record<string, Array<TSelectItem>>
+	) {
+		this.on('change', ({ value }: { value: any }) => {
+			select.emptyValue();
+
+			if (values[value]) {
+				select.field().set(values[value][0].value, values[value][0].label);
+
+				select.synchronous(values[value]);
+				this.emit('reflectedTo', {
+					origin: this,
+					destination: select,
+					values: values[value],
+				});
+			}
+		});
+	}
+
 	protected _flush () {
 		this._comps.items.querySelectorAll<HTMLElement>('.item').forEach(el => {
 			el.classList.remove('current');

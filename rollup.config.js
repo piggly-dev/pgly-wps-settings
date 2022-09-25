@@ -6,7 +6,7 @@ import json from '@rollup/plugin-json';
 import uglify from '@lopatnov/rollup-plugin-uglify';
 
 const extensions = ['.js', '.ts'];
-const version = '027';
+const version = '028';
 
 module.exports = [
 	{

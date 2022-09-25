@@ -26,6 +26,8 @@ export default class PglySelectComponent extends PglyBaseComponent {
     synchronous(items: Array<TSelectItem>): void;
     asynchronous(callback: () => Promise<Array<TSelectItem>>): Promise<void>;
     emptyValue(): void;
+    cleanItems(): void;
+    reflect(select: PglySelectComponent, values: Record<string, Array<TSelectItem>>): void;
     protected _flush(): void;
     protected _toggle(): void;
     protected _close(): void;
