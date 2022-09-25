@@ -117,6 +117,26 @@ var PglySelectComponent = /** @class */ (function (_super) {
     PglySelectComponent.prototype.emptyValue = function () {
         this.field().set('', '');
     };
+    PglySelectComponent.prototype.cleanItems = function () {
+        this.items = [];
+        this._render();
+    };
+    PglySelectComponent.prototype.reflect = function (select, values) {
+        var _this = this;
+        this.on('change', function (_a) {
+            var value = _a.value;
+            select.emptyValue();
+            if (values[value]) {
+                select.field().set(values[value][0].value, values[value][0].label);
+                select.synchronous(values[value]);
+                _this.emit('reflectedTo', {
+                    origin: _this,
+                    destination: select,
+                    values: values[value],
+                });
+            }
+        });
+    };
     PglySelectComponent.prototype._flush = function () {
         var _this = this;
         this._comps.items.querySelectorAll('.item').forEach(function (el) {

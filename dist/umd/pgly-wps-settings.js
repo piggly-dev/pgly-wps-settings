@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps027 = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps028 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -595,6 +595,32 @@
 
       PglySelectComponent.prototype.emptyValue = function () {
         this.field().set('', '');
+      };
+
+      PglySelectComponent.prototype.cleanItems = function () {
+        this.items = [];
+
+        this._render();
+      };
+
+      PglySelectComponent.prototype.reflect = function (select, values) {
+        var _this = this;
+
+        this.on('change', function (_a) {
+          var value = _a.value;
+          select.emptyValue();
+
+          if (values[value]) {
+            select.field().set(values[value][0].value, values[value][0].label);
+            select.synchronous(values[value]);
+
+            _this.emit('reflectedTo', {
+              origin: _this,
+              destination: select,
+              values: values[value]
+            });
+          }
+        });
       };
 
       PglySelectComponent.prototype._flush = function () {
@@ -1250,6 +1276,14 @@
         return this._loader;
       };
 
+      PglyBasicSelectComponent.prototype.synchronous = function (items) {
+        this.loader().prepare();
+
+        this._render(items);
+
+        this.loader().done();
+      };
+
       PglyBasicSelectComponent.prototype.asynchronous = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
           var _a;
@@ -1277,6 +1311,30 @@
 
       PglyBasicSelectComponent.prototype.emptyValue = function () {
         this.field().set('');
+      };
+
+      PglyBasicSelectComponent.prototype.cleanItems = function () {
+        this._render([]);
+      };
+
+      PglyBasicSelectComponent.prototype.reflect = function (select, values) {
+        var _this = this;
+
+        this.on('change', function (_a) {
+          var value = _a.value;
+          select.emptyValue();
+
+          if (values[value]) {
+            select.field().set(values[value][0].value, values[value][0].label);
+            select.synchronous(values[value]);
+
+            _this.emit('reflectedTo', {
+              origin: _this,
+              destination: select,
+              values: values[value]
+            });
+          }
+        });
       };
 
       PglyBasicSelectComponent.prototype._render = function (items) {
@@ -2238,18 +2296,10 @@
         this._postForm = (_a = document.querySelector('form[name="post"]')) !== null && _a !== void 0 ? _a : undefined;
 
         if (this._postForm && !this._group) {
-          this._postForm.addEventListener('submit', function (e) {
-            var _a;
-
-            e.preventDefault();
-
+          this._postForm.addEventListener('submit', function () {
             if (_this._form) {
               _this._form.submit('POST', _this._form.dataset().action, _this._form.prepare(_this._rules));
-
-              return;
             }
-
-            (_a = _this._postForm) === null || _a === void 0 ? void 0 : _a.submit();
           });
         }
       };

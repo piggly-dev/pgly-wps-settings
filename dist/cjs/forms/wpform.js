@@ -83,14 +83,10 @@ var WPForm = /** @class */ (function () {
         this._postForm =
             (_a = document.querySelector('form[name="post"]')) !== null && _a !== void 0 ? _a : undefined;
         if (this._postForm && !this._group) {
-            this._postForm.addEventListener('submit', function (e) {
-                var _a;
-                e.preventDefault();
+            this._postForm.addEventListener('submit', function () {
                 if (_this._form) {
                     _this._form.submit('POST', _this._form.dataset().action, _this._form.prepare(_this._rules));
-                    return;
                 }
-                (_a = _this._postForm) === null || _a === void 0 ? void 0 : _a.submit();
             });
         }
     };
