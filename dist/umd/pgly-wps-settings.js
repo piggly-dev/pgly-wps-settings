@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios')) :
     typeof define === 'function' && define.amd ? define(['exports', 'axios'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps028 = {}, global.axios));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pglyWps029 = {}, global.axios));
 })(this, (function (exports, axios) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -896,6 +896,16 @@
                 value = _c === void 0 ? '' : _c;
 
             _this.field().set(value, label);
+          }
+        });
+
+        this._search.input.addEventListener('keypress', function (e) {
+          var key = e.key || e.keyCode;
+
+          if (key === 'Enter' || key === 13) {
+            e.preventDefault();
+
+            _this.load();
           }
         });
       };
@@ -2335,10 +2345,9 @@
                   data = _a.sent().data;
 
                   if (!data.success) {
-                    this._onError({
+                    this.onError({
                       error: data.data
                     });
-
                     return [2
                     /*return*/
                     , []];
@@ -2350,11 +2359,9 @@
 
                 case 2:
                   err_1 = _a.sent();
-
-                  this._onError({
+                  this.onError({
                     error: err_1
                   });
-
                   return [2
                   /*return*/
                   , []];
@@ -2398,7 +2405,7 @@
               var _a;
 
               if (!_data.success) {
-                _this._onError({
+                _this.onError({
                   error: _data
                 });
 
@@ -2406,13 +2413,13 @@
                 return;
               }
 
-              _this._onSuccess({
+              _this.onSuccess({
                 response: _data
               });
 
               onSuccess(item, (_a = _data.data.id) !== null && _a !== void 0 ? _a : undefined);
             }).catch(function (err) {
-              _this._onError({
+              _this.onError({
                 error: err
               });
 
@@ -2426,7 +2433,7 @@
         group.on('loadError', function (_a) {
           var err = _a.err;
 
-          _this._onError({
+          _this.onError({
             error: err
           });
         });
@@ -2479,7 +2486,7 @@
         return base + "?action=" + action;
       };
 
-      WPForm.prototype.applyToFinder = function (field, url, xSecurity) {
+      WPForm.prototype.loadFinder = function (field, url) {
         var _this = this;
 
         field.options({
@@ -2493,10 +2500,9 @@
 
                     return [4
                     /*yield*/
-                    , axios__default["default"].post(url, {
-                      query: query,
-                      x_security: xSecurity
-                    })];
+                    , axios__default["default"].post(url, __assign({
+                      query: query
+                    }, this._form.dataset()))];
 
                   case 1:
                     data = _a.sent().data;
@@ -2514,9 +2520,7 @@
 
                   case 2:
                     err_2 = _a.sent();
-
-                    this._onError(err_2);
-
+                    this.onError(err_2);
                     return [2
                     /*return*/
                     , []];
@@ -2542,8 +2546,8 @@
         });
         form.formatter(formatter.bind(this));
         form.on('error', this._error.bind(this));
-        form.on('requestSuccess', this._onSuccess.bind(this));
-        form.on('requestError', this._onError.bind(this));
+        form.on('requestSuccess', this.onSuccess.bind(this));
+        form.on('requestError', this.onError.bind(this));
         form.auto();
         return form;
       };
@@ -2566,7 +2570,7 @@
         });
       };
 
-      WPForm.prototype._onSuccess = function (_a) {
+      WPForm.prototype.onSuccess = function (_a) {
         var response = _a.response;
 
         if (!response.success) {
@@ -2587,7 +2591,7 @@
         if (response.data.id) this._updateRecordId(response.data.id);
       };
 
-      WPForm.prototype._onError = function (_a) {
+      WPForm.prototype.onError = function (_a) {
         var _b, _c, _d, _e, _f, _g, _h;
 
         var error = _a.error;

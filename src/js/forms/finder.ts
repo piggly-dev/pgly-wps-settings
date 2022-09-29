@@ -182,6 +182,15 @@ export default class PglyFinderComponent extends PglyBaseComponent<string> {
 				this.field().set(value, label);
 			}
 		});
+
+		this._search.input.addEventListener('keypress', e => {
+			const key = e.key || e.keyCode;
+
+			if ( key === 'Enter' || key === 13 ) {
+				e.preventDefault();
+				this.load();
+			}
+		});
 	}
 
 	protected _render (item: TFinderItem) {
