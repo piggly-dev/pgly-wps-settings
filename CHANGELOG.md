@@ -16,3 +16,8 @@
 
 * A select input can reflect values to another with `reflect()` method and clean all items with `cleanItems()` method;
 * `get()` method has type in `PglyBaseFormEngine` and `PglyGroupFormComponent`.
+
+## `0.2.9` at `2021-09-29`
+
+* Finder will trigger `load()` when user type enter on input;
+* Public methods `onError` and `onSuccess` to control `WPForm` toast.
