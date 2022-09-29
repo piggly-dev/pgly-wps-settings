@@ -90,13 +90,13 @@ export class WPForm {
 				});
 
 				if (!data.success) {
-					this._onError({ error: data.data });
+					this.onError({ error: data.data });
 					return [];
 				}
 
 				return data.data as Array<TGroupFormInputs>;
 			} catch (err) {
-				this._onError({ error: err });
+				this.onError({ error: err });
 				return [];
 			}
 		});
@@ -142,23 +142,23 @@ export class WPForm {
 				})
 					.then((_data: any) => {
 						if (!_data.success) {
-							this._onError({ error: _data });
+							this.onError({ error: _data });
 							onError(item);
 							return;
 						}
 
-						this._onSuccess({ response: _data });
+						this.onSuccess({ response: _data });
 						onSuccess(item, _data.data.id ?? undefined);
 					})
 					.catch(err => {
-						this._onError({ error: err });
+						this.onError({ error: err });
 						onError(item);
 					})
 					.finally(() => group.loader().done());
 			};
 
 		group.on('loadError', ({ err }) => {
-			this._onError({ error: err });
+			this.onError({ error: err });
 		});
 
 		group.on(
@@ -222,13 +222,13 @@ export class WPForm {
 		return `${base}?action=${action}`;
 	}
 
-	public applyToFinder (field: PglyFinderComponent, url: string, xSecurity: string) {
+	public loadFinder (field: PglyFinderComponent, url: string) {
 		field.options({
 			load: async query => {
 				try {
 					const { data } = await axios.post(url, {
 						query,
-						x_security: xSecurity,
+					 	...this._form.dataset(),
 					});
 
 					if (data.data.length === 0) {
@@ -240,7 +240,7 @@ export class WPForm {
 
 					return data.data as Array<TFinderItem>;
 				} catch (err) {
-					this._onError(err);
+					this.onError(err);
 					return [];
 				}
 			},
@@ -262,8 +262,8 @@ export class WPForm {
 
 		form.formatter(formatter.bind(this));
 		form.on('error', this._error.bind(this));
-		form.on('requestSuccess', this._onSuccess.bind(this));
-		form.on('requestError', this._onError.bind(this));
+		form.on('requestSuccess', this.onSuccess.bind(this));
+		form.on('requestError', this.onError.bind(this));
 		form.auto();
 
 		return form;
@@ -291,7 +291,7 @@ export class WPForm {
 		});
 	}
 
-	protected _onSuccess ({ response }: any): void {
+	public onSuccess ({ response }: any): void {
 		if (!response.success) {
 			this._toaster.launch(response.data.message, {
 				type: 'danger',
@@ -310,7 +310,7 @@ export class WPForm {
 		if (response.data.id) this._updateRecordId(response.data.id);
 	}
 
-	protected _onError ({ error }: any): void {
+	public onError ({ error }: any): void {
 		this._toaster.launch(
 			error?.response?.data?.data?.message ??
 				error?.data?.message ??

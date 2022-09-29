@@ -111,13 +111,13 @@ var WPForm = /** @class */ (function () {
                     case 1:
                         data = (_a.sent()).data;
                         if (!data.success) {
-                            this._onError({ error: data.data });
+                            this.onError({ error: data.data });
                             return [2 /*return*/, []];
                         }
                         return [2 /*return*/, data.data];
                     case 2:
                         err_1 = _a.sent();
-                        this._onError({ error: err_1 });
+                        this.onError({ error: err_1 });
                         return [2 /*return*/, []];
                     case 3: return [2 /*return*/];
                 }
@@ -150,15 +150,15 @@ var WPForm = /** @class */ (function () {
                     .then(function (_data) {
                     var _a;
                     if (!_data.success) {
-                        _this._onError({ error: _data });
+                        _this.onError({ error: _data });
                         onError(item);
                         return;
                     }
-                    _this._onSuccess({ response: _data });
+                    _this.onSuccess({ response: _data });
                     onSuccess(item, (_a = _data.data.id) !== null && _a !== void 0 ? _a : undefined);
                 })
                     .catch(function (err) {
-                    _this._onError({ error: err });
+                    _this.onError({ error: err });
                     onError(item);
                 })
                     .finally(function () { return group.loader().done(); });
@@ -166,7 +166,7 @@ var WPForm = /** @class */ (function () {
         };
         group.on('loadError', function (_a) {
             var err = _a.err;
-            _this._onError({ error: err });
+            _this.onError({ error: err });
         });
         group.on('added', action(editUrl, { action: 'add' }, function (item, id) {
             group.items().updateId(item.uid, parseInt(id, 10));
@@ -199,7 +199,7 @@ var WPForm = /** @class */ (function () {
     WPForm.prototype.getUrl = function (base, action) {
         return base + "?action=" + action;
     };
-    WPForm.prototype.applyToFinder = function (field, url, xSecurity) {
+    WPForm.prototype.loadFinder = function (field, url) {
         var _this = this;
         field.options({
             load: function (query) { return __awaiter(_this, void 0, void 0, function () {
@@ -208,10 +208,7 @@ var WPForm = /** @class */ (function () {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, axios_1.default.post(url, {
-                                    query: query,
-                                    x_security: xSecurity,
-                                })];
+                            return [4 /*yield*/, axios_1.default.post(url, __assign({ query: query }, this._form.dataset()))];
                         case 1:
                             data = (_a.sent()).data;
                             if (data.data.length === 0) {
@@ -223,7 +220,7 @@ var WPForm = /** @class */ (function () {
                             return [2 /*return*/, data.data];
                         case 2:
                             err_2 = _a.sent();
-                            this._onError(err_2);
+                            this.onError(err_2);
                             return [2 /*return*/, []];
                         case 3: return [2 /*return*/];
                     }
@@ -241,8 +238,8 @@ var WPForm = /** @class */ (function () {
         });
         form.formatter(formatter.bind(this));
         form.on('error', this._error.bind(this));
-        form.on('requestSuccess', this._onSuccess.bind(this));
-        form.on('requestError', this._onError.bind(this));
+        form.on('requestSuccess', this.onSuccess.bind(this));
+        form.on('requestError', this.onError.bind(this));
         form.auto();
         return form;
     };
@@ -264,7 +261,7 @@ var WPForm = /** @class */ (function () {
             timer: 5000,
         });
     };
-    WPForm.prototype._onSuccess = function (_a) {
+    WPForm.prototype.onSuccess = function (_a) {
         var response = _a.response;
         if (!response.success) {
             this._toaster.launch(response.data.message, {
@@ -282,7 +279,7 @@ var WPForm = /** @class */ (function () {
         if (response.data.id)
             this._updateRecordId(response.data.id);
     };
-    WPForm.prototype._onError = function (_a) {
+    WPForm.prototype.onError = function (_a) {
         var _b, _c, _d, _e, _f, _g, _h;
         var error = _a.error;
         this._toaster.launch((_h = (_g = (_e = (_d = (_c = (_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) !== null && _e !== void 0 ? _e : (_f = error === null || error === void 0 ? void 0 : error.data) === null || _f === void 0 ? void 0 : _f.message) !== null && _g !== void 0 ? _g : error.message) !== null && _h !== void 0 ? _h : 'Erro de execução do script', {

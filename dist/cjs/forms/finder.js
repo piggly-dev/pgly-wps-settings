@@ -187,6 +187,13 @@ var PglyFinderComponent = /** @class */ (function (_super) {
                 _this.field().set(value, label);
             }
         });
+        this._search.input.addEventListener('keypress', function (e) {
+            var key = e.key || e.keyCode;
+            if (key === 'Enter' || key === 13) {
+                e.preventDefault();
+                _this.load();
+            }
+        });
     };
     PglyFinderComponent.prototype._render = function (item) {
         var _a, _b;

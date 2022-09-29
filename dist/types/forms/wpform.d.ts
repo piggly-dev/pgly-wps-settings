@@ -20,12 +20,12 @@ export declare class WPForm {
     inOnMetabox(inputName: string, loadUrl: string, editUrl: string, xSecurity: string, view: Record<string, string>, rules: Record<string, Array<RuleValidator>>): void;
     enableAction(action: string, callback: (wpForm: WPForm) => void): void;
     getUrl(base: string, action: string): string;
-    applyToFinder(field: PglyFinderComponent, url: string, xSecurity: string): void;
+    loadFinder(field: PglyFinderComponent, url: string): void;
     protected _loadForm(id: string, formatter: TFormBody, rules?: Record<string, Array<RuleValidator>>): PglyAsyncFormEngine;
     protected _applyData(data: Record<string, any>): Record<string, any>;
     protected _error(): void;
-    protected _onSuccess({ response }: any): void;
-    protected _onError({ error }: any): void;
+    onSuccess({ response }: any): void;
+    onError({ error }: any): void;
     protected _getRecordId(): string | undefined;
     protected _updateRecordId(id?: string): void;
 }
