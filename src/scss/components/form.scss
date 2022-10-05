@@ -57,9 +57,9 @@
 
 	.pgly-wps--field {
 		.pgly-wps--label {
-			font-size: 14px;
+			font-size: 13px;
 			font-weight: bold;
-			margin-bottom: 4px;
+			margin-bottom: 6px;
 			display: block;
 
 			&.hidden {
@@ -67,9 +67,15 @@
 			}
 		}
 
+		&.pgly-form--finder {
+			.pgly-wps--card .pgly-wps--label {
+				margin-bottom: 0;
+			}
+		}
+
 		.pgly-wps--description {
-			font-size: 13px;
-			margin-top: 4px;
+			font-size: 12px;
+			margin-top: 6px;
 			color: $grey;
 		}
 
@@ -125,7 +131,7 @@
 			position: relative;
 			width: 100%;
 			max-width: 100%;
-			padding: 8px 12px;
+			padding: 6px 8px;
 			border: 2px solid;
 			border-color: $white;
 			border-radius: $radius-small;

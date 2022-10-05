@@ -16,7 +16,7 @@
 		"js:esm": "rimraf ./dist/esm && tsc --module ESNext --outDir ./dist/esm",
 		"js:watch": "rimraf ./public/assets/js && rollup -c rollup.config.dev.js -w",
 		"js:deploy": "npm run js:umd && npm run js:cjs && npm run js:esm",
-		"dev:start": "sirv public --port 3000 --host 0.0.0.0 --dev",
+		"dev:start": "sirv public --port 8080 --host 0.0.0.0 --dev",
 		"css:build": "npm run css:build-sass && npm run css:build-autoprefix && npm run css:build-cleancss",
 		"css:build-autoprefix": "postcss --use autoprefixer --map false --output dist/css/pgly-wps-settings.css dist/css/pgly-wps-settings.css",
 		"css:build-cleancss": "cleancss -o dist/css/pgly-wps-settings.min.css dist/css/pgly-wps-settings.css",

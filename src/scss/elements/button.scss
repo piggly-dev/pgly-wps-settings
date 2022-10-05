@@ -3,6 +3,11 @@ $icon-button-dimensions-regular: 24px !default;
 $icon-button-dimensions-medium: 32px !default;
 $icon-button-dimensions-large: 42px !default;
 
+$button-font-size: 12px !default;
+$button-font-size-small: 10px !default;
+$button-font-size-medium: 14px !default;
+$button-font-size-large: 16px !default;
+
 .pgly-wps--settings {
 	.pgly-wps--close {
 		&::before,
@@ -44,7 +49,7 @@ $icon-button-dimensions-large: 42px !default;
 		margin-bottom: 6px;
 		margin-right: 6px;
 
-		font-size: 14px;
+		font-size: $button-font-size;
 		width: $icon-button-dimensions-regular;
 		height: $icon-button-dimensions-regular;
 		line-height: $icon-button-dimensions-regular;
@@ -78,7 +83,7 @@ $icon-button-dimensions-large: 42px !default;
 			left: 50%;
 			width: 18px;
 			height: 18px;
-			margin: -9px 0 0 -9px;
+			transform: translate(-50%, -50%);
 		}
 
 		svg {
@@ -94,7 +99,7 @@ $icon-button-dimensions-large: 42px !default;
 			width: $icon-button-dimensions-small;
 			height: $icon-button-dimensions-small;
 			line-height: $icon-button-dimensions-small;
-			font-size: 12px;
+			font-size: $button-font-size-small;
 
 			.pgly-wps--spinner {
 				width: 12px;
@@ -112,12 +117,11 @@ $icon-button-dimensions-large: 42px !default;
 			width: $icon-button-dimensions-medium;
 			height: $icon-button-dimensions-medium;
 			line-height: $icon-button-dimensions-medium;
-			font-size: 18px;
+			font-size: $button-font-size-medium;
 
 			.pgly-wps--spinner {
 				width: 18px;
 				height: 18px;
-				margin: -9px 0 0 -9px;
 			}
 
 			svg {
@@ -130,12 +134,11 @@ $icon-button-dimensions-large: 42px !default;
 			width: $icon-button-dimensions-large;
 			height: $icon-button-dimensions-large;
 			line-height: $icon-button-dimensions-large;
-			font-size: 24px;
+			font-size: $button-font-size-large;
 
 			.pgly-wps--spinner {
 				width: 24px;
 				height: 24px;
-				margin: -12px 0 0 -12px;
 			}
 
 			svg {
@@ -277,7 +280,7 @@ $icon-button-dimensions-large: 42px !default;
 		background-color: $white;
 		color: $black;
 		display: inline-block;
-		font-size: 14px;
+		font-size: $button-font-size;
 		margin-bottom: 6px;
 		margin-right: 6px;
 		padding: 12px 20px;
@@ -302,7 +305,7 @@ $icon-button-dimensions-large: 42px !default;
 			background-color: transparent !important;
 			display: inline-block;
 			color: $black;
-			font-size: 12px;
+			font-size: $button-font-size;
 			margin-bottom: 6px;
 			margin-right: 6px;
 			padding: 8px;
@@ -347,7 +350,7 @@ $icon-button-dimensions-large: 42px !default;
 
 		&.pgly-wps-is-expanded {
 			display: table;
-			font-size: 16px;
+			font-size: $button-font-size;
 			margin-bottom: 10px;
 			padding: 16px 20px;
 			width: 100%;
