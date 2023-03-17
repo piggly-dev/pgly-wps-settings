@@ -10,10 +10,12 @@
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 25px;
+  padding: 16px;
 }
 
-.pgly-wps--settings *, .pgly-wps--settings *:before, .pgly-wps--settings *:after {
+.pgly-wps--settings *,
+.pgly-wps--settings *:before,
+.pgly-wps--settings *:after {
   border: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -58,6 +60,7 @@
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin: 6px 0;
 }
 .pgly-wps--settings .pgly-wps--row.pgly-wps-has-action {
   -webkit-box-align: center;
@@ -209,17 +212,20 @@
   z-index: 2;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   display: block;
 }
 .pgly-wps--settings .pgly-wps--field .pgly-wps--label.hidden {
   margin: 22px 0;
 }
+.pgly-wps--settings .pgly-wps--field.pgly-form--finder .pgly-wps--card .pgly-wps--label {
+  margin-bottom: 0;
+}
 .pgly-wps--settings .pgly-wps--field .pgly-wps--description {
-  font-size: 13px;
-  margin-top: 4px;
+  font-size: 12px;
+  margin-top: 6px;
   color: #6e6e87;
 }
 .pgly-wps--settings .pgly-wps--field.pgly-wps--error .pgly-wps--label {
@@ -265,7 +271,7 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  padding: 8px 12px;
+  padding: 6px 8px;
   border: 2px solid;
   border-color: white;
   border-radius: 4px;
@@ -1084,6 +1090,377 @@
   color: #e00070;
 }
 
+#pgly-wps--settings .pgly-wps--dashboard,
+.pgly-wps--settings .pgly-wps--dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  overflow: hidden;
+}
+#pgly-wps--settings .pgly-wps--widget,
+.pgly-wps--settings .pgly-wps--widget {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -ms-flex-preferred-size: 1;
+      flex-basis: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 6px;
+  overflow: hidden;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--wrapper,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--wrapper {
+  margin: 0;
+  padding: 24px;
+  border: none;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--tag,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--tag {
+  font-size: 13px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--spinner,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--spinner {
+  display: none;
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-dark,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-dark {
+  background-color: #0a0a0a;
+  color: white;
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-1,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-1 {
+  max-width: calc(100% / 12 * 1);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-2,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-2 {
+  max-width: calc(100% / 12 * 2);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-3,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-3 {
+  max-width: calc(100% / 12 * 3);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-4,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-4 {
+  max-width: calc(100% / 12 * 4);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-5,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-5 {
+  max-width: calc(100% / 12 * 5);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-6,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-6 {
+  max-width: calc(100% / 12 * 6);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-7,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-7 {
+  max-width: calc(100% / 12 * 7);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-8,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-8 {
+  max-width: calc(100% / 12 * 8);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-9,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-9 {
+  max-width: calc(100% / 12 * 9);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-10,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-10 {
+  max-width: calc(100% / 12 * 10);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-11,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-11 {
+  max-width: calc(100% / 12 * 11);
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-wps-is-12,
+.pgly-wps--settings .pgly-wps--widget.pgly-wps-is-12 {
+  max-width: calc(100% / 12 * 12);
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header,
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content {
+  width: 100%;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 18px;
+  font-size: 14px;
+  font-weight: bold;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header > *,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header > * {
+  margin-right: 6px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header > *:last-child,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header > *:last-child {
+  margin-right: 0;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header svg,
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--header i,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header svg,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--header i {
+  width: 16px;
+  height: 16px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 6px;
+  overflow: auto;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content > *:last-child,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content > *:last-child {
+  margin-bottom: 0;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value,
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value > *,
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend > *,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value > *,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend > * {
+  margin-right: 6px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value > *:last-child,
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend > *:last-child,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value > *:last-child,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend > *:last-child {
+  margin-right: 0;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value {
+  font-size: 32px;
+  min-height: 40px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--legend {
+  font-size: 12px;
+  min-height: 24px;
+}
+#pgly-wps--settings .pgly-wps--widget .pgly-wps--chart,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--chart {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--spinner,
+.pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--spinner {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--value::before,
+#pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--legend::before,
+.pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--value::before,
+.pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--legend::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #d0d0e7;
+  z-index: 100;
+}
+#pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--value::after,
+#pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--legend::after,
+.pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--value::after,
+.pgly-wps--settings .pgly-wps--widget.pgly-loading--state .pgly-wps--legend::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(35%, rgba(255, 255, 255, 0.2)), color-stop(75%, transparent));
+  background: -o-linear-gradient(left, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 35%, transparent 75%);
+  background-size: 200% 100%;
+  -webkit-animation: 0.8s loader linear infinite;
+          animation: 0.8s loader linear infinite;
+  z-index: 200;
+}
+
+@-webkit-keyframes loader {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+@keyframes loader {
+  to {
+    background-position-x: -200%;
+  }
+}
+@media screen and (max-width: 1080px) {
+  #pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value,
+.pgly-wps--settings .pgly-wps--widget .pgly-wps--content .pgly-wps--value {
+    font-size: 24px;
+    min-height: 29px;
+  }
+}
+@media screen and (max-width: 969px) {
+  #pgly-wps--settings .pgly-wps--widget,
+.pgly-wps--settings .pgly-wps--widget {
+    min-width: 100%;
+    width: 100%;
+  }
+}
+.pgly-wps--settings .pgly-wps--filters {
+  margin: 12px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  background-color: white;
+  border: 1px #d0d0e7 solid;
+  border-radius: 8px;
+}
+.pgly-wps--settings .pgly-wps--filters *:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.pgly-wps--settings .pgly-wps--filters .pgly-wps--filter {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 12px;
+  border-right: 1px #d0d0e7 solid;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  min-height: 66px;
+}
+.pgly-wps--settings .pgly-wps--filters .pgly-wps--filter:last-child {
+  border-right: none;
+}
+.pgly-wps--settings .pgly-wps--filters .pgly-wps--filter .pgly-wps--label {
+  font-size: 12px;
+  font-weight: bold;
+}
+.pgly-wps--settings .pgly-wps--filters .pgly-wps--filter .pgly-wps--input {
+  padding: 8px 0 0;
+  font-size: 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.pgly-wps--settings .pgly-wps--filters .pgly-wps--filter .pgly-wps--input:focus {
+  border-color: none;
+}
+.pgly-wps--settings .pgly-wps--filters button {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: transparent;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 16px;
+  min-height: 66px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.4s, color 0.4s;
+  -o-transition: background-color 0.4s, color 0.4s;
+  transition: background-color 0.4s, color 0.4s;
+}
+.pgly-wps--settings .pgly-wps--filters button:hover {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+@media screen and (max-width: 800px) {
+  .pgly-wps--settings .pgly-wps--filters {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .pgly-wps--settings .pgly-wps--filters .pgly-wps--filter {
+    border-right: none;
+    border-bottom: 1px #d0d0e7 solid;
+  }
+  .pgly-wps--settings .pgly-wps--filters .pgly-wps--filter:last-child {
+    border-bottom: none;
+  }
+}
 /* Elements */
 .pgly-wps--settings .pgly-wps--badges {
   -webkit-box-align: center;
@@ -1348,7 +1725,7 @@
   display: inline-block;
   margin-bottom: 6px;
   margin-right: 6px;
-  font-size: 14px;
+  font-size: 12px;
   width: 24px;
   height: 24px;
   line-height: 24px;
@@ -1375,7 +1752,9 @@
   left: 50%;
   width: 18px;
   height: 18px;
-  margin: -9px 0 0 -9px;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .pgly-wps--settings .pgly-wps--icon-button svg {
   width: 14px;
@@ -1391,7 +1770,7 @@
   width: 18px;
   height: 18px;
   line-height: 18px;
-  font-size: 12px;
+  font-size: 10px;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-small .pgly-wps--spinner {
   width: 12px;
@@ -1406,12 +1785,11 @@
   width: 32px;
   height: 32px;
   line-height: 32px;
-  font-size: 18px;
+  font-size: 14px;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-medium .pgly-wps--spinner {
   width: 18px;
   height: 18px;
-  margin: -9px 0 0 -9px;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-medium svg {
   width: 18px;
@@ -1421,12 +1799,11 @@
   width: 42px;
   height: 42px;
   line-height: 42px;
-  font-size: 24px;
+  font-size: 16px;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-large .pgly-wps--spinner {
   width: 24px;
   height: 24px;
-  margin: -12px 0 0 -12px;
 }
 .pgly-wps--settings .pgly-wps--icon-button.pgly-wps-is-large svg {
   width: 24px;
@@ -1551,7 +1928,7 @@
   background-color: white;
   color: #0a0a0a;
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 6px;
   margin-right: 6px;
   padding: 12px 20px;
@@ -1608,7 +1985,7 @@
 }
 .pgly-wps--settings .pgly-wps--button.pgly-wps-is-expanded {
   display: table;
-  font-size: 16px;
+  font-size: 12px;
   margin-bottom: 10px;
   padding: 16px 20px;
   width: 100%;
@@ -1938,7 +2315,7 @@
   display: block;
 }
 .pgly-wps--settings .pgly-wps--explorer span {
-  font-size: 26px;
+  font-size: 24px;
   word-break: break-word;
   display: block;
 }
@@ -2078,6 +2455,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 .pgly-wps--settings .pgly-wps--media-wrapper .pgly-wps--images .pgly-wps--image {
   width: 100px;
@@ -2331,7 +2710,7 @@
 }
 .pgly-wps--settings .pgly-wps--title {
   color: #121212;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
   line-height: 1.125;
   padding: 0 8px;
@@ -2344,16 +2723,16 @@
   margin-top: -12px;
 }
 .pgly-wps--settings .pgly-wps--title.pgly-wps-is-1 {
-  font-size: 48px;
-}
-.pgly-wps--settings .pgly-wps--title.pgly-wps-is-2 {
   font-size: 38px;
 }
+.pgly-wps--settings .pgly-wps--title.pgly-wps-is-2 {
+  font-size: 32px;
+}
 .pgly-wps--settings .pgly-wps--title.pgly-wps-is-3 {
-  font-size: 30px;
+  font-size: 28px;
 }
 .pgly-wps--settings .pgly-wps--title.pgly-wps-is-4 {
-  font-size: 26px;
+  font-size: 24px;
 }
 .pgly-wps--settings .pgly-wps--title.pgly-wps-is-5 {
   font-size: 22px;
@@ -2384,16 +2763,16 @@
   margin-top: -12px;
 }
 .pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-1 {
-  font-size: 48px;
-}
-.pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-2 {
   font-size: 38px;
 }
+.pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-2 {
+  font-size: 32px;
+}
 .pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-3 {
-  font-size: 30px;
+  font-size: 28px;
 }
 .pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-4 {
-  font-size: 26px;
+  font-size: 24px;
 }
 .pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-5 {
   font-size: 22px;
@@ -2409,6 +2788,850 @@
 }
 .pgly-wps--settings .pgly-wps--subtitle.pgly-wps-is-9 {
   font-size: 11px;
+}
+
+/* Components */
+#pgly-wps--settings,
+.pgly-wps--settings {
+  /* scrollbar is not visible by default for legend, hence forcing the visibility */
+  /* markers */
+}
+#pgly-wps--settings .apexcharts-canvas,
+.pgly-wps--settings .apexcharts-canvas {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  max-width: 100%;
+  /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+}
+#pgly-wps--settings .apexcharts-canvas ::-webkit-scrollbar,
+.pgly-wps--settings .apexcharts-canvas ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px;
+}
+#pgly-wps--settings .apexcharts-canvas ::-webkit-scrollbar-thumb,
+.pgly-wps--settings .apexcharts-canvas ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+#pgly-wps--settings .apexcharts-inner,
+.pgly-wps--settings .apexcharts-inner {
+  position: relative;
+}
+#pgly-wps--settings .apexcharts-text tspan,
+.pgly-wps--settings .apexcharts-text tspan {
+  font-family: inherit;
+}
+#pgly-wps--settings .legend-mouseover-inactive,
+.pgly-wps--settings .legend-mouseover-inactive {
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+  opacity: 0.2;
+}
+#pgly-wps--settings .apexcharts-series-collapsed,
+.pgly-wps--settings .apexcharts-series-collapsed {
+  opacity: 0;
+}
+#pgly-wps--settings .apexcharts-tooltip,
+.pgly-wps--settings .apexcharts-tooltip {
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 6px -4px #999;
+          box-shadow: 2px 2px 6px -4px #999;
+  cursor: default;
+  font-size: 14px;
+  left: 62px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 12;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-tooltip.apexcharts-active,
+.pgly-wps--settings .apexcharts-tooltip.apexcharts-active {
+  opacity: 1;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-light,
+.pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-light {
+  border: 1px solid #e3e3e3;
+  background: rgba(255, 255, 255, 0.96);
+}
+#pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-dark,
+.pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-dark {
+  color: #fff;
+  background: rgba(30, 30, 30, 0.8);
+}
+#pgly-wps--settings .apexcharts-tooltip *,
+.pgly-wps--settings .apexcharts-tooltip * {
+  font-family: inherit;
+}
+#pgly-wps--settings .apexcharts-tooltip-title,
+.pgly-wps--settings .apexcharts-tooltip-title {
+  padding: 6px;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+#pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title,
+.pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+  background: #eceff1;
+  border-bottom: 1px solid #ddd;
+}
+#pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title,
+.pgly-wps--settings .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid #333;
+}
+#pgly-wps--settings .apexcharts-tooltip-text-y-value,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+#pgly-wps--settings .apexcharts-tooltip-text-z-value,
+.pgly-wps--settings .apexcharts-tooltip-text-y-value,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+.pgly-wps--settings .apexcharts-tooltip-text-z-value {
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 5px;
+}
+#pgly-wps--settings .apexcharts-tooltip-title:empty,
+#pgly-wps--settings .apexcharts-tooltip-text-y-label:empty,
+#pgly-wps--settings .apexcharts-tooltip-text-y-value:empty,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-label:empty,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value:empty,
+#pgly-wps--settings .apexcharts-tooltip-text-z-value:empty,
+.pgly-wps--settings .apexcharts-tooltip-title:empty,
+.pgly-wps--settings .apexcharts-tooltip-text-y-label:empty,
+.pgly-wps--settings .apexcharts-tooltip-text-y-value:empty,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-label:empty,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value:empty,
+.pgly-wps--settings .apexcharts-tooltip-text-z-value:empty {
+  display: none;
+}
+#pgly-wps--settings .apexcharts-tooltip-text-y-value,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+#pgly-wps--settings .apexcharts-tooltip-text-z-value,
+.pgly-wps--settings .apexcharts-tooltip-text-y-value,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+.pgly-wps--settings .apexcharts-tooltip-text-z-value {
+  font-weight: 600;
+}
+#pgly-wps--settings .apexcharts-tooltip-text-goals-label,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-label,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value {
+  padding: 6px 0 5px;
+}
+#pgly-wps--settings .apexcharts-tooltip-goals-group,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-label,
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value,
+.pgly-wps--settings .apexcharts-tooltip-goals-group,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-label,
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#pgly-wps--settings .apexcharts-tooltip-text-goals-label:not(:empty),
+#pgly-wps--settings .apexcharts-tooltip-text-goals-value:not(:empty),
+.pgly-wps--settings .apexcharts-tooltip-text-goals-label:not(:empty),
+.pgly-wps--settings .apexcharts-tooltip-text-goals-value:not(:empty) {
+  margin-top: -6px;
+}
+#pgly-wps--settings .apexcharts-tooltip-marker,
+.pgly-wps--settings .apexcharts-tooltip-marker {
+  width: 12px;
+  height: 12px;
+  position: relative;
+  top: 0px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+#pgly-wps--settings .apexcharts-tooltip-series-group,
+.pgly-wps--settings .apexcharts-tooltip-series-group {
+  padding: 0 10px;
+  display: none;
+  text-align: left;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#pgly-wps--settings .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker,
+.pgly-wps--settings .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+  opacity: 1;
+}
+#pgly-wps--settings .apexcharts-tooltip-series-group.apexcharts-active,
+#pgly-wps--settings .apexcharts-tooltip-series-group:last-child,
+.pgly-wps--settings .apexcharts-tooltip-series-group.apexcharts-active,
+.pgly-wps--settings .apexcharts-tooltip-series-group:last-child {
+  padding-bottom: 4px;
+}
+#pgly-wps--settings .apexcharts-tooltip-series-group-hidden,
+.pgly-wps--settings .apexcharts-tooltip-series-group-hidden {
+  opacity: 0;
+  height: 0;
+  line-height: 0;
+  padding: 0 !important;
+}
+#pgly-wps--settings .apexcharts-tooltip-y-group,
+.pgly-wps--settings .apexcharts-tooltip-y-group {
+  padding: 6px 0 5px;
+}
+#pgly-wps--settings .apexcharts-tooltip-box,
+#pgly-wps--settings .apexcharts-custom-tooltip,
+.pgly-wps--settings .apexcharts-tooltip-box,
+.pgly-wps--settings .apexcharts-custom-tooltip {
+  padding: 4px 8px;
+}
+#pgly-wps--settings .apexcharts-tooltip-boxPlot,
+.pgly-wps--settings .apexcharts-tooltip-boxPlot {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+#pgly-wps--settings .apexcharts-tooltip-box > div,
+.pgly-wps--settings .apexcharts-tooltip-box > div {
+  margin: 4px 0;
+}
+#pgly-wps--settings .apexcharts-tooltip-box span.value,
+.pgly-wps--settings .apexcharts-tooltip-box span.value {
+  font-weight: bold;
+}
+#pgly-wps--settings .apexcharts-tooltip-rangebar,
+.pgly-wps--settings .apexcharts-tooltip-rangebar {
+  padding: 5px 8px;
+}
+#pgly-wps--settings .apexcharts-tooltip-rangebar .category,
+.pgly-wps--settings .apexcharts-tooltip-rangebar .category {
+  font-weight: 600;
+  color: #777;
+}
+#pgly-wps--settings .apexcharts-tooltip-rangebar .series-name,
+.pgly-wps--settings .apexcharts-tooltip-rangebar .series-name {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip,
+.pgly-wps--settings .apexcharts-xaxistooltip {
+  opacity: 0;
+  padding: 9px 10px;
+  pointer-events: none;
+  color: #373d3f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  background: #eceff1;
+  border: 1px solid #90a4ae;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip.apexcharts-theme-dark,
+.pgly-wps--settings .apexcharts-xaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip:after,
+#pgly-wps--settings .apexcharts-xaxistooltip:before,
+.pgly-wps--settings .apexcharts-xaxistooltip:after,
+.pgly-wps--settings .apexcharts-xaxistooltip:before {
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip:after,
+.pgly-wps--settings .apexcharts-xaxistooltip:after {
+  border-color: rgba(236, 239, 241, 0);
+  border-width: 6px;
+  margin-left: -6px;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip:before,
+.pgly-wps--settings .apexcharts-xaxistooltip:before {
+  border-color: rgba(144, 164, 174, 0);
+  border-width: 7px;
+  margin-left: -7px;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom:after,
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom:before {
+  bottom: 100%;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-top:after,
+#pgly-wps--settings .apexcharts-xaxistooltip-top:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-top:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-top:before {
+  top: 100%;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom:after {
+  border-bottom-color: #eceff1;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom:before {
+  border-bottom-color: #90a4ae;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-top:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-top:after {
+  border-top-color: #eceff1;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-top:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-top:before {
+  border-top-color: #90a4ae;
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after,
+.pgly-wps--settings .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+  border-top-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before,
+.pgly-wps--settings .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+  border-top-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-xaxistooltip.apexcharts-active,
+.pgly-wps--settings .apexcharts-xaxistooltip.apexcharts-active {
+  opacity: 1;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip,
+.pgly-wps--settings .apexcharts-yaxistooltip {
+  opacity: 0;
+  padding: 4px 10px;
+  pointer-events: none;
+  color: #373d3f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  background: #eceff1;
+  border: 1px solid #90a4ae;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip.apexcharts-theme-dark,
+.pgly-wps--settings .apexcharts-yaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip:after,
+#pgly-wps--settings .apexcharts-yaxistooltip:before,
+.pgly-wps--settings .apexcharts-yaxistooltip:after,
+.pgly-wps--settings .apexcharts-yaxistooltip:before {
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip:after,
+.pgly-wps--settings .apexcharts-yaxistooltip:after {
+  border-color: rgba(236, 239, 241, 0);
+  border-width: 6px;
+  margin-top: -6px;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip:before,
+.pgly-wps--settings .apexcharts-yaxistooltip:before {
+  border-color: rgba(144, 164, 174, 0);
+  border-width: 7px;
+  margin-top: -7px;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-left:after,
+#pgly-wps--settings .apexcharts-yaxistooltip-left:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-left:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-left:before {
+  left: 100%;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-right:after,
+#pgly-wps--settings .apexcharts-yaxistooltip-right:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-right:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-right:before {
+  right: 100%;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-left:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-left:after {
+  border-left-color: #eceff1;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-left:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-left:before {
+  border-left-color: #90a4ae;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+  border-left-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+  border-left-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-right:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-right:after {
+  border-right-color: #eceff1;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-right:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-right:before {
+  border-right-color: #90a4ae;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after,
+.pgly-wps--settings .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+  border-right-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before,
+.pgly-wps--settings .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+  border-right-color: rgba(0, 0, 0, 0.5);
+}
+#pgly-wps--settings .apexcharts-yaxistooltip.apexcharts-active,
+.pgly-wps--settings .apexcharts-yaxistooltip.apexcharts-active {
+  opacity: 1;
+}
+#pgly-wps--settings .apexcharts-yaxistooltip-hidden,
+.pgly-wps--settings .apexcharts-yaxistooltip-hidden {
+  display: none;
+}
+#pgly-wps--settings .apexcharts-xcrosshairs,
+#pgly-wps--settings .apexcharts-ycrosshairs,
+.pgly-wps--settings .apexcharts-xcrosshairs,
+.pgly-wps--settings .apexcharts-ycrosshairs {
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-xcrosshairs.apexcharts-active,
+#pgly-wps--settings .apexcharts-ycrosshairs.apexcharts-active,
+.pgly-wps--settings .apexcharts-xcrosshairs.apexcharts-active,
+.pgly-wps--settings .apexcharts-ycrosshairs.apexcharts-active {
+  opacity: 1;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-ycrosshairs-hidden,
+.pgly-wps--settings .apexcharts-ycrosshairs-hidden {
+  opacity: 0;
+}
+#pgly-wps--settings .apexcharts-selection-rect,
+.pgly-wps--settings .apexcharts-selection-rect {
+  cursor: move;
+}
+#pgly-wps--settings .svg_select_boundingRect,
+#pgly-wps--settings .svg_select_points_rot,
+.pgly-wps--settings .svg_select_boundingRect,
+.pgly-wps--settings .svg_select_points_rot {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+#pgly-wps--settings .apexcharts-selection-rect + g .svg_select_boundingRect,
+#pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_rot,
+.pgly-wps--settings .apexcharts-selection-rect + g .svg_select_boundingRect,
+.pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_rot {
+  opacity: 0;
+  visibility: hidden;
+}
+#pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_l,
+#pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_r,
+.pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_l,
+.pgly-wps--settings .apexcharts-selection-rect + g .svg_select_points_r {
+  cursor: ew-resize;
+  opacity: 1;
+  visibility: visible;
+}
+#pgly-wps--settings .svg_select_points,
+.pgly-wps--settings .svg_select_points {
+  fill: #efefef;
+  stroke: #333;
+  rx: 2;
+}
+#pgly-wps--settings .apexcharts-svg.apexcharts-zoomable.hovering-zoom,
+.pgly-wps--settings .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+  cursor: crosshair;
+}
+#pgly-wps--settings .apexcharts-svg.apexcharts-zoomable.hovering-pan,
+.pgly-wps--settings .apexcharts-svg.apexcharts-zoomable.hovering-pan {
+  cursor: move;
+}
+#pgly-wps--settings .apexcharts-zoom-icon,
+#pgly-wps--settings .apexcharts-zoomin-icon,
+#pgly-wps--settings .apexcharts-zoomout-icon,
+#pgly-wps--settings .apexcharts-reset-icon,
+#pgly-wps--settings .apexcharts-pan-icon,
+#pgly-wps--settings .apexcharts-selection-icon,
+#pgly-wps--settings .apexcharts-menu-icon,
+#pgly-wps--settings .apexcharts-toolbar-custom-icon,
+.pgly-wps--settings .apexcharts-zoom-icon,
+.pgly-wps--settings .apexcharts-zoomin-icon,
+.pgly-wps--settings .apexcharts-zoomout-icon,
+.pgly-wps--settings .apexcharts-reset-icon,
+.pgly-wps--settings .apexcharts-pan-icon,
+.pgly-wps--settings .apexcharts-selection-icon,
+.pgly-wps--settings .apexcharts-menu-icon,
+.pgly-wps--settings .apexcharts-toolbar-custom-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  line-height: 24px;
+  color: #6e8192;
+  text-align: center;
+}
+#pgly-wps--settings .apexcharts-zoom-icon svg,
+#pgly-wps--settings .apexcharts-zoomin-icon svg,
+#pgly-wps--settings .apexcharts-zoomout-icon svg,
+#pgly-wps--settings .apexcharts-reset-icon svg,
+#pgly-wps--settings .apexcharts-menu-icon svg,
+.pgly-wps--settings .apexcharts-zoom-icon svg,
+.pgly-wps--settings .apexcharts-zoomin-icon svg,
+.pgly-wps--settings .apexcharts-zoomout-icon svg,
+.pgly-wps--settings .apexcharts-reset-icon svg,
+.pgly-wps--settings .apexcharts-menu-icon svg {
+  fill: #6e8192;
+}
+#pgly-wps--settings .apexcharts-selection-icon svg,
+.pgly-wps--settings .apexcharts-selection-icon svg {
+  fill: #444;
+  -webkit-transform: scale(0.76);
+      -ms-transform: scale(0.76);
+          transform: scale(0.76);
+}
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-reset-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-pan-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-selection-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-menu-icon svg,
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-reset-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-pan-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-selection-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-menu-icon svg,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+  fill: #f3f4f5;
+}
+#pgly-wps--settings .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+#pgly-wps--settings .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+#pgly-wps--settings .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg,
+.pgly-wps--settings .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+.pgly-wps--settings .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+.pgly-wps--settings .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+  fill: #008ffb;
+}
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-menu-icon:hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+  fill: #333;
+}
+#pgly-wps--settings .apexcharts-selection-icon,
+#pgly-wps--settings .apexcharts-menu-icon,
+.pgly-wps--settings .apexcharts-selection-icon,
+.pgly-wps--settings .apexcharts-menu-icon {
+  position: relative;
+}
+#pgly-wps--settings .apexcharts-reset-icon,
+.pgly-wps--settings .apexcharts-reset-icon {
+  margin-left: 5px;
+}
+#pgly-wps--settings .apexcharts-zoom-icon,
+#pgly-wps--settings .apexcharts-reset-icon,
+#pgly-wps--settings .apexcharts-menu-icon,
+.pgly-wps--settings .apexcharts-zoom-icon,
+.pgly-wps--settings .apexcharts-reset-icon,
+.pgly-wps--settings .apexcharts-menu-icon {
+  -webkit-transform: scale(0.85);
+      -ms-transform: scale(0.85);
+          transform: scale(0.85);
+}
+#pgly-wps--settings .apexcharts-zoomin-icon,
+#pgly-wps--settings .apexcharts-zoomout-icon,
+.pgly-wps--settings .apexcharts-zoomin-icon,
+.pgly-wps--settings .apexcharts-zoomout-icon {
+  -webkit-transform: scale(0.7);
+      -ms-transform: scale(0.7);
+          transform: scale(0.7);
+}
+#pgly-wps--settings .apexcharts-zoomout-icon,
+.pgly-wps--settings .apexcharts-zoomout-icon {
+  margin-right: 3px;
+}
+#pgly-wps--settings .apexcharts-pan-icon,
+.pgly-wps--settings .apexcharts-pan-icon {
+  -webkit-transform: scale(0.62);
+      -ms-transform: scale(0.62);
+          transform: scale(0.62);
+  position: relative;
+  left: 1px;
+  top: 0px;
+}
+#pgly-wps--settings .apexcharts-pan-icon svg,
+.pgly-wps--settings .apexcharts-pan-icon svg {
+  fill: #fff;
+  stroke: #6e8192;
+  stroke-width: 2;
+}
+#pgly-wps--settings .apexcharts-pan-icon.apexcharts-selected svg,
+.pgly-wps--settings .apexcharts-pan-icon.apexcharts-selected svg {
+  stroke: #008ffb;
+}
+#pgly-wps--settings .apexcharts-pan-icon:not(.apexcharts-selected):hover svg,
+.pgly-wps--settings .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+  stroke: #333;
+}
+#pgly-wps--settings .apexcharts-toolbar,
+.pgly-wps--settings .apexcharts-toolbar {
+  position: absolute;
+  z-index: 11;
+  max-width: 176px;
+  text-align: right;
+  border-radius: 3px;
+  padding: 0px 6px 2px 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#pgly-wps--settings .apexcharts-menu,
+.pgly-wps--settings .apexcharts-menu {
+  background: #fff;
+  position: absolute;
+  top: 100%;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 3px;
+  right: 10px;
+  opacity: 0;
+  min-width: 110px;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+  pointer-events: none;
+}
+#pgly-wps--settings .apexcharts-menu.apexcharts-menu-open,
+.pgly-wps--settings .apexcharts-menu.apexcharts-menu-open {
+  opacity: 1;
+  pointer-events: all;
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .apexcharts-menu-item,
+.pgly-wps--settings .apexcharts-menu-item {
+  padding: 6px 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+#pgly-wps--settings .apexcharts-theme-light .apexcharts-menu-item:hover,
+.pgly-wps--settings .apexcharts-theme-light .apexcharts-menu-item:hover {
+  background: #eee;
+}
+#pgly-wps--settings .apexcharts-theme-dark .apexcharts-menu,
+.pgly-wps--settings .apexcharts-theme-dark .apexcharts-menu {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+@media screen and (min-width: 768px) {
+  #pgly-wps--settings .apexcharts-canvas:hover .apexcharts-toolbar,
+.pgly-wps--settings .apexcharts-canvas:hover .apexcharts-toolbar {
+    opacity: 1;
+  }
+}
+#pgly-wps--settings .apexcharts-datalabel.apexcharts-element-hidden,
+.pgly-wps--settings .apexcharts-datalabel.apexcharts-element-hidden {
+  opacity: 0;
+}
+#pgly-wps--settings .apexcharts-pie-label,
+#pgly-wps--settings .apexcharts-datalabels,
+#pgly-wps--settings .apexcharts-datalabel,
+#pgly-wps--settings .apexcharts-datalabel-label,
+#pgly-wps--settings .apexcharts-datalabel-value,
+.pgly-wps--settings .apexcharts-pie-label,
+.pgly-wps--settings .apexcharts-datalabels,
+.pgly-wps--settings .apexcharts-datalabel,
+.pgly-wps--settings .apexcharts-datalabel-label,
+.pgly-wps--settings .apexcharts-datalabel-value {
+  cursor: default;
+  pointer-events: none;
+}
+#pgly-wps--settings .apexcharts-pie-label-delay,
+.pgly-wps--settings .apexcharts-pie-label-delay {
+  opacity: 0;
+  -webkit-animation-name: opaque;
+          animation-name: opaque;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+}
+#pgly-wps--settings .apexcharts-canvas .apexcharts-element-hidden,
+.pgly-wps--settings .apexcharts-canvas .apexcharts-element-hidden {
+  opacity: 0;
+}
+#pgly-wps--settings .apexcharts-hide .apexcharts-series-points,
+.pgly-wps--settings .apexcharts-hide .apexcharts-series-points {
+  opacity: 0;
+}
+#pgly-wps--settings .apexcharts-gridline,
+#pgly-wps--settings .apexcharts-annotation-rect,
+#pgly-wps--settings .apexcharts-xaxis-annotation-label,
+#pgly-wps--settings .apexcharts-yaxis-annotation-label,
+#pgly-wps--settings .apexcharts-point-annotation-label,
+#pgly-wps--settings .apexcharts-tooltip .apexcharts-marker,
+#pgly-wps--settings .apexcharts-area-series .apexcharts-area,
+#pgly-wps--settings .apexcharts-line,
+#pgly-wps--settings .apexcharts-zoom-rect,
+#pgly-wps--settings .apexcharts-toolbar svg,
+#pgly-wps--settings .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+#pgly-wps--settings .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+#pgly-wps--settings .apexcharts-radar-series path,
+#pgly-wps--settings .apexcharts-radar-series polygon,
+.pgly-wps--settings .apexcharts-gridline,
+.pgly-wps--settings .apexcharts-annotation-rect,
+.pgly-wps--settings .apexcharts-xaxis-annotation-label,
+.pgly-wps--settings .apexcharts-yaxis-annotation-label,
+.pgly-wps--settings .apexcharts-point-annotation-label,
+.pgly-wps--settings .apexcharts-tooltip .apexcharts-marker,
+.pgly-wps--settings .apexcharts-area-series .apexcharts-area,
+.pgly-wps--settings .apexcharts-line,
+.pgly-wps--settings .apexcharts-zoom-rect,
+.pgly-wps--settings .apexcharts-toolbar svg,
+.pgly-wps--settings .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.pgly-wps--settings .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.pgly-wps--settings .apexcharts-radar-series path,
+.pgly-wps--settings .apexcharts-radar-series polygon {
+  pointer-events: none;
+}
+#pgly-wps--settings .apexcharts-marker,
+.pgly-wps--settings .apexcharts-marker {
+  -webkit-transition: 0.15s ease all;
+  -o-transition: 0.15s ease all;
+  transition: 0.15s ease all;
+}
+#pgly-wps--settings .resize-triggers,
+.pgly-wps--settings .resize-triggers {
+  -webkit-animation: 1ms resizeanim;
+          animation: 1ms resizeanim;
+  visibility: hidden;
+  opacity: 0;
+}
+#pgly-wps--settings .resize-triggers,
+#pgly-wps--settings .resize-triggers > div,
+#pgly-wps--settings .contract-trigger:before,
+.pgly-wps--settings .resize-triggers,
+.pgly-wps--settings .resize-triggers > div,
+.pgly-wps--settings .contract-trigger:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+#pgly-wps--settings .resize-triggers > div,
+.pgly-wps--settings .resize-triggers > div {
+  background: #eee;
+  overflow: auto;
+}
+#pgly-wps--settings .contract-trigger:before,
+.pgly-wps--settings .contract-trigger:before {
+  width: 200%;
+  height: 200%;
+}
+
+@-webkit-keyframes opaque {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* Resize generated styles */
+@-webkit-keyframes resizeanim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes resizeanim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /*# sourceMappingURL=pgly-wps-settings.css.map */

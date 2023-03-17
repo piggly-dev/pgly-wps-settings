@@ -3,6 +3,7 @@
 
 <head>
 	<title>Piggly WPS Settings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="/assets/js/pgly-wps-settings.js"></script>
 	<link href="/assets/css/pgly-wps-settings.css" rel="stylesheet" />
@@ -1996,6 +1997,462 @@
 				</div>
 			</div>
 		</form>
+		<div class="pgly-wps--dashboard">
+			<div class="pgly-wps--widget pgly-wps-is-4">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<span class="pgly-wps--label">
+							New Users
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span>2500</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span class="pgly-wps--badge pgly-wps-is-success">+4%</span><span>from last week</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-4 pgly-loading--state">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<span class="pgly-wps--label">
+							Sells
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span></span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-4">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<?xml version="1.0" ?><svg height="32" id="icon" viewBox="0 0 32 32" width="32"
+							xmlns="http://www.w3.org/2000/svg">
+							<path d="M19,21H13a3,3,0,0,0-3,3v2h2V24a1,1,0,0,1,1-1h6a1,1,0,0,1,1,1v2h2V24A3,3,0,0,0,19,21Z" />
+							<path d="M16,20a4,4,0,1,0-4-4A4,4,0,0,0,16,20Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,16,14Z" />
+							<path
+								d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Orders
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span>254</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span class="pgly-wps--badge pgly-wps-is-danger">-2%</span><span>from last week</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.5/dist/apexcharts.min.js"></script>
+		<div class="pgly-wps--dashboard">
+			<div class="pgly-wps--widget pgly-wps-is-6">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<span class="pgly-wps--label">
+							New Users
+						</span>
+					</div>
+					<div class="pgly-wps--content" style="display: block">
+						<div id="chart-one" class="pgly-wps--chart" style="width: 100%"></div>
+						<script>
+							document.addEventListener( 'DOMContentLoaded', () => {
+								var options = {
+									chart: {
+										type: 'line',
+										zoom: {
+											enabled: false,
+										},
+										height: '300px'
+									},
+									stroke: {
+										width: 5,
+										curve: 'smooth'
+									},
+									series: [{
+										name: 'Users',
+										data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+									}],
+									grid: {
+										xaxis: {
+											lines: {
+												show: false
+											}
+										},
+										yaxis: {
+											lines: {
+												show: false
+											}
+										},
+									},
+									xaxis: {
+										type: 'datetime',
+										categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001', '4/11/2001', '5/11/2001', '6/11/2001'],
+										tickAmount: 10,
+										labels: {
+											formatter: function ( value, timestamp, opts ) {
+												return opts.dateFormatter( new Date( timestamp ), 'dd MMM' )
+											}
+										},
+									},
+									yaxis: {
+										min: 0,
+										max: 40,
+										labels: {
+											show: false
+										}
+									}
+								}
+
+								var chart = new ApexCharts( document.querySelector( "#chart-one" ), options );
+
+								chart.render();
+							} );
+						</script>
+						<span class="pgly-wps--legend">
+							<span class="pgly-wps--badge pgly-wps-is-success">+4%</span><span>from last week</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--dashboard">
+			<div class="pgly-wps--widget pgly-wps-is-3">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M2 4h2v16H2V4zm4 0h1v16H6V4zm2 0h2v16H8V4zm3 0h2v16h-2V4zm3 0h2v16h-2V4zm3 0h1v16h-1V4zm2 0h3v16h-3V4z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Boletos emitidos
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span>37</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>de todos os boletos criados, independente do status final</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-3">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M2 4h2v16H2V4zm4 0h1v16H6V4zm2 0h2v16H8V4zm3 0h2v16h-2V4zm3 0h2v16h-2V4zm3 0h1v16h-1V4zm2 0h3v16h-3V4z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Boletos emitidos
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span class="pgly-wps--tag">R$</span>
+							<span>12.950,00</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>valor em reais de todos os boletos emitidos</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-3">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M2 4h2v16H2V4zm4 0h1v16H6V4zm2 0h2v16H8V4zm3 0h2v16h-2V4zm3 0h2v16h-2V4zm3 0h1v16h-1V4zm2 0h3v16h-3V4z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Boletos pagos
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span>18</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>de todos os boletos pagos, incluindo pagos parcialmente</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-3">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M2 4h2v16H2V4zm4 0h1v16H6V4zm2 0h2v16H8V4zm3 0h2v16h-2V4zm3 0h2v16h-2V4zm3 0h1v16h-1V4zm2 0h3v16h-3V4z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Boletos pagos
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span class="pgly-wps--tag">R$</span>
+							<span>6.300,00</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>valor em reais de todos os boletos pagos</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--dashboard">
+			<div class="pgly-wps--widget pgly-wps-is-6">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M22.29,6.29,15,13.59,9.71,8.29a1,1,0,0,0-1.42,0l-8,8a1,1,0,0,0,1.42,1.42L9,10.41l5.29,5.3a1,1,0,0,0,1.42,0l8-8A1,1,0,0,0,22.29,6.29Z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Vendas concretizadas
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<div id="sells" class="pgly-wps--chart" style="width: 100%"></div>
+						<script>
+							document.addEventListener( 'DOMContentLoaded', () => {
+								var options = {
+									chart: {
+										type: 'line',
+										zoom: {
+											enabled: false,
+										},
+										height: '300px'
+									},
+									stroke: {
+										width: 5,
+										// curve: 'smooth'
+									},
+									series: [{
+										name: 'Pedidos',
+										data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+									}],
+									grid: {
+										xaxis: {
+											lines: {
+												show: false
+											}
+										},
+										yaxis: {
+											lines: {
+												show: false
+											}
+										},
+									},
+									xaxis: {
+										type: 'datetime',
+										categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001', '4/11/2001', '5/11/2001', '6/11/2001'],
+										tickAmount: 10,
+										labels: {
+											formatter: function ( value, timestamp, opts ) {
+												return opts.dateFormatter( new Date( timestamp ), 'dd/MM' )
+											}
+										},
+									},
+									yaxis: {
+										min: 0,
+										max: 40,
+									}
+								}
+
+								var chart = new ApexCharts( document.querySelector( "#sells" ), options );
+
+								chart.render();
+							} );
+						</script>
+						<span class="pgly-wps--legend">
+							<span>quantidade de vendas relacionada aos boletos pagos</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-6">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M22.29,6.29,15,13.59,9.71,8.29a1,1,0,0,0-1.42,0l-8,8a1,1,0,0,0,1.42,1.42L9,10.41l5.29,5.3a1,1,0,0,0,1.42,0l8-8A1,1,0,0,0,22.29,6.29Z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Faturamento bruto
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<div id="receipts" class="pgly-wps--chart" style="width: 100%"></div>
+						<script>
+							document.addEventListener( 'DOMContentLoaded', () => {
+								var options = {
+									chart: {
+										type: 'line',
+										zoom: {
+											enabled: false,
+										},
+										height: '300px'
+									},
+									stroke: {
+										width: 5,
+										// curve: 'smooth'
+									},
+									series: [{
+										name: 'Pedidos',
+										data: [560, 350, 380, 420, 788, 820, 1094, 1280, 450, 380, 190, 245, 330, 425.5, 420.18, 350.89, 87.58, 590.00]
+									}],
+									grid: {
+										xaxis: {
+											lines: {
+												show: false
+											}
+										},
+										yaxis: {
+											lines: {
+												show: false
+											}
+										},
+									},
+									xaxis: {
+										type: 'datetime',
+										categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001', '4/11/2001', '5/11/2001', '6/11/2001'],
+										tickAmount: 10,
+										labels: {
+											formatter: function ( value, timestamp, opts ) {
+												return opts.dateFormatter( new Date( timestamp ), 'dd/MM' )
+											}
+										},
+									},
+									yaxis: {
+										min: 0,
+										max: 1400,
+									}
+								}
+
+								var chart = new ApexCharts( document.querySelector( "#receipts" ), options );
+
+								chart.render();
+							} );
+						</script>
+						<span class="pgly-wps--legend">
+							<span>quantidade de faturamento relacionado aos boletos pagos</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pgly-wps--dashboard">
+			<div class="pgly-wps--widget pgly-wps-is-6">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg version="1.1" viewBox="0 0 16 16">
+							<path
+								d="M8,0C3.582,0,0,3.582,0,8s3.582,8,8,8s8-3.582,8-8S12.418,0,8,0z M7,8h2c1.103,0,2,0.897,2,2v1c0,1.103-0.897,2-2,2v1H8v-1  H7c-1.103,0-2-0.897-2-2h1c0,0.551,0.448,1,1,1h1h1c0.552,0,1-0.449,1-1v-1c0-0.551-0.448-1-1-1H7C5.897,9,5,8.103,5,7V6  c0-1.103,0.897-2,2-2h1V3h1v1c1.103,0,2,0.897,2,2h-1c0-0.551-0.448-1-1-1H7C6.448,5,6,5.449,6,6v1C6,7.551,6.448,8,7,8z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Conversão em Pagamento
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span>48,65</span>
+							<span class="pgly-wps--tag">%</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>total de boletos pagos dividido por boletos gerados</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--widget pgly-wps-is-6">
+				<div class="pgly-wps--wrapper">
+					<div class="pgly-wps--header">
+						<svg class="pgly-wps--spinner pgly-wps-is-primary" viewBox="0 0 50 50">
+							<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+						</svg>
+						<svg version="1.1" viewBox="0 0 16 16">
+							<path
+								d="M8,0C3.582,0,0,3.582,0,8s3.582,8,8,8s8-3.582,8-8S12.418,0,8,0z M7,8h2c1.103,0,2,0.897,2,2v1c0,1.103-0.897,2-2,2v1H8v-1  H7c-1.103,0-2-0.897-2-2h1c0,0.551,0.448,1,1,1h1h1c0.552,0,1-0.449,1-1v-1c0-0.551-0.448-1-1-1H7C5.897,9,5,8.103,5,7V6  c0-1.103,0.897-2,2-2h1V3h1v1c1.103,0,2,0.897,2,2h-1c0-0.551-0.448-1-1-1H7C6.448,5,6,5.449,6,6v1C6,7.551,6.448,8,7,8z" />
+						</svg>
+						<span class="pgly-wps--label">
+							Ticket médio da emissão
+						</span>
+					</div>
+					<div class="pgly-wps--content">
+						<span class="pgly-wps--value">
+							<span class="pgly-wps--tag">R$</span>
+							<span>390,00</span>
+						</span>
+						<span class="pgly-wps--legend">
+							<span>média de valor por boleto emitido</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pgly-wps--filters">
+			<div class="pgly-wps--filter">
+				<label class="pgly-wps--label">Date Range</label>
+				<input class="pgly-wps--input" type="text" />
+			</div>
+			<div class="pgly-wps--filter">
+				<label class="pgly-wps--label">Product SKU</label>
+				<input class="pgly-wps--input" type="text" />
+			</div>
+			<button type="button">Apply Filters</button>
+		</div>
 	</div>
 </body>
 

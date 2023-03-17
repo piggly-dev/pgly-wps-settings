@@ -13,6 +13,7 @@
 
 		.pgly-wps--images {
 			display: flex;
+			flex-wrap: wrap;
 
 			.pgly-wps--image {
 				width: 100px;

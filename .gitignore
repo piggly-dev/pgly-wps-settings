@@ -132,3 +132,4 @@ dw_php_codehinting.config
 
 # Folders
 /public/assets
+!/src/scss/vendor

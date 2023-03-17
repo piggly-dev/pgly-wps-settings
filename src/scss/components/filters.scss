@@ -1,0 +1,85 @@
+.pgly-wps--settings {
+	.pgly-wps--filters {
+		margin: 12px 0;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		width: 100%;
+		align-items: stretch;
+		background-color: $white;
+		border: 1px $grey-lighter solid;
+		border-radius: 8px;
+
+		*:last-child {
+			border-radius: 0 8px 8px 0;
+		}
+
+		.pgly-wps--filter {
+			display: inline-flex;
+			flex-direction: column;
+			padding: 12px;
+			border-right: 1px $grey-lighter solid;
+			flex: 1 1 auto;
+			min-height: 66px;
+
+			&:last-child {
+				border-right: none;
+			}
+
+			.pgly-wps--label {
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.pgly-wps--input {
+				padding: 8px 0 0;
+				font-size: 16px;
+				width: 100%;
+				border: none;
+				outline: none;
+				background-color: transparent;
+				box-shadow: none;
+
+				&:focus {
+					border-color: none;
+				}
+			}
+		}
+
+		button {
+			display: inline-flex;
+			flex: 0 0 auto;
+			align-items: center;
+			justify-content: center;
+			background-color: transparent;
+			font-size: 12px;
+			font-weight: bold;
+			padding: 0 16px;
+			min-height: 66px;
+			cursor: pointer;
+			transition: background-color 0.4s, color 0.4s;
+
+			&:hover {
+				background-color: $black;
+				color: $white;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.pgly-wps--settings {
+		.pgly-wps--filters {
+			flex-direction: column;
+
+			.pgly-wps--filter {
+				border-right: none;
+				border-bottom: 1px $grey-lighter solid;
+
+				&:last-child {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}

@@ -1,6 +1,5 @@
 #pgly-wps-plugin,
-.pgly-wps--settings
-{
+.pgly-wps--settings {
 	display: table;
 	font-family: $family-primary;
 	position: relative;
@@ -8,13 +7,13 @@
 	max-width: 100%;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 25px;
+	padding: 16px;
 }
 
-.pgly-wps--settings
-{	
-	*, *:before, *:after
-	{
+.pgly-wps--settings {
+	*,
+	*:before,
+	*:after {
 		border: none;
 		box-sizing: border-box;
 		font-family: $family-primary;
@@ -28,6 +27,7 @@
 		word-break: break-word;
 	}
 
-	strong
-	{ font-weight: $weight-bold; }
+	strong {
+		font-weight: $weight-bold;
+	}
 }
