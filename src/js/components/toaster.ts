@@ -2,7 +2,18 @@ import DOMManipulation from '../behaviours/dommanipulation';
 
 export type TPglyToastOptions = {
 	timer: number;
-	type: string;
+	type: 'white'|
+			'black'|
+			'light'|
+			'dark'|
+			'primary'|
+			'link'|
+			'info'|
+			'success'|
+			'warning'|
+			'danger'|
+			'accent'|
+			'regular';
 	light: boolean;
 };
 

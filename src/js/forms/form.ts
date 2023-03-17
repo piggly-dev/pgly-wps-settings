@@ -15,6 +15,7 @@ import PglySingleMediaComponent from './singlemedia';
 import PglyMultipleMediaComponent from './multiplemedia';
 import { PglyGroupFormComponent } from './group';
 import PglyBasicSelectComponent from './basicselect';
+import PglyTextEditorComponent from './texteditor';
 
 export type TFormError = {
 	name: string;
@@ -105,6 +106,11 @@ export abstract class PglyBaseFormEngine extends EventHandler {
 
 			if (el.classList.contains(`${prefix}--textarea`)) {
 				this._inputs.push(new PglyTextAreaComponent(el));
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--texteditor`)) {
+				this._inputs.push(new PglyTextEditorComponent(el));
 				return;
 			}
 

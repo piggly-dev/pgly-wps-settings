@@ -12,6 +12,7 @@ import { RuleValidator } from '../validator/engine';
 import UUID from '../helpers/uuid';
 import PglyLoadable from './loadable';
 import PglyBasicSelectComponent from './basicselect';
+import PglyTextEditorComponent from './texteditor';
 
 export type TGroupFormInputs = Record<string, { label?: string; value: any }>;
 
@@ -213,6 +214,13 @@ export class PglyGroupFormComponent extends PglyBaseComponent<Array<TGroupFormIn
 
 			if (el.classList.contains(`${prefix}--textarea`)) {
 				const component = new PglyTextAreaComponent(el);
+				const name = component.field().name();
+				this._inputs[name] = component;
+				return;
+			}
+
+			if (el.classList.contains(`${prefix}--texteditor`)) {
+				const component = new PglyTextEditorComponent(el);
 				const name = component.field().name();
 				this._inputs[name] = component;
 				return;

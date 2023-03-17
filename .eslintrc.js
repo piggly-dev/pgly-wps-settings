@@ -85,7 +85,7 @@ module.exports = {
 		'no-multi-assign': 'off',
 		eqeqeq: 'off',
 		'max-classes-per-file': 'off',
-		'max-statements': ['error', 40],
+		'max-statements': ['error', 50],
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-unused-vars': 'off',
 	},

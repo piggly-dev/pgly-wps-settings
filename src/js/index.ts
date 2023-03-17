@@ -8,6 +8,7 @@ import PglyBasicSelectComponent from './forms/basicselect';
 import PglySingleMediaComponent from './forms/singlemedia';
 import PglyMultipleMediaComponent from './forms/multiplemedia';
 import PglyTextAreaComponent from './forms/textarea';
+import PglyTextEditorComponent from './forms/texteditor';
 import { wpMultipleMediaFrame, wpSingleMediaFrame, WPForm } from './forms/wpform';
 
 import PglyNotification from './components/notification';
@@ -18,6 +19,7 @@ export {
 	PglyCheckboxComponent,
 	PglyFinderComponent,
 	PglyTextAreaComponent,
+	PglyTextEditorComponent,
 	PglyBasicSelectComponent,
 	PglySelectComponent,
 	PglySingleMediaComponent,

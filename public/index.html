@@ -11,7 +11,10 @@
 </head>
 
 <body>
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 	<div class="pgly-wps--settings">
+		<div id="pgly-wps--form-toaster" class="pgly-wps--toaster pgly-wps-in-s"></div>
 		<div id="pgly-wps--toaster" class="pgly-wps--toaster pgly-wps-in-s"></div>
 		<button id="pgly-wps--toaster-action" class="pgly-wps--button pgly-wps-is-primary">Send Toaster</button>
 		<script>
@@ -1258,6 +1261,8 @@
 						}
 					} );
 
+					window.form = form;
+
 					form.auto();
 
 					form.get( 'basic-select-async' ).asynchronous( () => {
@@ -1542,6 +1547,18 @@
 							setTimeout( () => res( groupData ), 3000 );
 						} )
 					} );
+
+					const formToaster = new pglyWps.PglyToast( 'pgly-wps--form-toaster' );
+
+					form.on( 'error', ( { data } ) => {
+						console.log( data );
+						formToaster.launch( 'Form has errors!', { type: 'danger' } );
+					} );
+
+					form.on( 'prepared', ( data ) => {
+						console.log( data );
+						formToaster.launch( 'Form is ready to submit!', { type: 'success' } );
+					} );
 				} )
 			</script>
 			<div class="pgly-wps--row">
@@ -1626,6 +1643,26 @@
 						</label>
 						<div>
 							<textarea></textarea>
+						</div>
+						<span class="pgly-wps--message"></span>
+						<p class="pgly-wps--description">
+							It includes description.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="pgly-wps--row">
+				<div class="pgly-wps--column">
+					<div class="pgly-wps--field pgly-form--input pgly-form--texteditor" data-name="regular-texteditor">
+						<label class="pgly-wps--label">
+							TextEditor
+						</label>
+						<div class="quill-wrapper">
+							<div class="quill-editor">
+								<p>Hello World!</p>
+								<p>Some initial <strong>bold</strong> text</p>
+								<p><br></p>
+							</div>
 						</div>
 						<span class="pgly-wps--message"></span>
 						<p class="pgly-wps--description">
@@ -1923,6 +1960,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="pgly-wps--row">
 				<div class="pgly-wps--column">
 					<div class="pgly-wps--group pgly-form--input pgly-form--group" data-name="form-group">

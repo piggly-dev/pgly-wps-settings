@@ -11,7 +11,7 @@ const version = '029';
 module.exports = [
 	{
 		input: 'src/js/index.ts',
-		external: ['axios'],
+		external: ['axios', 'quill'],
 		output: {
 			file: `dist/umd/pgly-wps-settings.js`,
 			name: 'pglyWps' + version,
@@ -35,7 +35,7 @@ module.exports = [
 	},
 	{
 		input: 'src/js/index.ts',
-		external: ['axios'],
+		external: ['axios', 'quill'],
 		output: {
 			file: `dist/umd/pgly-wps-settings.min.js`,
 			name: 'pglyWps' + version,
