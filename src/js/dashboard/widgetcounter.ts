@@ -1,28 +1,7 @@
 import DOMManipulation from '../behaviours/dommanipulation';
-import AsynchronousComponent from './asynchronous';
+import AsynchronousComponent from '../components/asynchronous';
 
-class PglyWidgetGraph extends AsynchronousComponent {
-	protected _chart: HTMLSpanElement;
-
-	constructor (el: string | HTMLDivElement) {
-		super(el);
-
-		this._chart = DOMManipulation.findElement(this._wrapper, '.pgly-wps--chart');
-		this._loader.prepare();
-	}
-
-	public async load (options, callback: () => Promise<{series: Array<any>, categories: Array<any>}>) {
-		this._loader.prepare();
-		const data = await callback();
-
-		options.series = data.series;
-		options.xaxis.categories = data.categories;
-
-		this._loader.done();
-	}
-}
-
-class PglyWidgetCounter extends AsynchronousComponent {
+export default class PglyWidgetCounter extends AsynchronousComponent {
 	protected _value: HTMLSpanElement;
 
 	constructor (el: string | HTMLDivElement) {
