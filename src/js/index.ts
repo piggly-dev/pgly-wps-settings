@@ -1,3 +1,14 @@
+import DOMManipulation from './behaviours/dommanipulation';
+import EventHandler from './events/handler';
+
+import AsynchronousComponent from './components/asynchronous';
+import PglyLoadable from './components/loadable';
+import PglyNotification from './components/notification';
+import PglyToast from './components/toaster';
+
+import PglyWidgetData from './dashboard/widgetdata';
+import PglyWidgetGraph from './dashboard/widgetgraphs';
+
 import { PglyAsyncFormEngine } from './forms/form';
 import { PglyGroupFormComponent } from './forms/group';
 import PglyInputComponent from './forms/input';
@@ -11,10 +22,15 @@ import PglyTextAreaComponent from './forms/textarea';
 import PglyTextEditorComponent from './forms/texteditor';
 import { wpMultipleMediaFrame, wpSingleMediaFrame, WPForm } from './forms/wpform';
 
-import PglyNotification from './components/notification';
-import PglyToast from './components/toaster';
-
 export {
+	DOMManipulation,
+	EventHandler,
+	AsynchronousComponent,
+	PglyWidgetData,
+	PglyWidgetGraph,
+	PglyLoadable,
+	PglyNotification,
+	PglyToast,
 	PglyInputComponent,
 	PglyCheckboxComponent,
 	PglyFinderComponent,
@@ -26,8 +42,6 @@ export {
 	PglyMultipleMediaComponent,
 	PglyGroupFormComponent,
 	PglyAsyncFormEngine,
-	PglyNotification,
-	PglyToast,
 	WPForm,
 	wpSingleMediaFrame,
 	wpMultipleMediaFrame,

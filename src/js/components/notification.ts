@@ -1,20 +1,48 @@
+import { TColors } from '../types';
 import DOMManipulation from '../behaviours/dommanipulation';
 
-export type TPglyNotificationOptions = {
+export type PglyNotificationOptions = {
 	timer: number;
-	type: string;
+	type: TColors;
 	light: boolean;
 };
 
+/**
+ * Create a notification wrapper.
+ */
 export default class PglyNotification {
+	/**
+	 * The container of the notification.
+	 *
+	 * @type {HTMLDivElement}
+	 * @protected
+	 */
 	protected _container: HTMLDivElement;
 
+	/**
+	 * Create a new notification wrapper.
+	 *
+	 * @param {string | HTMLDivElement} el The element to bind the notification to.
+	 * @memberof PglyNotification
+	 * @public
+	 * @constructor
+	 * @returns {void}
+	 */
 	constructor (el: string | HTMLDivElement) {
 		this._container = DOMManipulation.getElement(el);
 		this._bind();
 	}
 
-	public launch (message: string, options: Partial<TPglyNotificationOptions>) {
+	/**
+	 * Launch a new notification.
+	 *
+	 * @param {string} message The message to display.
+	 * @param {Partial<PglyNotificationOptions>} options The options of the notification.
+	 * @protected
+	 * @memberof PglyNotification
+	 * @returns {void}
+	 */
+	public launch (message: string, options: Partial<PglyNotificationOptions>) {
 		const op = {
 			timer: 2000,
 			type: 'regular',
@@ -51,6 +79,13 @@ export default class PglyNotification {
 		});
 	}
 
+	/**
+	 * Bind the events.
+	 *
+	 * @protected
+	 * @memberof PglyNotification
+	 * @returns {void}
+	 */
 	protected _bind () {
 		document
 			.querySelectorAll('.pgly-wps--notification .pgly-wps--delete')

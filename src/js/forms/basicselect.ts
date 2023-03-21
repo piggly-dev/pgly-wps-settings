@@ -1,15 +1,44 @@
 import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
-import PglyLoadable from './loadable';
+import PglyLoadable from '../components/loadable';
 import { TSelectItem } from './select';
 
+/**
+ * The basic select component.
+ */
 export default class PglyBasicSelectComponent extends PglyBaseComponent<string> {
+	/**
+	 * The state of the change event.
+	 *
+	 * @type {boolean}
+	 * @protected
+	 */
 	protected _changeEvent = false;
 
+	/**
+	 * The loader of the component.
+	 *
+	 * @type {PglyLoadable}
+	 * @protected
+	 */
 	protected _loader: PglyLoadable;
 
+	/**
+	 * The select input element of the component.
+	 *
+	 * @type {HTMLSelectElement}
+	 * @protected
+	 */
 	protected _input: HTMLSelectElement;
 
+	/**
+	 * Create a new select input component.
+	 *
+	 * @param {string | HTMLDivElement} el The element of the component.
+	 * @constructor
+	 * @public
+	 * @returns {void}
+	 */
 	constructor (el: string | HTMLDivElement) {
 		super(el);
 
@@ -84,6 +113,16 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		});
 	}
 
+	/**
+	 * Bind the component.
+	 *
+	 * This will bind the change event of the input element.
+	 * It will also bind the beforeLoad and afterLoad events of the loader.
+	 *
+	 * @protected
+	 * @returns {void}
+	 * @memberof PglyInputComponent
+	 */
 	protected _bind () {
 		this.on('beforeLoad', () => {
 			this._input.disabled = true;
@@ -105,6 +144,13 @@ export default class PglyBasicSelectComponent extends PglyBaseComponent<string> 
 		});
 	}
 
+	/**
+	 * Set the default value of the field.
+	 *
+	 * @protected
+	 * @returns {void}
+	 * @memberof PglyBasicSelectComponent
+	 */
 	protected _default (): void {
 		this.field().set(this._input.value);
 	}

@@ -46,7 +46,7 @@ export class WPForm {
 		return this._form;
 	}
 
-	public isOnPost () {
+	public formIsOnPostEditPage () {
 		this._postForm =
 			document.querySelector<HTMLFormElement>('form[name="post"]') ?? undefined;
 
@@ -63,7 +63,7 @@ export class WPForm {
 		}
 	}
 
-	public inOnMetabox (
+	public groupFormIsOnMetabox (
 		inputName: string,
 		loadUrl: string,
 		editUrl: string,
@@ -90,13 +90,13 @@ export class WPForm {
 				});
 
 				if (!data.success) {
-					this.onError({ error: data.data });
+					this._onRequestError({ error: data.data });
 					return [];
 				}
 
 				return data.data as Array<TGroupFormInputs>;
 			} catch (err) {
-				this.onError({ error: err });
+				this._onRequestError({ error: err });
 				return [];
 			}
 		});
@@ -142,23 +142,23 @@ export class WPForm {
 				})
 					.then((_data: any) => {
 						if (!_data.success) {
-							this.onError({ error: _data });
+							this._onRequestError({ error: _data });
 							onError(item);
 							return;
 						}
 
-						this.onSuccess({ response: _data });
+						this._onRequestSuccess({ response: _data });
 						onSuccess(item, _data.data.id ?? undefined);
 					})
 					.catch(err => {
-						this.onError({ error: err });
+						this._onRequestError({ error: err });
 						onError(item);
 					})
 					.finally(() => group.loader().done());
 			};
 
 		group.on('loadError', ({ err }) => {
-			this.onError({ error: err });
+			this._onRequestError({ error: err });
 		});
 
 		group.on(
@@ -195,7 +195,7 @@ export class WPForm {
 			)
 		);
 
-		group.on('error', this._error.bind(this));
+		group.on('error', this._onError.bind(this));
 	}
 
 	public enableAction (action: string, callback: (wpForm: WPForm) => void) {
@@ -240,7 +240,7 @@ export class WPForm {
 
 					return data.data as Array<TFinderItem>;
 				} catch (err) {
-					this.onError(err);
+					this._onRequestError(err);
 					return [];
 				}
 			},
@@ -261,9 +261,9 @@ export class WPForm {
 		});
 
 		form.formatter(formatter.bind(this));
-		form.on('error', this._error.bind(this));
-		form.on('requestSuccess', this.onSuccess.bind(this));
-		form.on('requestError', this.onError.bind(this));
+		form.on('error', this._onError.bind(this));
+		form.on('requestSuccess', this._onRequestSuccess.bind(this));
+		form.on('requestError', this._onRequestError.bind(this));
 		form.auto();
 
 		return form;
@@ -278,20 +278,19 @@ export class WPForm {
 
 		if (this._form.dataset().postId) _data.post_id = this._form.dataset().postId;
 
-		if (this._form.dataset().xSecurity)
-			_data.x_security = this._form.dataset().xSecurity;
+		if (this._form.dataset().xSecurity) _data.x_security = this._form.dataset().xSecurity;
 
 		return _data;
 	}
 
-	protected _error (): void {
+	protected _onError (): void {
 		this._toaster.launch('Campos inválidos, verifique antes de continuar', {
 			type: 'danger',
 			timer: 5000,
 		});
 	}
 
-	public onSuccess ({ response }: any): void {
+	public _onRequestSuccess ({ response }: any): void {
 		if (!response.success) {
 			this._toaster.launch(response.data.message, {
 				type: 'danger',
@@ -310,12 +309,12 @@ export class WPForm {
 		if (response.data.id) this._updateRecordId(response.data.id);
 	}
 
-	public onError ({ error }: any): void {
+	public _onRequestError ({ error }: any): void {
 		this._toaster.launch(
 			error?.response?.data?.data?.message ??
 				error?.data?.message ??
 				error.message ??
-				'Erro de execução do script',
+				'Unable to process request',
 			{
 				type: 'danger',
 				timer: 5000,

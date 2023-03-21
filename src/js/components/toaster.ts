@@ -1,29 +1,46 @@
+import { TColors } from '@/types';
 import DOMManipulation from '../behaviours/dommanipulation';
 
 export type TPglyToastOptions = {
 	timer: number;
-	type: 'white'|
-			'black'|
-			'light'|
-			'dark'|
-			'primary'|
-			'link'|
-			'info'|
-			'success'|
-			'warning'|
-			'danger'|
-			'accent'|
-			'regular';
+	type: TColors;
 	light: boolean;
 };
 
+/**
+ * Create a toaster wrapper.
+ */
 export default class PglyToast {
+	/**
+	 * The container of the toaster.
+	 *
+	 * @type {HTMLDivElement}
+	 * @protected
+	 */
 	protected _container: HTMLDivElement;
 
+	/**
+	 * Create a new toaster wrapper.
+	 *
+	 * @param {string | HTMLDivElement} el The element to bind the toasts to.
+	 * @memberof PglyToast
+	 * @public
+	 * @constructor
+	 * @returns {void}
+	 */
 	constructor (el: string | HTMLDivElement) {
 		this._container = DOMManipulation.getElement(el);
 	}
 
+	/**
+	 * Launch a new toast.
+	 *
+	 * @param {string} message The message to display.
+	 * @param {Partial<TPglyToastOptions>} options The options of the notification.
+	 * @protected
+	 * @memberof PglyToast
+	 * @returns {void}
+	 */
 	public launch (message: string, options: Partial<TPglyToastOptions>) {
 		const op = {
 			timer: 2000,

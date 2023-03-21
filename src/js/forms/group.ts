@@ -10,7 +10,7 @@ import PglyFinderComponent from './finder';
 import PglySelectComponent from './select';
 import { RuleValidator } from '../validator/engine';
 import UUID from '../helpers/uuid';
-import PglyLoadable from './loadable';
+import PglyLoadable from '../components/loadable';
 import PglyBasicSelectComponent from './basicselect';
 import PglyTextEditorComponent from './texteditor';
 

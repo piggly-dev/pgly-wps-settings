@@ -1,6 +1,6 @@
 import DOMManipulation from '../behaviours/dommanipulation';
 import PglyBaseComponent from './base';
-import PglyLoadable from './loadable';
+import PglyLoadable from '../components/loadable';
 
 export type TFinderItem = {
 	value: string;

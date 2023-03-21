@@ -1,4 +1,16 @@
+/**
+ * Easy shortcuts for DOM manipulation.
+ */
 export default class DOMManipulation {
+	/**
+	 * Get an element by ID from the DOM.
+	 *
+	 * @param {string|HTMLElement} el The element to get.
+	 * @returns {HTMLElement} The element.
+	 * @throws {Error} If element is not found.
+	 * @public
+	 * @static
+	 */
 	public static getElement<T = HTMLElement> (el: string | HTMLElement): T {
 		if (typeof el === 'string') {
 			const wrapper = document.getElementById(el);
@@ -9,6 +21,16 @@ export default class DOMManipulation {
 		return el as unknown as T;
 	}
 
+	/**
+	 * Get an element by query selector from the DOM.
+	 *
+	 * @param {HTMLElement} wrapper The parent of element to be found.
+	 * @param {string} query The query to find the element.
+	 * @returns {HTMLElement} The element.
+	 * @throws {Error} If element is not found.
+	 * @public
+	 * @static
+	 */
 	public static findElement<T = HTMLElement> (wrapper: HTMLElement, query: string): T {
 		const el = wrapper.querySelector(query);
 		if (!query)
@@ -16,6 +38,16 @@ export default class DOMManipulation {
 		return el as unknown as T;
 	}
 
+	/**
+	 * Create an hidden input on parent.
+	 *
+	 * @param {HTMLElement} parent The parent of element to be found.
+	 * @param {string} name The name of the input.
+	 * @param {string} value The value of the input.
+	 * @returns {HTMLInputElement} The input created.
+	 * @public
+	 * @static
+	 */
 	public static createHiddenInput (
 		parent: HTMLElement,
 		name: string,

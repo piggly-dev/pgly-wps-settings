@@ -1,7 +1,23 @@
+/**
+ * UUID helper.
+ */
 export default class UUID {
+	/**
+	 * The LUT.
+	 *
+	 * @type {Array<string>}
+	 * @protected
+	 * @static
+	 */
 	protected static lut: Array<string> = [];
 
 	/**
+	 * Generate a new UUID.
+	 *
+	 * @static
+	 * @public
+	 * @memberof UUID
+	 * @returns {string} The generated UUID.
 	 * @link https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
 	 */
 	public static generate () {
